@@ -24,64 +24,74 @@
         </div>
         <div id="show_data" class="absolute hidden top-24 left-0 w-full bg-[#303030]">
             <ul class=" ">
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                <li class="pt-[50px]">
+                    <a href="">
+                        <img src="{{ asset('images/home.png') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Home</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.admin.index') }}">
+                        <img src="{{ Request::routeIs('admin.admin.index') ? asset('images/user-yellow.png') : asset('images/user-profile.png') }}"
+                            class="mx-auto" alt="">
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Admin</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.user.index') }}">
+                        <img src="{{ asset('images/users-white.png') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">User</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.actor.index') }}">
+                        <img src="{{ asset('images/cost-white.png') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Cost</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.sub-category.index') }}">
+                        <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Sub Category</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.jingle.index') }}">
+                        <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Jingle</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+               
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.review.index') }}">
+                        <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Review</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.notification.index') }}">
+                        <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Notification</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.legal.index') }}">
+                        <img src="{{ asset('images/legal-white.png') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Legal</span>
                     </a>
                 </li>
-                <li class="pb-[20px] pt-4 hover:bg-zinc-700 px-[40px]">
-                    <a href="" class="flex items-center space-x-3">
-                        <img src="../images/home.png" class="" alt="">
-                        <span>Home</span>
+              
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.onboarding.index') }}">
+                        <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Advertising</span>
+                    </a>
+                </li>
+                <li class="pt-[50px]">
+                    <a href="{{ route('admin.logout') }}">
+                        <img src="{{ asset('images/logout.png') }}" class="mx-auto" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Logout</span>
                     </a>
                 </li>
             </ul>
