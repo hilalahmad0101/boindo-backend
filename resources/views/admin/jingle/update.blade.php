@@ -1,10 +1,10 @@
 @extends('layouts.new_app')
 @section('title')
-    update Jingle
+    update ADS
 @endsection
 @section('content')
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">UPDATE JINGLE</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">ADVERTISING UPLOAD</h1>
         <div>
             <div class="mt-12">
                 <form method="POST" enctype="multipart/form-data"

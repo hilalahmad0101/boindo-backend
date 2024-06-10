@@ -127,7 +127,7 @@
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.actor.index') }}">
                             <img src="{{ asset('images/cost-white.png') }}" class="mx-auto" alt="">
-                            <span class="text-center text-neutral-500 text-xs font-normal ">Cost</span>
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Cast</span>
                         </a>
                     </li>
                     <li class="pt-[50px]">
@@ -136,13 +136,7 @@
                             <span class="text-center text-neutral-500 text-xs font-normal ">Sub Category</span>
                         </a>
                     </li>
-                    <li class="pt-[50px]">
-                        <a href="{{ route('admin.jingle.index') }}">
-                            <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
-                            <span class="text-center text-neutral-500 text-xs font-normal ">Jingle</span>
-                        </a>
-                    </li>
-                   
+                    
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.review.index') }}">
                             <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
@@ -162,12 +156,20 @@
                         </a>
                     </li>
                   
-                    <li class="pt-[50px]">
+                    {{-- <li class="pt-[50px]">
                         <a href="{{ route('admin.onboarding.index') }}">
                             <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Advertising</span>
                         </a>
+                    </li> --}}
+
+                    <li class="pt-[50px]">
+                        <a href="{{ route('admin.jingle.index') }}">
+                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Advertising</span>
+                        </a>
                     </li>
+                   
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.logout') }}">
                             <img src="{{ asset('images/logout.png') }}" class="mx-auto" alt="">

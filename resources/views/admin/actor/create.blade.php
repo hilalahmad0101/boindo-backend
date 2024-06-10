@@ -1,11 +1,11 @@
 @extends('layouts.new_app')
 @section('title')
-    Create Cast
+    Create CAST
 @endsection
 @section('content')
     {{-- <div class="container px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Create Cast
+            Create CAST
         </h2>
         <form class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
             action="{{ route('admin.actor.store') }}" method="POST" enctype="multipart/form-data">
@@ -54,14 +54,14 @@
             <div class="flex mt-6">
                 <button type="submit"
                     class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                    <span>Create Cast</span>
+                    <span>Create CAST</span>
                 </button>
             </div>
         </form>
     </div> --}}
 
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">CREATE COST</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">CREATE CAST</h1>
         <div>
             <div class="mt-12">
                 <form method="POST" enctype="multipart/form-data" action="{{ route('admin.actor.store') }}">

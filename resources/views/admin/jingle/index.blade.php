@@ -1,12 +1,12 @@
 @extends('layouts.new_app')
 @section('title')
-    List Jingle
+    List Advertising
 @endsection
 @section('content')
     {{-- <div class="container px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             style="display: flex;align-items: center;justify-content: space-between">
-            List Jingle
+            List Advertising
             <a href="{{ route('admin.jingle.create') }}"
                 class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                 aria-label="Delete">
@@ -104,12 +104,12 @@
      </script> --}}
 
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">JINGLE LIST</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">ADVERTISMENT LIST</h1>
         <div>
             <div class="mt-[58px]">
                 <div class="md:flex items-center justify-between block">
                     <p class="text-neutral-50 text-2xl font-black flex space-x-3">
-                        <span>jingle</span>
+                        <span>Advertisment</span>
                         <span
                             class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($jingles) }}</span>
                     </p>
@@ -150,14 +150,14 @@
                     <tbody class="bg-[#383838]">
                         @foreach ($jingles as $jingle)
                             <tr>
-                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">
-                                    {{ $jingle->title }}
-                                </td>
-                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">
+                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4 space-x-3">
                                     <img src="{{ asset('storage/' . $jingle->image) }}" width="100px" alt="">
+                                    <span> {{ $jingle->title }}</span>
                                 </td>
                                 <td class="border border-[#FFFFFF33] text-white  px-6 py-4">
-                                    <audio src="{{ asset('storage/'.$jingle->audio) }}" controls></audio>
+                                </td>
+                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">
+                                    <audio src="{{ asset('storage/' . $jingle->audio) }}" controls></audio>
                                 </td>
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($jingle->created_at)) }}</td>

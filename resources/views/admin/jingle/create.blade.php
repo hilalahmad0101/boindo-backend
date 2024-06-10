@@ -1,6 +1,6 @@
 @extends('layouts.new_app')
 @section('title')
-    Create Jingle
+    Create ADS
 @endsection
 @section('content')
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/tagify.css') }}">
@@ -51,19 +51,12 @@
 
 
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">CREATE JINGLE</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">CREATE ADS</h1>
         <div>
             <div class="mt-12">
                 <form method="POST" enctype="multipart/form-data" action="{{ route('admin.jingle.store') }}">
                     @csrf
-                    <div>
-                        <label for="" class="text-neutral-50 text-2xl font-black">Title</label>
-                        <input type="text" placeholder="Title" name="title"
-                            class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
-                        @error('title')
-                            <span style="color: red">{{ $message }}</span>
-                        @enderror
-                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div class="rounded-lg p-6 relative mt-[10px]">
                             <label for="" class="text-neutral-50 text-2xl font-black m">Upload Image</label>
@@ -92,6 +85,16 @@
                             @enderror
                         </div>
 
+                    </div>
+                    <div>
+                        <label for="" class="text-neutral-50 text-2xl font-black">Title</label>
+                        <input type="text" placeholder="Title" name="title"
+                            class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
+                        @error('title')
+                            <span style="color: red">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div></div>
                         <div class="flex items-center justify-end space-x-9 mt-[76px]">
                             <button onclick="window.location.href='{{ route('admin.onboarding.index') }}'" type="button"
