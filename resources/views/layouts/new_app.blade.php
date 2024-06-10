@@ -89,7 +89,7 @@
     </nav>
     <div class="flex items-start  lg:mt-[54px] lg:ml-[38px]">
         <div class="hidden lg:block">
-            <nav class="w-[110px] h-[1150px] bg-[#303030] rounded-[20px] mb-10">
+            <nav class="w-[110px] h-[1200px] bg-[#303030] rounded-[20px] mb-10">
                 <ul class="flex flex-col justify-center items-center">
                     <li class="pt-[50px]">
                         <img src="{{ asset('images/logo.png') }}" alt="">
@@ -113,6 +113,13 @@
                             <span class="text-center text-neutral-500 text-xs font-normal ">User</span>
                         </a>
                     </li>
+                    
+                    <li class="pt-[50px]">
+                        <a href="{{ route('admin.actor.index') }}">
+                            <img src="{{ asset('images/cost-white.png') }}" class="mx-auto" alt="">
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Cost</span>
+                        </a>
+                    </li>
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.sub-category.index') }}">
                             <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
@@ -120,17 +127,31 @@
                         </a>
                     </li>
                     <li class="pt-[50px]">
-                        <a href="{{ route('admin.actor.index') }}">
-                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
-                            <span class="text-center text-neutral-500 text-xs font-normal ">Actor</span>
-                        </a>
-                    </li>
-                    <li class="pt-[50px]">
                         <a href="{{ route('admin.jingle.index') }}">
-                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
+                            <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Jingle</span>
                         </a>
                     </li>
+                   
+                    <li class="pt-[50px]">
+                        <a href="{{ route('admin.review.index') }}">
+                            <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Review</span>
+                        </a>
+                    </li>
+                    <li class="pt-[50px]">
+                        <a href="{{ route('admin.notification.index') }}">
+                            <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Notification</span>
+                        </a>
+                    </li>
+                    <li class="pt-[50px]">
+                        <a href="{{ route('admin.legal.index') }}">
+                            <img src="{{ asset('images/legal-white.png') }}" class="mx-auto" alt="">
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Legal</span>
+                        </a>
+                    </li>
+                  
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.onboarding.index') }}">
                             <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
@@ -138,26 +159,8 @@
                         </a>
                     </li>
                     <li class="pt-[50px]">
-                        <a href="{{ route('admin.review.index') }}">
-                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
-                            <span class="text-center text-neutral-500 text-xs font-normal ">Review</span>
-                        </a>
-                    </li>
-                    <li class="pt-[50px]">
-                        <a href="{{ route('admin.legal.index') }}">
-                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
-                            <span class="text-center text-neutral-500 text-xs font-normal ">Legal</span>
-                        </a>
-                    </li>
-                    <li class="pt-[50px]">
-                        <a href="{{ route('admin.notification.index') }}">
-                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
-                            <span class="text-center text-neutral-500 text-xs font-normal ">Notification</span>
-                        </a>
-                    </li>
-                    <li class="pt-[50px]">
                         <a href="{{ route('admin.logout') }}">
-                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
+                            <img src="{{ asset('images/logout.png') }}" class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Logout</span>
                         </a>
                     </li>
