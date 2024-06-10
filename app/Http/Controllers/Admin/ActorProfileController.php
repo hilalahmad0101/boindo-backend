@@ -10,7 +10,7 @@ class ActorProfileController extends Controller
 {
     public function index()
     {
-        $actors = ActorProfile::latest()->get();
+        $actors = ActorProfile::latest()->paginate(10);
         return view("admin.actor.index", compact('actors'));
     }
 

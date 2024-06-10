@@ -10,7 +10,7 @@ class JingleController extends Controller
 {
     public function index()
     {
-        $jingles = Jingle::latest()->get();
+        $jingles = Jingle::latest()->paginate(10);
         return view('admin.jingle.index', compact('jingles'));
     }
 

@@ -3,9 +3,10 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\JingleController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\LegalController;
 use App\Http\Controllers\User\AuthController as UserAuthController;
 use App\Http\Controllers\Admin\ContentController;
-use App\Http\Controllers\Admin\DashboardController; 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OnboardingController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
@@ -21,19 +22,19 @@ Route::middleware(['guest:admin'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::get('/', 'index')->name('admin.login');
         Route::post('/login', 'login')->name('admin.make.login');
-        Route::get('/admin/forget/password/view', 'forget_password_view')->name('admin.forget.password.view'); 
-        Route::post('/admin/forget/password', 'forget_password')->name('admin.forget.password'); 
-        Route::get('/admin/change/password/{code}', 'change_password'); 
-        Route::post('/admin/update/password/{code}', 'update_password')->name('admin.update.password'); 
+        Route::get('/admin/forget/password/view', 'forget_password_view')->name('admin.forget.password.view');
+        Route::post('/admin/forget/password', 'forget_password')->name('admin.forget.password');
+        Route::get('/admin/change/password/{code}', 'change_password');
+        Route::post('/admin/update/password/{code}', 'update_password')->name('admin.update.password');
     });
     Route::controller(UserAuthController::class)->group(function () {
-        Route::get('/user/change/password/{code}', 'change_password'); 
-        Route::post('/user/update/password/{code}', 'update_password')->name('user.update.password'); 
+        Route::get('/user/change/password/{code}', 'change_password');
+        Route::post('/user/update/password/{code}', 'update_password')->name('user.update.password');
     });
 });
 
 Route::controller(UserAuthController::class)->group(function () {
-    Route::get('/user/verify/email/{code}', 'email_verified');  
+    Route::get('/user/verify/email/{code}', 'email_verified');
 });
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -46,9 +47,9 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::get('dashboard', 'index')->name('admin.dashboard');
             Route::get('notification', 'notification')->name('admin.notification.index');
             Route::post('send/notification', 'send_notification')->name('admin.notification.send');
+            Route::get('review', 'getReviews')->name('admin.review.index');
+            Route::get('review/delete/{id}', 'deleteReviews')->name('admin.review.delete');
             Route::post('get/version', 'getVersion')->name('admin.get.version');
-             
-             
             Route::get('/send/mail/{id}', 'send_mail_view')->name('admin.send.mail.view');
             Route::post('/send/mail/{id}', 'send_mail')->name('admin.send.mail');
         });
@@ -66,6 +67,7 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::controller(UserController::class)->group(function () {
                 Route::get('list', 'index')->name('admin.user.index');
                 Route::get('delete/{id}', 'delete')->name('admin.user.delete');
+                Route::get('suspend/{id}', 'suspend')->name('admin.user.suspend');
             });
         });
         Route::prefix('onboarding')->group(function () {
@@ -106,6 +108,8 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::get('create', 'create')->name('admin.admin.create');
             Route::post('store', 'store')->name('admin.admin.store');
             Route::get('edit/{id}', 'edit')->name('admin.admin.edit');
+            Route::get('reset/password/{id}', 'resetPassword')->name('admin.admin.reset.password');
+            Route::post('update/password/{id}', 'updatePassword')->name('admin.admin.update.password');
             Route::post('update/{id}', 'update')->name('admin.admin.update');
             Route::get('delete/{id}', 'delete')->name('admin.admin.delete');
         });
@@ -117,6 +121,10 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::post('/jingle/update/{id}', 'update')->name('admin.jingle.update');
             Route::get('/jingle/delete/{id}', 'delete')->name('admin.jingle.delete');
         });
-         
+
+        Route::controller(LegalController::class)->group(function () {
+            Route::get('/legal/list', 'index')->name('admin.legal.index');
+            Route::post('/legal/store', 'store')->name('admin.legal.store');
+        });
     });
 });

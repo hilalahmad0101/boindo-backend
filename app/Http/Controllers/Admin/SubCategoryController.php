@@ -13,7 +13,7 @@ class SubCategoryController extends Controller
     function index(): View
     {
         // list of item 
-        $categories = SubCategory::all();
+        $categories = SubCategory::latest()->paginate(10);
         return view('admin.sub_category.index', compact('categories'));
     }
     function create(): View

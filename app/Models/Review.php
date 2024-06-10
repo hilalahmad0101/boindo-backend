@@ -9,13 +9,15 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
-    public function content(){
-        return $this->belongsTo(Content::class,'content_id');
+    public function contents()
+    {
+        return $this->belongsTo(Content::class, 'content_id');
     }
-    
-    public function user(){
-        return $this->belongsTo(User::class,'user_id');
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

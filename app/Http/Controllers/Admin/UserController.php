@@ -11,12 +11,21 @@ class UserController extends Controller
 {
     function index(): View
     {
-        $users=User::all();
-        return view('admin.users',compact('users'));
+        $users = User::latest()->paginate(10);
+        return view('admin.users', compact('users'));
     }
 
-    function delete($id)  {
+    function delete($id)
+    {
         User::findOrFail($id)->delete();
-        return to_route('admin.user.index')->with('success','Delete successfully');
+        return to_route('admin.user.index')->with('success', 'Delete successfully');
+    }
+
+    public function suspend($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = 0;
+        $user->save();
+        return to_route('admin.user.index')->with('success', 'Suspend successfully');
     }
 }

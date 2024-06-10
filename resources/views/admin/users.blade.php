@@ -1,92 +1,67 @@
-@extends('layouts.app')
+@extends('layouts.new_app')
 @section('title')
     List Users
 @endsection
 @section('content')
-    <div class="container px-6 mx-auto grid">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            List Users
-        </h2>
+    <div class="mt-[134px]">
+        <h1 class="text-neutral-50 text-4xl font-black ">USERS LIST</h1>
+        <div>
+            <div class="mt-[58px]">
+                <div class="md:flex items-center justify-between block">
+                    <p class="text-neutral-50 text-2xl font-black flex space-x-3">
+                        <span>User</span>
+                        <span
+                            class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($users) }}</span>
+                    </p>
+                    
+                </div>
+            </div>
 
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                        <tr
-                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3">Email</th> 
-                            <th class="px-4 py-3">Actions</th>
+
+            <div class="mt-8  overflow-x-scroll xl:overflow-hidden ">
+                <table class="table-auto w-[1000px] xl:w-full rounded-md ">
+                    <thead class="bg-[#FFFFFF33] rounded-tl-lg rounded-tr-lg">
+                        <tr class="rounded-md">
+                            <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Email</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Del</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Sus</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Email</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    <tbody class="bg-[#383838]">
                         @foreach ($users as $user)
-                            
-                        <tr class="text-gray-700 dark:text-gray-400">
-                            <td class="px-4 py-3">
-                                <div class="flex items-center text-sm">
-                                    <div>
-                                        <p class="font-semibold">{{ $user->email }}</p> 
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center space-x-4 text-sm">
-                                    {{-- <a href="{{ route('admin.sub-category.edit', ['id'=>$category->id]) }}"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Edit">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                            </path>
-                                        </svg>
-                                    </a> --}}
-                                    <a href="{{ route('admin.user.delete', ['id'=>$user->id]) }}" 
-                                        onclick="return confirm('Are you sure you want to delete?') ? deleteCategory(event) : false;"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Delete">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                           <path fill-rule="evenodd"
-                                                 d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                 clip-rule="evenodd"></path>
-                                        </svg>
-                                     </a>
-                                     <a class='bg-purple-600' href="{{route('admin.send.mail.view',['id'=>$user->id])}}"
-                                        style="color: white;
-                                                display: flex;
-                                                text-align: center;
-                                                width: 40%;
-                                                align-items: center;
-                                                justify-content: center;
-                                                padding: 6px; 
-                                                border-radius: 9px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                                        </svg>
-                
+                            <tr>
+                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">{{ $user->email }}</td>
+                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                    {{ date('Y M d', strtotime($user->created_at)) }}</td>
+                                <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                    <a href="{{ route('admin.user.delete', ['id' => $user->id]) }}">
+                                        <img src="{{ asset('images/trash.svg') }}"  alt="">
                                     </a>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="border-b border-[#FFFFFF33] px-6 py-4 text-center">
+                                   <a href="{{ route('admin.user.suspend', ['id'=>$user->id]) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="20" viewBox="0 0 14 20" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 0H4C5.10457 0 6 0.89543 6 2V18C6 19.1046 5.10457 20 4 20H2C0.89543 20 0 19.1046 0 18V2C0 0.89543 0.89543 0 2 0ZM10 0H12C13.1046 0 14 0.89543 14 2V18C14 19.1046 13.1046 20 12 20H10C8.89543 20 8 19.1046 8 18V2C8 0.89543 8.89543 0 10 0ZM2 2V18H4V2H2ZM10 2V18H12V2H10Z" fill="white"/>
+                                      </svg>
+                                   </a>
+                                </td>
+                                <td class="border-b border-[#FFFFFF33] px-6 py-4 text-center">
+                                    <a href="{{ route('admin.send.mail.view', $user->id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M4.6875 6.75L11.3596 11.5403C11.7449 11.8168 12.2551 11.8168 12.6404 11.5403L19.3125 6.75M5.25 19H18.75C19.9926 19 21 17.9553 21 16.6667V7.33333C21 6.04467 19.9926 5 18.75 5H5.25C4.00736 5 3 6.04467 3 7.33333V16.6667C3 17.9553 4.00736 19 5.25 19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                          </svg>
+                                    </a>
+                                </td>
+                            </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
+            <div class="mt-[45px] mb-[50px]">
+               {{ $users->links() }}
+            </div>
         </div>
     </div>
-    <script>
-        function deleteCategory(event) {
-           // Prevent the default link behavior to avoid navigating immediately
-           event.preventDefault();
-     
-           // Get the URL from the anchor element
-           var deleteUrl = event.currentTarget.href;
-     
-           // Perform the deletion by redirecting to the delete URL
-           window.location.href = deleteUrl;
-        }
-     </script>
-    
 @endsection

@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.new_app')
 @section('title')
     List Sub Category
 @endsection
 @section('content')
-    <div class="container px-6 mx-auto grid">
+    {{-- <div class="container px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             style="display: flex; align-items: center;justify-content: space-between;">
             List Sub Category
@@ -99,5 +99,89 @@
            // Perform the deletion by redirecting to the delete URL
            window.location.href = deleteUrl;
         }
-     </script>
+     </script> --}}
+
+
+     <!-- MAIN AREA -->
+    <div class="mt-[134px]">
+        <h1 class="text-neutral-50 text-4xl font-black ">SUB-CATEGORY LIST</h1>
+        <div>
+            <div class="mt-[58px]">
+                <div class="md:flex items-center justify-between block">
+                    <p class="text-neutral-50 text-2xl font-black flex space-x-3">
+                        <span>Sub-Category</span>
+                        <span
+                            class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($categories) }}</span>
+                    </p>
+                    <div class="flex items-center mt-3 md:mt-0">
+                        <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
+                            <img src="{{ asset('images/search.png') }}" alt="">
+                            <input type="text" placeholder="Search"
+                                class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
+                        </div>
+                        <a href="{{ route('admin.sub-category.create') }}"
+                            class=" ml-[29px] px-4 py-2 bg-white rounded-lg justify-start items-center gap-2 inline-flex text-black text-base font-bold   leading-normal">
+                            <img src="../images/plus.svg" alt="">
+                            <span>Add</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mt-8  overflow-x-scroll xl:overflow-hidden ">
+                <table class="table-auto w-[1000px] xl:w-full rounded-md ">
+                    <thead class="bg-[#FFFFFF33] rounded-tl-lg rounded-tr-lg">
+                        <tr class="rounded-md">
+                            <th
+                                class="px-6 py-3 text-left  text-white border-b border-r border-t rounded-tl-md border-[#FFFFFF33]">
+                                Title</th>
+                            <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Date</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-[#383838]">
+                        @foreach ($categories as $category)
+                            <tr>
+                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">{{ $category->name }}</td>
+                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                    {{ date('Y M d', strtotime($category->created_at)) }}</td>
+                                <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                  <a href="{{ route('admin.sub-category.edit', ['id'=>$category->id]) }}">
+                                    <img src="{{ asset('images/edit.svg') }}" alt="">
+                                  </a>
+                                </td>
+                                <td class="border-b border-[#FFFFFF33] px-6 py-4">
+                                    <a href="{{ route('admin.sub-category.delete', $category->id) }}">
+                                        <img src="{{ asset('images/trash.svg') }}" alt="">
+                                    </a>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-[45px] mb-[50px]">
+                {{ $categories->links() }}
+                {{-- <div class="flex md:flex-row flex-col items-center justify-between">
+                    <p class=" text-white text-base font-semibold  leading-tight">Showing 1 to 9 of 9 results</p>
+                    <div class="flex items-center space-x-3">
+                        <button
+                            class="px-4 py-2 rounded-lg border-2 border-white justify-start items-center gap-2 inline-flex">
+                            <img src="../images/back.svg" alt="">
+                            <p class=" text-white text-base font-bold leading-normal">Previous</p>
+                        </button>
+                        <button
+                            class="px-4 py-2 rounded-lg border-2 border-white justify-start items-center gap-2 inline-flex">
+                            <p class=" text-white text-base font-bold leading-normal">Next</p>
+                            <img src="../images/next.png" alt="">
+                        </button>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+    </div>
+
 @endsection

@@ -10,7 +10,7 @@ class OnboardingController extends Controller
 {
     function index()
     {
-        $onboardings = Onboarding::latest()->get();
+        $onboardings = Onboarding::latest()->paginate(10);
         return view('admin.onboarding.index', compact('onboardings'));
     }
     function create()

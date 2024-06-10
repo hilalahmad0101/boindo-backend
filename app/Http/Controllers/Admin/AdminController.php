@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = Admin::all();
+        $admins = Admin::latest()->paginate(10);
         return view('admin.index', compact('admins'));
     }
 
@@ -23,6 +23,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'name' => 'required',
             'email' => 'required|email|unique:admins',
             'password' => 'required|min:6',
         ]);
@@ -30,7 +31,7 @@ class AdminController extends Controller
         Admin::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'name' => '',
+            'name' => $request->name,
             'profile' => ''
         ]);
 
@@ -39,20 +40,23 @@ class AdminController extends Controller
 
     public function edit($id)
     {
-        $admin=Admin::findOrFail($id);
+        $admin = Admin::findOrFail($id);
         return view('admin.update', compact('admin'));
     }
 
     public function update(Request $request, $id)
     {
-        $admin=Admin::findOrFail($id);
+        $admin = Admin::findOrFail($id);
         $request->validate([
+            'name' => 'required',
             'email' => 'required|email|unique:admins,email,' . $admin->id,
             'password' => 'sometimes|min:6',
         ]);
         $admin->update([
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'name' => $request->name,
+
         ]);
 
         return redirect()->route('admin.admin.index')->with('success', 'Admin updated successfully!');
@@ -63,5 +67,23 @@ class AdminController extends Controller
         Admin::findOrFail($id)->delete();
 
         return redirect()->route('admin.admin.index')->with('success', 'Admin deleted successfully!');
+    }
+
+    public function resetPassword($id)
+    {
+        return view('admin.reset-password',compact('id'));
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required|min:6',
+        ]);
+        $admin = Admin::findOrFail($id);
+        $admin->update([
+            'password' =>  Hash::make($request->password),
+        ]);
+
+        return redirect('/admin/list')->with('success', 'Password updated successfully!');
     }
 }
