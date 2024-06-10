@@ -135,13 +135,7 @@
                         <tr class="rounded-md">
                             <th
                                 class="px-6 py-3 text-left  text-white border-b border-r border-t rounded-tl-md border-[#FFFFFF33]">
-                                Name</th>
-                            <th
-                                class="px-6 py-3 text-left  text-white border-b border-r border-t rounded-tl-md border-[#FFFFFF33]">
-                                Image</th>
-                            <th
-                                class="px-6 py-3 text-left  text-white border-b border-r border-t rounded-tl-md border-[#FFFFFF33]">
-                                Audio</th>
+                                Name</th> 
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
@@ -151,14 +145,11 @@
                         @foreach ($jingles as $jingle)
                             <tr>
                                 <td class="border border-[#FFFFFF33] text-white  px-6 py-4 space-x-3">
-                                    <img src="{{ asset('storage/' . $jingle->image) }}" width="100px" alt="">
+                                   <div class="flex items-center space-x-4">
+                                    <img src="{{ asset('storage/' . $jingle->image) }}" class="w-[100px] h-[100px] object-fill" alt="">
                                     <span> {{ $jingle->title }}</span>
-                                </td>
-                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">
-                                </td>
-                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">
-                                    <audio src="{{ asset('storage/' . $jingle->audio) }}" controls></audio>
-                                </td>
+                                   </div>
+                                </td>  
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($jingle->created_at)) }}</td>
                                 <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
