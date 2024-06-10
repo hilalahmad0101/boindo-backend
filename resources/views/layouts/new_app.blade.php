@@ -177,7 +177,9 @@
                                 <div class=" justify-start items-start gap-3.5 inline-flex">
                                     <div
                                         class=" p-2.5 bg-blue-500 rounded-full justify-center items-center gap-2.5 flex">
-                                        <div class=" w-6 h-6 relative"></div>
+                                        <div class=" w-6 h-6 relative">
+                                            <img src="{{ asset('images/header_icon.png') }}" alt="">
+                                        </div>
                                     </div>
                                     <div class=" flex-col justify-start items-start gap-1 inline-flex">
                                         <div class="TotalEmployees text-white text-base font-medium  tracking-tight">
@@ -193,8 +195,11 @@
                             <div class=" grow shrink basis-0 flex-col justify-start items-start gap-9 inline-flex">
                                 <div class=" justify-start items-start gap-3.5 inline-flex">
                                     <div
-                                        class=" p-2.5 bg-blue-500 rounded-full justify-center items-center gap-2.5 flex">
-                                        <div class=" w-6 h-6 relative"></div>
+                                        class=" p-2.5 bg-[#4FE268] rounded-full justify-center items-center gap-2.5 flex">
+                                        <div class=" w-6 h-6 relative">
+                                            <img src="{{ asset('images/headphones.png') }}" alt="">
+
+                                        </div>
                                     </div>
                                     <div class=" flex-col justify-start items-start gap-1 inline-flex">
                                         <div class="TotalEmployees text-white text-base font-medium  tracking-tight">
@@ -210,8 +215,11 @@
                             <div class=" grow shrink basis-0 flex-col justify-start items-start gap-9 inline-flex">
                                 <div class=" justify-start items-start gap-3.5 inline-flex">
                                     <div
-                                        class=" p-2.5 bg-blue-500 rounded-full justify-center items-center gap-2.5 flex">
-                                        <div class=" w-6 h-6 relative"></div>
+                                        class=" p-2.5 bg-[#B13F46] rounded-full justify-center items-center gap-2.5 flex">
+                                        <div class=" w-6 h-6 relative">
+                                            <img src="{{ asset('images/header_user.png') }}" alt="">
+
+                                        </div>
                                     </div>
                                     <div class=" flex-col justify-start items-start gap-1 inline-flex">
                                         <div class="TotalEmployees text-white text-base font-medium  tracking-tight">
