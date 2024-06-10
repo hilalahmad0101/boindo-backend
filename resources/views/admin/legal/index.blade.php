@@ -11,8 +11,9 @@
                     @foreach ($legals as $legal)
                         <div>
                             <div class="relative" id="image">
+                                <div class="text-neutral-50 text-xl font-normal my-2">{{ $legal->name }}</div>
                                 <img class="w-full" src="{{ asset('images/file-upload.svg') }}" alt="">
-                                <img class="absolute top-[10px] right-[10px]" src="{{ asset('images/pdfimage.png') }}"
+                                <img class="absolute top-[40px] right-[10px]" src="{{ asset('images/pdfimage.png') }}"
                                     alt="">
                             </div>
                         </div>
