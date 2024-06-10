@@ -1,15 +1,15 @@
 @extends('layouts.new_app')
 @section('title')
-    List Actor
+    List Cast
 @endsection
 @section('content')
 <div class="mt-[134px]">
-    <h1 class="text-neutral-50 text-4xl font-black ">ACTOR LIST</h1>
+    <h1 class="text-neutral-50 text-4xl font-black ">CAST LIST</h1>
     <div>
         <div class="mt-[58px]">
             <div class="md:flex items-center justify-between block">
                 <p class="text-neutral-50 text-2xl font-black flex space-x-3">
-                    <span>Actor</span>
+                    <span>Cast</span>
                     <span
                         class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($actors) }}</span>
                 </p>
@@ -39,8 +39,8 @@
                         <th
                             class="px-6 py-3 text-left  text-white border-b border-r border-t rounded-tl-md border-[#FFFFFF33]">
                             Image</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
                         <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Views</th>
-                        <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
                         <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
                         <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
                     </tr>

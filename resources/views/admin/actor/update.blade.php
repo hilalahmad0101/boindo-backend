@@ -1,6 +1,6 @@
 @extends('layouts.new_app')
 @section('title')
-    Update Actor
+    Update Cost
 @endsection
 @section('content')
     {{-- <div class="container px-6 mx-auto grid">
@@ -63,7 +63,7 @@
     </div> --}}
 
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">UPDATE ACTOR</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">UPDATE COST</h1>
         <div>
             <div class="mt-12">
                 <form method="POST" enctype="multipart/form-data" action="{{ route('admin.actor.update',['id'=>$actorProfile->id]) }}">
