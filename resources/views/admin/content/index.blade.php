@@ -195,10 +195,10 @@
                                     {{ $content->category }}</td>
                                 <td class="border border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ $content->category }}</td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ date('Y M d', strtotime($content->created_at)) }}</td>
                                     <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                         {{ 0 }}</td>
+                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                    {{ date('Y M d', strtotime($content->created_at)) }}</td>
                                 <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     <a href="{{ route('admin.content.edit', ['id' => $content->id]) }}">
                                         <img src="{{ asset('images/edit.svg') }}" alt="">

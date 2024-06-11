@@ -51,6 +51,8 @@ Route::prefix('user')->group(function () {
             Route::get('/getActorProfile/{id}', 'getActorProfile');
             Route::post('/getAuthorProfiles', 'getAuthorProfiles');
             Route::get('/getActorWithContent/{id}', 'getActorWithContent');
+            Route::get('/legal', 'legal');
+            Route::get('/view/ads/{id}', 'viewAds'); 
         });
     });
 });

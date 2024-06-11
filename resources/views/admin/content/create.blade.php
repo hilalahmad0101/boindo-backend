@@ -257,9 +257,9 @@
                             <span class="text-neutral-50 text-2xl font-black">
                                 Select Sub Category
                             </span>
-                            <select name="subcategory[]"  id="sub_category" value="{{ old('sub_category') }}"
+                            <select name="subcategory[]" id="sub_category" value="{{ old('sub_category') }}"
                                 class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
-                            </select> 
+                            </select>
                             @error('subcategory')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
@@ -382,6 +382,11 @@
 
             $("#category").on('change', function() {
                 const value = $(this).val();
+                console.log(value);
+                $("#sub_category").attr({
+                    "multiple": false
+                });
+                $("#sub_category").html('');
 
                 $.ajax({
                     url: "{{ route('admin.content.get.subcategories') }}",
@@ -391,15 +396,24 @@
                         _token: "{{ csrf_token() }}",
                     },
                     success: (data) => {
-                        $("#sub_category").attr({"multiple":true})
-                        $("#sub_category").html(data);
-                        new TomSelect('#sub_category', {
-                            persist: false,
-                            createOnBlur: true,
-                            create: true
+                        $("#sub_category").attr({
+                            "multiple": true
                         });
+                        $("#sub_category").html(data);
+
+                        // Destroy existing TomSelect instance if it exists
+                        if ($("#sub_category")[0].tomselect) {
+                            $("#sub_category")[0].tomselect.destroy();
+                        }
+
+                        // Initialize a new TomSelect instance
+                        // new TomSelect('#sub_category', {
+                        //     persist: false,
+                        //     createOnBlur: true,
+                        //     create: true
+                        // });
                     }
                 });
-            })
+            });
         </script>
     @endsection
