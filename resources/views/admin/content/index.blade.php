@@ -156,7 +156,7 @@
                             <input type="text" placeholder="Search"
                                 class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
                         </div>
-                        <a href="{{ route('admin.jingle.create') }}"
+                        <a href="{{ route('admin.content.create') }}"
                             class=" ml-[29px] px-4 py-2 bg-white rounded-lg justify-start items-center gap-2 inline-flex text-black text-base font-bold   leading-normal">
                             <img src="{{ asset('images/plus.svg') }}" alt="">
                             <span>Add</span>
