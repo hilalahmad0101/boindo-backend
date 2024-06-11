@@ -22,10 +22,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
             </svg>
         </div>
-        <div id="show_data" class="absolute hidden top-24 left-0 w-full bg-[#303030]">
+        <div id="show_data" class="absolute hidden top-24 left-0 w-full bg-[#2e2e2e]">
             <ul class=" px-3">
-                <li class="pt-[20px]  px-4">
-                    <a href="" class="flex items-center space-x-4">
+                <li class="pt-[20px]  px-4 pb-10">
+                    <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-4">
                         <img src="{{ asset('images/home.png') }}" class="" alt="">
                         <span class="text-center text-neutral-500 text-xs font-normal ">Home</span>
                     </a>
@@ -115,11 +115,10 @@
                     </a>
                 </li>
 
-                <li class="pt-[20px]">
-                    <a class= px-4"flex items-center space-x-4" href="{{ route('admin.logout') }}">
-                        <img src="{{ asset('images/logout.png') }}" class="mx-auto" alt="">
-                        <span
-                            -center {{ Request::routeIs('admin.jingle.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Logout</span>
+                <li class="pt-[20px] px-4">
+                    <a class=" flex items-center space-x-4" href="{{ route('admin.logout') }}">
+                        <img src="{{ asset('images/logout.png') }}" class="" alt="">
+                        <span class=" text-neutral-500 text-xs font-normal ">Logout</span>
                     </a>
                 </li>
             </ul>
@@ -133,7 +132,7 @@
                         <img src="{{ asset('images/logo.png') }}" alt="">
                     </li>
                     <li class="pt-[50px]">
-                        <a href="">
+                        <a href="{{ route('admin.dashboard') }}">
                             <img src="{{ asset('images/home.png') }}" class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Home</span>
                         </a>
@@ -353,36 +352,7 @@
             $("#show_data").toggleClass('block hidden');
         });
 
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const searchInput = document.getElementById('searchInput');
-        //     const table = document.getElementById('dataTable');
-        //     const tbody = table.getElementsByTagName('tbody')[0];
-        //     const rows = tbody.getElementsByTagName('tr');
-
-        //     searchInput.addEventListener('keyup', function() {
-        //         const filter = searchInput.value.toLowerCase();
-        //         for (let i = 0; i < rows.length; i++) {
-        //             const cells = rows[i].getElementsByTagName('td');
-        //             let rowContainsFilter = false;
-
-        //             for (let j = 0; j < cells.length; j++) {
-        //                 if (cells[j]) {
-        //                     const cellText = cells[j].textContent || cells[j].innerText;
-        //                     if (cellText.toLowerCase().indexOf(filter) > -1) {
-        //                         rowContainsFilter = true;
-        //                         break;
-        //                     }
-        //                 }
-        //             }
-
-        //             if (rowContainsFilter) {
-        //                 rows[i].style.display = '';
-        //             } else {
-        //                 rows[i].style.display = 'none';
-        //             }
-        //         }
-        //     });
-        // });
+       
     </script>
 
     @yield('script')

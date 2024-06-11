@@ -46,7 +46,7 @@
     </div> --}}
 
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">SUB CATEGORY </h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">CREATE SUB-CATEGORY</h1>
         <div>
             <div class="mt-12">
                 <form method="POST" action="{{ route('admin.sub-category.store') }}">

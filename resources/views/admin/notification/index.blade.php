@@ -65,3 +65,39 @@
         </div>
     </div>
 @endsection
+
+
+@section('script')
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.getElementById('dataTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let rowContainsFilter = false;
+
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j]) {
+                            const cellText = cells[j].textContent || cells[j].innerText;
+                            if (cellText.toLowerCase().indexOf(filter) > -1) {
+                                rowContainsFilter = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (rowContainsFilter) {
+                        rows[i].style.display = '';
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+@endsection

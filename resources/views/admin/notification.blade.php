@@ -133,7 +133,7 @@
                             <button onclick="window.location.href='{{ route('admin.notification.index') }}'" type="button"
                                 class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>
                             <button type="submit"
-                                class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Create</button>
+                                class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Create & Send</button>
                         </div>
                     </div>
                 </form>

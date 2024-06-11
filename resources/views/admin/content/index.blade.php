@@ -153,7 +153,7 @@
                     <div class="flex items-center mt-3 md:mt-0">
                         <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
                             <img src="{{ asset('images/search.png') }}" alt="">
-                            <input type="text" placeholder="Search"
+                            <input type="text" placeholder="Search" id="searchInput"
                                 class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
                         </div>
                         <a href="{{ route('admin.content.create') }}"
@@ -221,4 +221,38 @@
 
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.getElementById('dataTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let rowContainsFilter = false;
+
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j]) {
+                            const cellText = cells[j].textContent || cells[j].innerText;
+                            if (cellText.toLowerCase().indexOf(filter) > -1) {
+                                rowContainsFilter = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (rowContainsFilter) {
+                        rows[i].style.display = '';
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

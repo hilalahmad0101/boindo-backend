@@ -60,16 +60,19 @@
         </form>
     </div> --}}
 
-    <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">CREATE CAST</h1>
+    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.actor.store') }}" class="mt-[134px]">
+        <div class="flex md:flex-row flex-col md:space-y-0 space-x-5 items-center justify-between">
+            <h1 class="text-neutral-50 text-4xl font-black ">CAST UPLOAD</h1>
+            <p>
+            <div><span class="text-white text-xl font-normal ">Cost will be added to search engine category - </span><span
+                    class="text-amber-500 text-xl font-normal ">CONTENT</span> <input type='checkbox' name="search" /></div>
+            </p>
+        </div>
         <div>
             <div class="mt-12">
-                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.actor.store') }}">
+                <div>
                     @csrf
-
-                    <div>
-                        <input type='checkbox' name="search" /> <label style="color:white">Is you want in searching</label>
-                    </div>
+ 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div class="rounded-lg pb-6 relative mt-[10px]">
                             <label for="" class="text-neutral-50 text-2xl font-black m">Media</label>
@@ -78,7 +81,8 @@
                             <div class=" mt-4" id="image">
                                 <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
                             </div>
-                            <img src="" style="width: 100%" id="preivew" alt="">
+                            <img src="" style="width: 100%" id="preivew"
+                                class="w-[100px] h-[100px] object-fill hidden" alt="">
                             @error('image')
                                 <span style="color:red">{{ $message }}</span>
                             @enderror
@@ -118,14 +122,14 @@
                                     type="button"
                                     class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>
                                 <button type="submit"
-                                    class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Create</button>
+                                    class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Upload</button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <script>
         // Function to handle the file input change event

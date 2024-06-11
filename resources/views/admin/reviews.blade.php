@@ -1,19 +1,23 @@
 @extends('layouts.new_app')
 @section('title')
-    List Users
+    List Reviews
 @endsection
 @section('content')
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">REVIEWS LIST</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">USER REVIEWS</h1>
         <div>
             <div class="mt-[58px]">
                 <div class="md:flex items-center justify-between block">
                     <p class="text-neutral-50 text-2xl font-black flex space-x-3">
-                        <span>REviews</span>
+                        <span>User Reviews</span>
                         <span
                             class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($reviews) }}</span>
                     </p>
-
+                    <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
+                        <img src="{{ asset('images/search.png') }}" alt="">
+                        <input type="text" placeholder="Search" id="searchInput" 
+                            class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
+                    </div>
                 </div>
             </div>
 
@@ -73,4 +77,38 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.getElementById('dataTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let rowContainsFilter = false;
+
+                    for (let j = 0; j < cells.length; j++) {
+                        if (cells[j]) {
+                            const cellText = cells[j].textContent || cells[j].innerText;
+                            if (cellText.toLowerCase().indexOf(filter) > -1) {
+                                rowContainsFilter = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (rowContainsFilter) {
+                        rows[i].style.display = '';
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

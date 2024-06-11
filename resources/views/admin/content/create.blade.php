@@ -19,15 +19,18 @@
             color: white !important;
         }
     </style>
-    <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">CONTENT UPLOAD</h1>
+    <form action="{{ route('admin.content.store') }}" method="POST" enctype="multipart/form-data" class="mt-[134px]">
+        <div class="flex md:flex-row flex-col md:space-y-0 space-x-5 items-center justify-between">
+            <h1 class="text-neutral-50 text-4xl font-black ">CONTENT UPLOAD</h1>
+            <p>
+            <div><span class="text-white text-xl font-normal ">Content will be added to search engine category - </span><span
+                    class="text-amber-500 text-xl font-normal ">CONTENT</span> <input type='checkbox' name="search" /></div>
+            </p>
+        </div>
         <div>
             <div class="mt-12">
-                <form class="" action="{{ route('admin.content.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div>
-                        <input type='checkbox' name="search" /> <label style="color:white">Is you want in searching</label>
-                    </div>
+                <div>
+                    @csrf 
                     <h1 class="text-neutral-50 text-2xl font-black">Genral Information</h1>
                     <div class="my-5">
                         <div class="grid grid-cols-1 md:grid-cols-6 gap-5">
@@ -87,7 +90,7 @@
                     </div>
                     <div class="my-5">
                         <label class="">
-                            <input type="text" name="title" value="{{ old('title') }}" placeholder="Content"
+                            <input type="text" name="title" value="{{ old('title') }}" placeholder="Title"
                                 class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl " />
                             @error('title')
                                 <span style="color: red">{{ $message }}</span>
@@ -270,21 +273,21 @@
                             <button onclick="window.location.href='{{ route('admin.onboarding.index') }}'" type="button"
                                 class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>
                             <button type="submit"
-                                class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Create</button>
+                                class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Upload</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
+    </form>
 
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
 
-        <script src="{{ asset('assets/js/jquery.js') }}"></script>
-
-        <script>
-            $(document).ready(function() {
-                $("#addMoreBtn").click(function() {
-                    // Clone the existing input field and append it to the add_more div
-                    var clonedInput = `<div class="input-set"> 
+    <script>
+        $(document).ready(function() {
+            $("#addMoreBtn").click(function() {
+                // Clone the existing input field and append it to the add_more div
+                var clonedInput = `<div class="input-set"> 
                   <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Title</span>
                     <input type="text" name="playlist_title[]"  
@@ -314,106 +317,106 @@
                     <span>Close</span>
                   </button>
                 </div>`;
-                    $("#add_more").append(clonedInput);
+                $("#add_more").append(clonedInput);
+            });
+
+            $(document).on('click', '.closeBtn', function() {
+                $(this).closest(".input-set").remove();
+            });
+
+            $(document).on('change', 'input[name="playlist_audio[]"]', function() {
+                var audioElement = new Audio();
+                var durationInput = $(this).closest(".input-set").find('.duration-input');
+
+                audioElement.src = URL.createObjectURL(this.files[0]);
+
+                audioElement.addEventListener('loadedmetadata', function() {
+                    var duration = audioElement.duration;
+                    var minutes = Math.floor(duration / 60);
+                    var seconds = Math.floor(duration % 60);
+                    var formattedDuration =
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    durationInput.val(formattedDuration);
                 });
+            });
+        });
+    </script>
 
-                $(document).on('click', '.closeBtn', function() {
-                    $(this).closest(".input-set").remove();
-                });
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        new TomSelect('#producers', {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
 
-                $(document).on('change', 'input[name="playlist_audio[]"]', function() {
-                    var audioElement = new Audio();
-                    var durationInput = $(this).closest(".input-set").find('.duration-input');
+        new TomSelect('#authors', {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
 
-                    audioElement.src = URL.createObjectURL(this.files[0]);
+        new TomSelect('#translator', {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
 
-                    audioElement.addEventListener('loadedmetadata', function() {
-                        var duration = audioElement.duration;
-                        var minutes = Math.floor(duration / 60);
-                        var seconds = Math.floor(duration % 60);
-                        var formattedDuration =
-                            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                        durationInput.val(formattedDuration);
+        new TomSelect('#director', {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
+        new TomSelect('#music_director', {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
+        new TomSelect('#cost', {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
+        new TomSelect('#cost2', {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
+
+        $("#category").on('change', function() {
+            const value = $(this).val();
+            console.log(value);
+            $("#sub_category").attr({
+                "multiple": false
+            });
+            $("#sub_category").html('');
+
+            $.ajax({
+                url: "{{ route('admin.content.get.subcategories') }}",
+                type: 'POST',
+                data: {
+                    value,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: (data) => {
+                    $("#sub_category").attr({
+                        "multiple": true
                     });
-                });
-            });
-        </script>
+                    $("#sub_category").html(data);
 
-        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
-        <script>
-            new TomSelect('#producers', {
-                persist: false,
-                createOnBlur: true,
-                create: true
-            });
-
-            new TomSelect('#authors', {
-                persist: false,
-                createOnBlur: true,
-                create: true
-            });
-
-            new TomSelect('#translator', {
-                persist: false,
-                createOnBlur: true,
-                create: true
-            });
-
-            new TomSelect('#director', {
-                persist: false,
-                createOnBlur: true,
-                create: true
-            });
-            new TomSelect('#music_director', {
-                persist: false,
-                createOnBlur: true,
-                create: true
-            });
-            new TomSelect('#cost', {
-                persist: false,
-                createOnBlur: true,
-                create: true
-            });
-            new TomSelect('#cost2', {
-                persist: false,
-                createOnBlur: true,
-                create: true
-            });
-
-            $("#category").on('change', function() {
-                const value = $(this).val();
-                console.log(value);
-                $("#sub_category").attr({
-                    "multiple": false
-                });
-                $("#sub_category").html('');
-
-                $.ajax({
-                    url: "{{ route('admin.content.get.subcategories') }}",
-                    type: 'POST',
-                    data: {
-                        value,
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: (data) => {
-                        $("#sub_category").attr({
-                            "multiple": true
-                        });
-                        $("#sub_category").html(data);
-
-                        // Destroy existing TomSelect instance if it exists
-                        if ($("#sub_category")[0].tomselect) {
-                            $("#sub_category")[0].tomselect.destroy();
-                        }
-
-                        // Initialize a new TomSelect instance
-                        // new TomSelect('#sub_category', {
-                        //     persist: false,
-                        //     createOnBlur: true,
-                        //     create: true
-                        // });
+                    // Destroy existing TomSelect instance if it exists
+                    if ($("#sub_category")[0].tomselect) {
+                        $("#sub_category")[0].tomselect.destroy();
                     }
-                });
+
+                    // Initialize a new TomSelect instance
+                    // new TomSelect('#sub_category', {
+                    //     persist: false,
+                    //     createOnBlur: true,
+                    //     create: true
+                    // });
+                }
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection

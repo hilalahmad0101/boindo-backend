@@ -72,7 +72,7 @@ class ContentController extends Controller
             $demo = $request->file('demo')->store('content/demo', 'public');
         }
 
-        foreach ($request->subcategory as $sub_category) { 
+        foreach ($request->subcategory as $sub_category) {
             $content = Content::create([
                 'category' => $request->category ?? '',
                 'sub_cat_id' => $sub_category,
@@ -140,7 +140,6 @@ class ContentController extends Controller
             'authors' => 'required',
             'producers' => 'required',
             'adoption' => 'required',
-            'director' => 'required',
             'music_director' => 'required',
         ]);
 
