@@ -55,7 +55,7 @@
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($actor->created_at)) }}</td>
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ 0 }}</td>
+                                    {{ $actor->views }}</td>
                                 <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     <a href="{{ route('admin.actor.edit', ['id' => $actor->id]) }}">
                                         <img src="{{ asset('images/edit.svg') }}" alt="">

@@ -288,7 +288,7 @@ class HomeController extends Controller
     {
         try {
             $actor_profile = ActorProfile::findOrFail($id);
-            $actor_profile->views = $actor_profle->views + 1;
+            $actor_profile->views = $actor_profile->views + 1;
             $actor_profile->save();
             $contents = Content::with('playlists', 'reviews')->latest()->get();
 

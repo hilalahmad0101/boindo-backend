@@ -34,7 +34,7 @@
                     <a href="{{ route('admin.admin.index') }}">
                         <img src="{{ Request::routeIs('admin.admin.index') ? asset('images/user-yellow.png') : asset('images/user-profile.png') }}"
                             class="mx-auto" alt="">
-                            <span class=" text-neutral-500 text-xs font-normal ">Admin</span>
+                        <span class=" text-neutral-500 text-xs font-normal ">Admin</span>
                     </a>
                 </li>
                 <li class="pt-[50px]">
@@ -43,7 +43,7 @@
                         <span class=" text-neutral-500 text-xs font-normal ">User</span>
                     </a>
                 </li>
-                
+
                 <li class="pt-[50px]">
                     <a href="{{ route('admin.actor.index') }}">
                         <img src="{{ asset('images/cost-white.png') }}" class="mx-auto" alt="">
@@ -62,7 +62,7 @@
                         <span class=" text-neutral-500 text-xs font-normal ">Jingle</span>
                     </a>
                 </li>
-               
+
                 <li class="pt-[50px]">
                     <a href="{{ route('admin.review.index') }}">
                         <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
@@ -81,7 +81,7 @@
                         <span class=" text-neutral-500 text-xs font-normal ">Legal</span>
                     </a>
                 </li>
-              
+
                 <li class="pt-[50px]">
                     <a href="{{ route('admin.onboarding.index') }}">
                         <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
@@ -112,57 +112,64 @@
                     </li>
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.admin.index') }}">
-                            <img src="{{ Request::routeIs('admin.admin.index') ? asset('images/user-yellow.png') : asset('images/user-profile.png') }}"
+                            <img src="{{ Request::routeIs('admin.admin.index') ? asset('icons/user-yellow.svg') : asset('icons/user-white.svg') }}"
                                 class="mx-auto" alt="">
-                                <span class="text-center text-neutral-500 text-xs font-normal ">Admin</span>
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Admin</span>
                         </a>
                     </li>
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.user.index') }}">
-                            <img src="{{ asset('images/users-white.png') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.user.index') ? asset('icons/users-yellow.svg') : asset('icons/users-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">User</span>
                         </a>
                     </li>
 
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.content.index') }}">
-                            <img src="{{ asset('images/content-img.svg') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.content.index') ? asset('icons/content-yellow.svg') : asset('icons/content-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Content</span>
                         </a>
                     </li>
-                    
+
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.actor.index') }}">
-                            <img src="{{ asset('images/cost-white.png') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.actor.index') ? asset('icons/cost-yellow.svg') : asset('icons/cost-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Cast</span>
                         </a>
                     </li>
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.sub-category.index') }}">
-                            <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.sub-category.index') ? asset('icons/category-yellow.svg') : asset('icons/category-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Sub Category</span>
                         </a>
                     </li>
-                    
+
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.review.index') }}">
-                            <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.review .index') ? asset('icons/bell-yellow.svg') : asset('icons/bell-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Review</span>
                         </a>
                     </li>
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.notification.index') }}">
-                            <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.notification.index') ? asset('icons/bell-yellow.svg') : asset('icons/bell-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Notification</span>
                         </a>
                     </li>
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.legal.index') }}">
-                            <img src="{{ asset('images/legal-white.png') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.legal.index') ? asset('icons/legal-yellow.svg') : asset('icons/legal-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Legal</span>
                         </a>
                     </li>
-                  
+
                     {{-- <li class="pt-[50px]">
                         <a href="{{ route('admin.onboarding.index') }}">
                             <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
@@ -172,11 +179,12 @@
 
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.jingle.index') }}">
-                            <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
+                            <img src="{{ Request::routeIs('admin.jingle.index') ? asset('icons/ads-yellow.svg') : asset('icons/ads-white.svg') }}"
+                                class="mx-auto" alt="">
                             <span class="text-center text-neutral-500 text-xs font-normal ">Advertising</span>
                         </a>
                     </li>
-                   
+
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.logout') }}">
                             <img src="{{ asset('images/logout.png') }}" class="mx-auto" alt="">
@@ -206,7 +214,8 @@
                                         <div class="TotalEmployees text-white text-base font-medium  tracking-tight">
                                             USER
                                         </div>
-                                        <span class="234 text-white text-2xl font-medium ">{{ \App\Models\User::count()}}</span>
+                                        <span
+                                            class="234 text-white text-2xl font-medium ">{{ \App\Models\User::count() }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +235,8 @@
                                         <div class="TotalEmployees text-white text-base font-medium  tracking-tight">
                                             CONTENT
                                         </div>
-                                        <span class="234 text-white text-2xl font-medium ">{{ \App\Models\Content::count() }}</span>
+                                        <span
+                                            class="234 text-white text-2xl font-medium ">{{ \App\Models\Content::count() }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -246,15 +256,16 @@
                                         <div class="TotalEmployees text-white text-base font-medium  tracking-tight">
                                             CAST
                                         </div>
-                                        <span class="234 text-white text-2xl font-medium ">{{ \App\Models\ActorProfile::count() }}</span>
+                                        <span
+                                            class="234 text-white text-2xl font-medium ">{{ \App\Models\ActorProfile::count() }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="flex flex-col  items-end">
-                        <img src="{{ asset('images/user-profile.png') }}" class="w-[40px] h-[40px] mx-auto flex justify-end"
-                            alt="">
+                        <img src="{{ asset('images/user-profile.png') }}"
+                            class="w-[40px] h-[40px] mx-auto flex justify-end" alt="">
                         <p class="text-gray-400 text-center font-roboto text-sm not-italic font-normal leading-normal">
                             {{ Auth::user()->name }}
                         </p>
