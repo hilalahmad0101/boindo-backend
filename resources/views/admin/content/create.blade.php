@@ -257,10 +257,9 @@
                             <span class="text-neutral-50 text-2xl font-black">
                                 Select Sub Category
                             </span>
-                            <select name="subcategory[]" multiple id="sub_category" value="{{ old('sub_category') }}"
+                            <select name="subcategory[]"  id="sub_category" value="{{ old('sub_category') }}"
                                 class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
-                            </select>
-
+                            </select> 
                             @error('subcategory')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
@@ -392,6 +391,7 @@
                         _token: "{{ csrf_token() }}",
                     },
                     success: (data) => {
+                        $("#sub_category").attr({"multiple":true})
                         $("#sub_category").html(data);
                         new TomSelect('#sub_category', {
                             persist: false,
