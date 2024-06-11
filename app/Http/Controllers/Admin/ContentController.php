@@ -74,7 +74,7 @@ class ContentController extends Controller
 
         $content = Content::create([
             'category' => $request->category ?? '',
-            'sub_cat_id' => '0',
+            'sub_cat_id' => 30,
             'title' => $request->title ?? '',
             'isbn' => $request->isbn ?? '',
             'translator' => json_encode($request->translator)  ?? '',
