@@ -4,6 +4,7 @@
 @endsection
 @section('content')
     <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet" />
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">  --}}
     <style>
         .ts-control {
             background-color: transparent !important;
@@ -259,6 +260,7 @@
                             <select name="subcategory[]" multiple id="sub_category" value="{{ old('sub_category') }}"
                                 class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
                             </select>
+
                             @error('subcategory')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
@@ -278,6 +280,7 @@
 
 
         <script src="{{ asset('assets/js/jquery.js') }}"></script>
+
         <script>
             $(document).ready(function() {
                 $("#addMoreBtn").click(function() {
@@ -335,21 +338,6 @@
                     });
                 });
             });
-            $("#category").on('change', function() {
-                const value = $(this).val();
-
-                $.ajax({
-                    url: "{{ route('admin.content.get.subcategories') }}",
-                    type: 'POST',
-                    data: {
-                        value,
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: (data) => {
-                        $("#sub_category").html(data);
-                    }
-                });
-            })
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
@@ -392,5 +380,26 @@
                 createOnBlur: true,
                 create: true
             });
+
+            $("#category").on('change', function() {
+                const value = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('admin.content.get.subcategories') }}",
+                    type: 'POST',
+                    data: {
+                        value,
+                        _token: "{{ csrf_token() }}",
+                    },
+                    success: (data) => {
+                        $("#sub_category").html(data);
+                        new TomSelect('#sub_category', {
+                            persist: false,
+                            createOnBlur: true,
+                            create: true
+                        });
+                    }
+                });
+            })
         </script>
     @endsection
