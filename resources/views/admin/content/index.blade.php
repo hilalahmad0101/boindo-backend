@@ -193,17 +193,17 @@
                                 </td>
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($content->category)) }}</td>
-                                    <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                        {{ date('Y M d', strtotime($content->category)) }}</td>
+                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                    {{ date('Y M d', strtotime($content->category)) }}</td>
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($content->created_at)) }}</td>
                                 <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    <a href="{{ route('admin.content.edit', ['id' => $jingle->id]) }}">
+                                    <a href="{{ route('admin.content.edit', ['id' => $content->id]) }}">
                                         <img src="{{ asset('images/edit.svg') }}" alt="">
                                     </a>
                                 </td>
                                 <td class="border-b border-[#FFFFFF33] px-6 py-4">
-                                    <a href="{{ route('admin.content.delete', $jingle->id) }}">
+                                    <a href="{{ route('admin.content.delete', $content->id) }}">
                                         <img src="{{ asset('images/trash.svg') }}" alt="">
                                     </a>
 
