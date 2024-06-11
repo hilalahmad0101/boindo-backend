@@ -12,7 +12,7 @@ class ContentController extends Controller
 {
     public function index()
     {
-        $contents = Content::all();
+        $contents = Content::latest()->paginate(10);
         return view('admin.content.index', compact('contents'));
     }
 
