@@ -458,6 +458,7 @@
                     @csrf
                     <h1 class="text-neutral-50 text-2xl font-black">Genral Information</h1>
                     <div class="my-5">
+                        <div class="text-neutral-50 text-2xl font-black ">Media</div>
                         <div class="grid grid-cols-1 md:grid-cols-6 gap-5">
                             <div class="rounded-lg p-6 relative mt-[10px]">
                                 <label for=""
