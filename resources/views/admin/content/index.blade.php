@@ -191,10 +191,10 @@
                                         <span> {{ $content->title }}</span>
                                     </div>
                                 </td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ date('Y M d', strtotime($content->category)) }}</td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ date('Y M d', strtotime($content->category)) }}</td>
+                                <td class="border border-[#FFFFFF33] text-white px-6 py-4">
+                                    {{ $content->category }}</td>
+                                <td class="border border-[#FFFFFF33] text-white px-6 py-4">
+                                    {{ $content->category }}</td>
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($content->created_at)) }}</td>
                                 <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
