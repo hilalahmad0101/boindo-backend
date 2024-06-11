@@ -1,6 +1,6 @@
 @extends('layouts.new_app')
 @section('title')
-    Create ADS
+ADVERTISING UPLOAD
 @endsection
 @section('content')
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/tagify.css') }}">
@@ -51,15 +51,17 @@
 
 
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">CREATE ADS</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">ADVERTISING UPLOAD</h1>
         <div>
             <div class="mt-12">
                 <form method="POST" enctype="multipart/form-data" action="{{ route('admin.jingle.store') }}">
                     @csrf
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
                         <div class="rounded-lg p-6 relative mt-[10px]">
-                            <label for="" class="text-neutral-50 text-2xl font-black m">Upload Image</label>
+                            <label for="" class="text-neutral-50 text-sm font-black flex justify-center space-x-2 items-center">
+                                <img src="{{ asset('images/img.png') }}" alt="">
+                                <span>Cover</span>
+                            </label>
                             <input type="file" accept="images/*" id="onboardingImageInput" name="image"
                                 class="absolute inset-0 opacity-0 z-50" />
                             <div class=" mt-4" id="image">
@@ -71,7 +73,10 @@
                             @enderror
                         </div>
                         <div class="rounded-lg p-6  mt-[10px]">
-                            <label for="" class="text-neutral-50 text-2xl font-black m">Upload Audio</label>
+                            <label for="" class="text-neutral-50 text-sm font-black flex justify-center space-x-2 items-center">
+                                <img src="{{ asset('images/jingle.png') }}" alt="">
+                                <span>Jingle</span>
+                            </label>
                             <audio id="previewAudio" controls style="display:none;" class="mt-5"></audio>
                             <div class="relative">
                                 <input type="file" id="onboardingFileInput" name="audio" accept="audio/*"
@@ -83,8 +88,7 @@
                             @error('audio')
                                 <span style="color:red">{{ $message }}</span>
                             @enderror
-                        </div>
-
+                        </div> 
                     </div>
                     <div>
                         <label for="" class="text-neutral-50 text-2xl font-black">Title</label>

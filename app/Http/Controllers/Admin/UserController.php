@@ -24,8 +24,15 @@ class UserController extends Controller
     public function suspend($id)
     {
         $user = User::findOrFail($id);
-        $user->status = 0;
-        $user->save();
-        return to_route('admin.user.index')->with('success', 'Suspend successfully');
+        if($user->status == 0){
+            $user->status = 1;
+            $user->save();
+            return to_route('admin.user.index')->with('success', 'User Unsuspend successfully');
+        }else{
+            $user->status = 0;
+            $user->save();
+            return to_route('admin.user.index')->with('success', 'User suspend successfully');
+        }
+       
     }
 }

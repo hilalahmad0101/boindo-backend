@@ -46,6 +46,8 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index')->name('admin.dashboard');
             Route::get('notification', 'notification')->name('admin.notification.index');
+            Route::get('notification/create', 'notificationCreate')->name('admin.notification.create');
+            Route::get('notification/delete/{id}', 'deleteNotification')->name('admin.notification.delete');
             Route::post('send/notification', 'send_notification')->name('admin.notification.send');
             Route::get('review', 'getReviews')->name('admin.review.index');
             Route::get('review/delete/{id}', 'deleteReviews')->name('admin.review.delete');

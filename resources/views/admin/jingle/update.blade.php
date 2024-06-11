@@ -1,6 +1,6 @@
 @extends('layouts.new_app')
 @section('title')
-    update ADS
+    ADVERTISING UPLOAD
 @endsection
 @section('content')
     <div class="mt-[134px]">
@@ -10,17 +10,13 @@
                 <form method="POST" enctype="multipart/form-data"
                     action="{{ route('admin.jingle.update', ['id' => $jingle->id]) }}">
                     @csrf
-                    <div>
-                        <label for="" class="text-neutral-50 text-2xl font-black">Title</label>
-                        <input type="text" placeholder="Title" name="title" value="{{ $jingle->title }}"
-                            class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
-                        @error('title')
-                            <span style="color: red">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                   
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                         <div class="rounded-lg p-6 relative mt-[10px]">
-                            <label for="" class="text-neutral-50 text-2xl font-black m">Upload Image</label>
+                            <label for="" class="text-neutral-50 text-sm font-black flex justify-center space-x-2 items-center">
+                                <img src="{{ asset('images/img.png') }}" alt="">
+                                <span>Cover</span>
+                            </label>
                             <input type="file" accept="images/*" id="onboardingImageInput" name="image"
                                 class="absolute inset-0 opacity-0 z-50" />
                             <div class=" mt-4" id="image">
@@ -32,8 +28,11 @@
                             @enderror
                         </div>
                         <div class="rounded-lg p-6  mt-[10px]">
-                            <label for="" class="text-neutral-50 text-2xl font-black m">Upload Audio</label>
-                            <audio src="{{ asset('storage/'.$jingle->audio) }}" controls id="update_audio"></audio>
+                            <label for="" class="text-neutral-50 text-sm font-black flex mb-3 justify-center space-x-2 items-center">
+                                <img src="{{ asset('images/jingle.png') }}" alt="">
+                                <span>Jingle</span>
+                            </label>
+                            <audio src="{{ asset('storage/' . $jingle->audio) }}" controls id="update_audio"></audio>
                             <audio id="previewAudio" controls style="display:none;" class="mt-5"></audio>
                             <div class="relative">
                                 <input type="file" id="onboardingFileInput" name="audio" accept="audio/*"
@@ -47,7 +46,20 @@
                             @enderror
                         </div>
 
-                        <div></div>
+                        
+                    </div>
+
+                    <div>
+                        <label for="" class="text-neutral-50 text-2xl font-black">Title</label>
+                        <input type="text" placeholder="Title" name="title" value="{{ $jingle->title }}"
+                            class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
+                        @error('title')
+                            <span style="color: red">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div></div>
                         <div class="flex items-center justify-end space-x-9 mt-[76px]">
                             <button onclick="window.location.href='{{ route('admin.onboarding.index') }}'" type="button"
                                 class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>

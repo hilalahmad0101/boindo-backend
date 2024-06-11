@@ -42,7 +42,18 @@ class DashboardController extends Controller
 
     function notification(): View
     {
+        $notifications = \DB::table('notifications')->paginate(10);
+        return view('admin.notification.index', compact('notifications'));
+    }
+
+    public function notificationCreate()
+    {
         return view('admin.notification');
+    }
+    public function deleteNotification($id)
+    {
+        \DB::table('notifications')->where('id', $id)->delete();
+        return to_route('admin.notification.index')->with('success', 'Delete successfully');
     }
 
     public function getVersion()
@@ -148,7 +159,7 @@ class DashboardController extends Controller
 
     public function getReviews()
     {
-        $reviews = Review::with('contents','user')->latest()->paginate(10);
+        $reviews = Review::with('contents', 'user')->latest()->paginate(10);
         return view('admin.reviews', compact('reviews'));
     }
 

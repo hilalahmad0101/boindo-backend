@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
         $admins = Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
         if ($admins) {
-            return redirect()->route('admin.dashboard')->with('success', 'Login successfully');
+            return redirect()->route('admin.admin.index')->with('success', 'Login successfully');
         } else {
             return redirect()->route('admin.login')->with('error', 'Invalid username and password');
         }

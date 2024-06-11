@@ -24,7 +24,6 @@ class ContentController extends Controller
 
     public function store(Request $request)
     {
-        
         $request->validate([
             'category' => 'required',
             'subcategory' => 'required',
@@ -43,17 +42,17 @@ class ContentController extends Controller
             'music_director' => 'required',
         ]);
 
-    //   $image = [];
-    //     if ($request->file('image')) {
-    //         foreach ($request->file('image') as $image_file) {
-    //             array_push($image, $image_file->store('content/image', 'public'));
-    //         }
-    //     } 
-    
-    $image="";
-    if($request->file('image')){
-        $image=$request->file('image')->store('content/image','public');
-    }
+        //   $image = [];
+        //     if ($request->file('image')) {
+        //         foreach ($request->file('image') as $image_file) {
+        //             array_push($image, $image_file->store('content/image', 'public'));
+        //         }
+        //     } 
+
+        $image = "";
+        if ($request->file('image')) {
+            $image = $request->file('image')->store('content/image', 'public');
+        }
 
         // $audio = [];
         // if ($request->file('audio')) {
@@ -61,7 +60,7 @@ class ContentController extends Controller
         //         array_push($audio, $audio_file->store('content/audio', 'public'));
         //     }
         // } 
-        
+
 
         $audio = "";
         if ($request->file('audio')) {
@@ -72,19 +71,19 @@ class ContentController extends Controller
             $demo = $request->file('demo')->store('content/demo', 'public');
         }
 
-        $content=Content::create([
+        $content = Content::create([
             'category' => $request->category ?? '',
-            'sub_cat_id' => $request->subcategory ?? '',
+            'sub_cat_id' => json_encode($request->subcategory) ?? '',
             'title' => $request->title ?? '',
             'isbn' => $request->isbn ?? '',
             'translator' => json_encode($request->translator)  ?? '',
             'total_duration' => $request->total_duration ?? '',
-            'cost' =>json_encode($request->cost) ?? '',
+            'cost' => json_encode($request->cost) ?? '',
             'summary' => $request->summary ?? '',
-            'is_search'=>$request->search == "on" ? 1:0,
+            'is_search' => $request->search == "on" ? 1 : 0,
             'image' => $image ?? '',
             'audio' => $audio ?? '',
-            'demo' => $demo ?? '', 
+            'demo' => $demo ?? '',
             'author_id' => json_encode($request->authors) ?? '',
             // 'authors' =>  json_encode(explode(',', $request->authors)) ?? '',
             'authors' =>  json_encode($request->authors) ?? '',
@@ -94,21 +93,21 @@ class ContentController extends Controller
             'director' => json_encode($request->director) ?? '',
             'music_director' => json_encode($request->music_director) ?? '',
         ]);
-        
-         foreach ($request->playlist_title as $key => $value) {
-                $audio1 = ""; 
-                if ($request->file('playlist_audio') && isset($request->file('playlist_audio')[$key])) {
-                    // Use the correct key 'audio' for both checking and storing
-                    $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
-                } 
-                 $playlist=new Playlist();
-                 $playlist->title=$value;
-                 $playlist->content_id=$content->id ?? '';
-                 $playlist->audio=$audio1 ?? '';
-                 $playlist->duration=$request->duration[$key] ?? ''; 
-                 $playlist->authors=json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
-                 $playlist->save();
-            } 
+
+        foreach ($request->playlist_title as $key => $value) {
+            $audio1 = "";
+            if ($request->file('playlist_audio') && isset($request->file('playlist_audio')[$key])) {
+                // Use the correct key 'audio' for both checking and storing
+                $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
+            }
+            $playlist = new Playlist();
+            $playlist->title = $value;
+            $playlist->content_id = $content->id ?? '';
+            $playlist->audio = $audio1 ?? '';
+            $playlist->duration = $request->duration[$key] ?? '';
+            $playlist->authors = json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
+            $playlist->save();
+        }
         return to_route('admin.content.index')->with('success', 'Content add successfully');
     }
 
@@ -120,7 +119,7 @@ class ContentController extends Controller
 
 
     public function update(Request $request, $id)
-    {  
+    {
         $request->validate([
             'category' => 'required',
             'subcategory' => 'required',
@@ -146,8 +145,8 @@ class ContentController extends Controller
         }
 
         $audio = "";
-        if ($request->file('audio')) { 
-            $audio = $request->file('audio')->store('content/audio', 'public'); 
+        if ($request->file('audio')) {
+            $audio = $request->file('audio')->store('content/audio', 'public');
         } else {
             $audio = $content->audio;
         }
@@ -166,12 +165,12 @@ class ContentController extends Controller
             'isbn' => $request->isbn ?? '',
             'translator' => json_encode($request->translator)  ?? '',
             'total_duration' => $request->total_duration ?? '',
-            'cost' =>json_encode($request->cost) ?? '',
+            'cost' => json_encode($request->cost) ?? '',
             'summary' => $request->summary ?? '',
             'image' => $image ?? '',
             'audio' => $audio ?? '',
-            'demo' => $demo ?? '', 
-            'is_search'=>$request->search == "on" ? 1:0,
+            'demo' => $demo ?? '',
+            'is_search' => $request->search == "on" ? 1 : 0,
             'author_id' => json_encode($request->authors) ?? '',
             // 'authors' =>  json_encode(explode(',', $request->authors)) ?? '',
             'authors' =>  json_encode($request->authors) ?? '',
@@ -180,45 +179,44 @@ class ContentController extends Controller
             'adoption' => json_encode($request->adoption) ?? '',
             'director' => json_encode($request->director) ?? '',
             'music_director' => json_encode($request->music_director) ?? '',
-        ]); 
-        if(isset($request->playlist_title)){
-        foreach ($request->playlist_title as $key => $value) {
-            $playlist_id="";
-            if(isset($request->id[$key])){ 
-                $playlist_id=$request->id[$key]; 
-            }
-               
-                if(!empty($playlist_id)){
-                    $playlist1=Playlist::findOrFail($playlist_id);
-                    $audio1 = ""; 
-                    if ($request->file('playlist_audio') && isset($request->file('playlist_audio')[$key])) { 
+        ]);
+        if (isset($request->playlist_title)) {
+            foreach ($request->playlist_title as $key => $value) {
+                $playlist_id = "";
+                if (isset($request->id[$key])) {
+                    $playlist_id = $request->id[$key];
+                }
+
+                if (!empty($playlist_id)) {
+                    $playlist1 = Playlist::findOrFail($playlist_id);
+                    $audio1 = "";
+                    if ($request->file('playlist_audio') && isset($request->file('playlist_audio')[$key])) {
                         $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
-                    }else{
-                        $audio1=$playlist1->audio;
+                    } else {
+                        $audio1 = $playlist1->audio;
                     }
-                     
-                     $playlist1->title=$value ?? '';
-                     $playlist1->content_id=$content->id ?? '';
-                     $playlist1->audio=$audio1 ?? '';
-                     $playlist1->duration=$request->duration[$key] ?? '';
-                     $playlist1->authors=json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
-                     $playlist1->save();
-                }else{
-                     $audio1 = ""; 
+
+                    $playlist1->title = $value ?? '';
+                    $playlist1->content_id = $content->id ?? '';
+                    $playlist1->audio = $audio1 ?? '';
+                    $playlist1->duration = $request->duration[$key] ?? '';
+                    $playlist1->authors = json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
+                    $playlist1->save();
+                } else {
+                    $audio1 = "";
                     if ($request->file('playlist_audio') && isset($request->file('playlist_audio')[$key])) {
                         // Use the correct key 'audio' for both checking and storing
                         $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
-                    } 
-                     $playlist=new Playlist();
-                     $playlist->title=$value ?? '';
-                     $playlist->content_id=$content->id ?? '';
-                     $playlist->audio=$audio1 ?? '';
-                     $playlist->duration=$request->duration[$key] ?? '';
-                     $playlist->authors=json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
-                     $playlist->save();
+                    }
+                    $playlist = new Playlist();
+                    $playlist->title = $value ?? '';
+                    $playlist->content_id = $content->id ?? '';
+                    $playlist->audio = $audio1 ?? '';
+                    $playlist->duration = $request->duration[$key] ?? '';
+                    $playlist->authors = json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
+                    $playlist->save();
                 }
-                
-            } 
+            }
         }
 
         return to_route('admin.content.index')->with('success', 'Content Update successfully');
@@ -235,7 +233,7 @@ class ContentController extends Controller
     public function getSubCategories(Request $request)
     {
 
-        $value=$request->value;
+        $value = $request->value;
         $output = "";
 
         $categories = SubCategory::where('category', $value)->get();
@@ -249,22 +247,22 @@ class ContentController extends Controller
 
         echo $output;
     }
-    
-    
+
+
     public function getUpdateSubCategories(Request $request)
     {
 
-        $value=$request->value;
+        $value = $request->value;
         $output = "";
-        
-        $content=Content::findOrFail($request->id);
+
+        $content = Content::findOrFail($request->id);
         $categories = SubCategory::where('category', $value)->get();
         if (count($categories) > 0) {
             foreach ($categories as $category) {
-                if($content->sub_cat_id == $category->id){
-                    $selected="selected";
-                }else{
-                    $selected='';
+                if ($content->sub_cat_id == $category->id) {
+                    $selected = "selected";
+                } else {
+                    $selected = '';
                 }
                 $output .= "<option {$selected} value='{$category->id}'>{$category->name}</option>";
             }
@@ -274,9 +272,10 @@ class ContentController extends Controller
 
         echo $output;
     }
-    
-    public function delete_playlist($id,$content_id){
+
+    public function delete_playlist($id, $content_id)
+    {
         Playlist::findOrFail($id)->delete();
-        return to_route('admin.content.edit',['id'=>$content_id])->with('success', 'Content Update successfully');
+        return to_route('admin.content.edit', ['id' => $content_id])->with('success', 'Content Update successfully');
     }
 }

@@ -123,6 +123,13 @@
                             <span class="text-center text-neutral-500 text-xs font-normal ">User</span>
                         </a>
                     </li>
+
+                    <li class="pt-[50px]">
+                        <a href="{{ route('admin.content.index') }}">
+                            <img src="{{ asset('images/content-img.svg') }}" class="mx-auto" alt="">
+                            <span class="text-center text-neutral-500 text-xs font-normal ">Content</span>
+                        </a>
+                    </li>
                     
                     <li class="pt-[50px]">
                         <a href="{{ route('admin.actor.index') }}">
@@ -180,9 +187,8 @@
             </nav>
         </div>
 
-
         <div class="w-full">
-            <main class="container mx-auto w-full lg:pl-[60px] lg:px-3 px-3">
+            <main class="container mx-auto w-full lg:px-[60px] px-3">
                 <!-- top menu -->
                 <div class="flex justify-between items-center flex-wrap">
                     <div class="flex items-center max-w-4xl container md:mx-[0px] mx-auto gap-5 flex-wrap">
@@ -238,7 +244,7 @@
                                     </div>
                                     <div class=" flex-col justify-start items-start gap-1 inline-flex">
                                         <div class="TotalEmployees text-white text-base font-medium  tracking-tight">
-                                            COST
+                                            CAST
                                         </div>
                                         <span class="234 text-white text-2xl font-medium ">{{ \App\Models\ActorProfile::count() }}</span>
                                     </div>
