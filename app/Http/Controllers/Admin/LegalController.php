@@ -10,23 +10,22 @@ class LegalController extends Controller
 {
     public function index()
     {
-        $legals=Legal::latest()->get();
-        return view('admin.legal.index',compact('legals'));
+        $legals = Legal::latest()->get();
+        return view('admin.legal.index', compact('legals'));
     }
 
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
 
         if ($request->pdf) {
             $file = $request->pdf->store('legal', 'public');
             $filename = $request->pdf->getClientOriginalName();
         }
-        Legal::create([
-            'name' => $filename,
+        Legal::findOrFail($id)->update([
             'pdf' => $file
         ]);
 
 
-        return to_route('admin.legal.index')->with('success','Legal upload successfully');
+        return to_route('admin.legal.index')->with('success', 'Legal upload successfully');
     }
 }

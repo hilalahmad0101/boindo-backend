@@ -127,7 +127,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
         Route::controller(LegalController::class)->group(function () {
             Route::get('/legal/list', 'index')->name('admin.legal.index');
-            Route::post('/legal/store', 'store')->name('admin.legal.store');
+            Route::post('/legal/update/{id}', 'update')->name('admin.legal.update');
         });
     });
 });
