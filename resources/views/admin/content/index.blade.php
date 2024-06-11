@@ -175,7 +175,7 @@
                                 Name</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">Category</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">Sub Category</th>
-                            <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">Listened</th>
+                            <th class="px-6 py-3 text-left  text-white border-b  border-t border-[#FFFFFF33]">Listened</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
