@@ -16,11 +16,13 @@
                                 <img class="absolute top-[40px] right-[10px]" src="{{ asset('images/pdfimage.png') }}"
                                     alt="">
                                 <form method="POST" enctype="multipart/form-data"
-                                    action="{{ route('admin.legal.update', ['id' => $legal->id]) }}" id="pdfForm">
+                                    action="{{ route('admin.legal.update', ['id' => $legal->id]) }}"
+                                    id="pdfForm{{ $legal->id }}">
                                     @csrf
                                     <div class="rounded-lg py-6 relative flex items-center justify-end">
                                         <input type="file" accept="application/pdf" id="onboardingImageInput"
-                                            name="pdf" class="absolute inset-0 opacity-0 z-50" />
+                                            data-id="{{ $legal->id }}" name="pdf"
+                                            class="absolute inset-0 opacity-0 z-50" />
                                         <div class="" id="image">
                                             <img class="size-10" src="{{ asset('images/edit.svg') }}" alt="">
                                         </div>
@@ -45,13 +47,22 @@
             </div>
         </div>
     </div>
-
+@endsection
+@section('script')
     <script>
-        document.getElementById('onboardingImageInput').addEventListener('change', function() {
-            // Check if a file is selected
+        // document.getElementById('onboardingImageInput').addEventListener('change', function() {
+        //     if (this.files && this.files[0]) {
+        //         const dataId = this.getAttribute('data-id');
+        //         console.log(dataId); 
+        //         document.getElementById('pdfForm' + dataId).submit();
+        //     }
+        // });
+
+        $(document).on('change', '#onboardingImageInput', function() {
             if (this.files && this.files[0]) {
-                // Submit the form
-                document.getElementById('pdfForm').submit();
+                const dataId = this.getAttribute('data-id');
+                console.log(dataId);
+                document.getElementById('pdfForm' + dataId).submit();
             }
         });
     </script>
