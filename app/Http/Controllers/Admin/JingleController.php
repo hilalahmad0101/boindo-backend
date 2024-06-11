@@ -93,15 +93,15 @@ class JingleController extends Controller
 
     public function suspend($id)
     {
-        $user = Jingle::findOrFail($id);
-        if($user->status == 0){
-            $user->status = 1;
-            $user->save();
-            return to_route('admin.user.index')->with('success', 'User Unsuspend successfully');
+        $jingle = Jingle::findOrFail($id);
+        if($jingle->status == 0){
+            $jingle->status = 1;
+            $jingle->save();
+            return to_route('admin.jingle.index')->with('success', 'User Unsuspend successfully');
         }else{
-            $user->status = 0;
-            $user->save();
-            return to_route('admin.user.index')->with('success', 'User suspend successfully');
+            $jingle->status = 0;
+            $jingle->save();
+            return to_route('admin.jingle.index')->with('success', 'User suspend successfully');
         }
        
     }
