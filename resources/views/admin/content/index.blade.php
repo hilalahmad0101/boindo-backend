@@ -214,7 +214,7 @@
                 </table>
             </div>
             <div class="mt-[45px] mb-[50px]">
-                {{ $jingles->links() }}
+                {{ $contents->links() }}
             </div>
 
         </div>
