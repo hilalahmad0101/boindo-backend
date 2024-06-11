@@ -23,75 +23,103 @@
             </svg>
         </div>
         <div id="show_data" class="absolute hidden top-24 left-0 w-full bg-[#303030]">
-            <ul class=" ">
-                <li class="pt-[50px]">
-                    <a href="">
-                        <img src="{{ asset('images/home.png') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Home</span>
+            <ul class=" px-3">
+                <li class="pt-[20px]  px-4">
+                    <a href="" class="flex items-center space-x-4">
+                        <img src="{{ asset('images/home.png') }}" class="" alt="">
+                        <span class="text-center text-neutral-500 text-xs font-normal ">Home</span>
                     </a>
                 </li>
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.admin.index') }}">
-                        <img src="{{ Request::routeIs('admin.admin.index') ? asset('images/user-yellow.png') : asset('images/user-profile.png') }}"
-                            class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Admin</span>
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.admin.index') }}">
+                        <img src="{{ Request::routeIs('admin.admin.index') ? asset('icons/user-yellow.svg') : asset('icons/user-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center  text-xs font-normal {{ Request::routeIs('admin.admin.index') ? 'text-[#FFA800]' : 'text-neutral-500' }} ">Admin</span>
                     </a>
                 </li>
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.user.index') }}">
-                        <img src="{{ asset('images/users-white.png') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">User</span>
-                    </a>
-                </li>
-
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.actor.index') }}">
-                        <img src="{{ asset('images/cost-white.png') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Cost</span>
-                    </a>
-                </li>
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.sub-category.index') }}">
-                        <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Sub Category</span>
-                    </a>
-                </li>
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.jingle.index') }}">
-                        <img src="{{ asset('images/category-white.svg') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Jingle</span>
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.user.index') }}">
+                        <img src="{{ Request::routeIs('admin.user.index') ? asset('icons/users-yellow.svg') : asset('icons/users-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.user.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">User</span>
                     </a>
                 </li>
 
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.review.index') }}">
-                        <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Review</span>
-                    </a>
-                </li>
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.notification.index') }}">
-                        <img src="{{ asset('images/notification-white.png') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Notification</span>
-                    </a>
-                </li>
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.legal.index') }}">
-                        <img src="{{ asset('images/legal-white.png') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Legal</span>
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.content.index') }}">
+                        <img src="{{ Request::routeIs('admin.content.index') ? asset('icons/content-yellow.svg') : asset('icons/content-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.content.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Content</span>
                     </a>
                 </li>
 
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.onboarding.index') }}">
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.actor.index') }}">
+                        <img src="{{ Request::routeIs('admin.actor.index') ? asset('icons/cost-yellow.svg') : asset('icons/cost-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.actor.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Cast</span>
+                    </a>
+                </li>
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.sub-category.index') }}">
+                        <img src="{{ Request::routeIs('admin.sub-category.index') ? asset('icons/category-yellow.svg') : asset('icons/category-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.sub-category.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Sub
+                            Category</span>
+                    </a>
+                </li>
+
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.review.index') }}">
+                        <img src="{{ Request::routeIs('admin.review.index') ? asset('icons/bell-yellow.svg') : asset('icons/bell-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.review.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Review</span>
+                    </a>
+                </li>
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.notification.index') }}">
+                        <img src="{{ Request::routeIs('admin.notification.index') ? asset('icons/bell-yellow.svg') : asset('icons/bell-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.notification.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Notification</span>
+                    </a>
+                </li>
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.legal.index') }}">
+                        <img src="{{ Request::routeIs('admin.legal.index') ? asset('icons/legal-yellow.svg') : asset('icons/legal-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.legal.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Legal</span>
+                    </a>
+                </li>
+
+                {{-- <li class= px-4"pt-[20px]">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.onboarding.index') }}">
                         <img src="{{ asset('images/ads.svg') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Advertising</span>
+                        <span -center {{ Request::routeIs('admin.admin.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Advertising</span>
+                    </a>
+                </li> --}}
+
+                <li class="pt-[20px] px-4">
+                    <a class="flex items-center space-x-4" href="{{ route('admin.jingle.index') }}">
+                        <img src="{{ Request::routeIs('admin.jingle.index') ? asset('icons/ads-yellow.svg') : asset('icons/ads-white.svg') }}"
+                            class="" alt="">
+                        <span
+                            class="text-center {{ Request::routeIs('admin.admin.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Advertising</span>
                     </a>
                 </li>
-                <li class="pt-[50px]">
-                    <a href="{{ route('admin.logout') }}">
+
+                <li class="pt-[20px]">
+                    <a class= px-4"flex items-center space-x-4" href="{{ route('admin.logout') }}">
                         <img src="{{ asset('images/logout.png') }}" class="mx-auto" alt="">
-                        <span class=" text-neutral-500 text-xs font-normal ">Logout</span>
+                        <span
+                            -center {{ Request::routeIs('admin.jingle.index') ? 'text-[#FFA800]' : 'text-neutral-500' }}  text-xs font-normal ">Logout</span>
                     </a>
                 </li>
             </ul>
