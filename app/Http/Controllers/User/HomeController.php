@@ -81,6 +81,7 @@ class HomeController extends Controller
                 ->whereCategory($category)
                 ->get();
 
+
             foreach ($sub_category_with_contents as $subCategory) {
                 foreach ($subCategory->contents as $content) {
                     $content->authors = ActorProfile::find(json_decode($content->authors, true));

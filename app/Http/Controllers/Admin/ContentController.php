@@ -72,35 +72,37 @@ class ContentController extends Controller
             $demo = $request->file('demo')->store('content/demo', 'public');
         }
 
-        $content = Content::create([
-            'category' => $request->category ?? '',
-            'sub_cat_id' => 30,
-            'title' => $request->title ?? '',
-            'isbn' => $request->isbn ?? '',
-            'translator' => json_encode($request->translator)  ?? '',
-            'total_duration' => $request->total_duration ?? '',
-            'cost' => json_encode($request->cost) ?? '',
-            'summary' => $request->summary ?? '',
-            'is_search' => $request->search == "on" ? 1 : 0,
-            'image' => $image ?? '',
-            'audio' => $audio ?? '',
-            'demo' => $demo ?? '',
-            'author_id' => json_encode($request->authors) ?? '',
-            // 'authors' =>  json_encode(explode(',', $request->authors)) ?? '',
-            'authors' =>  json_encode($request->authors) ?? '',
-            'cost2' =>  json_encode($request->cost2) ?? '',
-            'producers' => json_encode($request->producers) ?? '',
-            'adoption' => json_encode($request->adoption) ?? '',
-            'director' => json_encode($request->director) ?? '',
-            'music_director' => json_encode($request->music_director) ?? '',
-        ]);
-
         foreach ($request->subcategory as $sub_category) {
-            ContentCategory::create([
-                'content_id' => $content->id,
-                'sub_category_id' => $sub_category
+
+            $content = Content::create([
+                'category' => $request->category ?? '',
+                'sub_cat_id' => $sub_category,
+                'title' => $request->title ?? '',
+                'isbn' => $request->isbn ?? '',
+                'translator' => json_encode($request->translator)  ?? '',
+                'total_duration' => $request->total_duration ?? '',
+                'cost' => json_encode($request->cost) ?? '',
+                'summary' => $request->summary ?? '',
+                'is_search' => $request->search == "on" ? 1 : 0,
+                'image' => $image ?? '',
+                'audio' => $audio ?? '',
+                'demo' => $demo ?? '',
+                'author_id' => json_encode($request->authors) ?? '',
+                // 'authors' =>  json_encode(explode(',', $request->authors)) ?? '',
+                'authors' =>  json_encode($request->authors) ?? '',
+                'cost2' =>  json_encode($request->cost2) ?? '',
+                'producers' => json_encode($request->producers) ?? '',
+                'adoption' => json_encode($request->adoption) ?? '',
+                'director' => json_encode($request->director) ?? '',
+                'music_director' => json_encode($request->music_director) ?? '',
             ]);
         }
+
+        //     ContentCategory::create([
+        //         'content_id' => $content->id,
+        //         'sub_category_id' => $sub_category
+        //     ]);
+        // }
 
         // foreach ($request->playlist_title as $key => $value) {
         //     $audio1 = "";

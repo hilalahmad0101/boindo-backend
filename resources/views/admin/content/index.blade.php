@@ -153,7 +153,7 @@
                     <div class="flex items-center mt-3 md:mt-0">
                         <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
                             <img src="{{ asset('images/search.png') }}" alt="">
-                            <input type="text" placeholder="Search" id="searchInput"
+                            <input type="text" placeholder="Search"
                                 class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
                         </div>
                         <a href="{{ route('admin.content.create') }}"
@@ -194,7 +194,7 @@
                                 <td class="border border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ $content->category }}</td>
                                 <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ $content->category }}</td>
+                                    {{ $content->sub_category->name }}</td>
                                     <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
                                         {{ $content->plays }}</td>
                                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
