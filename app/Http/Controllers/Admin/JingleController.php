@@ -97,11 +97,11 @@ class JingleController extends Controller
         if($jingle->status == 0){
             $jingle->status = 1;
             $jingle->save();
-            return to_route('admin.jingle.index')->with('success', 'User Unsuspend successfully');
+            return to_route('admin.jingle.index')->with('success', 'Jingle Unsuspend successfully');
         }else{
             $jingle->status = 0;
             $jingle->save();
-            return to_route('admin.jingle.index')->with('success', 'User suspend successfully');
+            return to_route('admin.jingle.index')->with('success', 'Jingle suspend successfully');
         }
        
     }
