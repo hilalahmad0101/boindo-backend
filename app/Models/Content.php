@@ -21,7 +21,7 @@ class Content extends Model
     }
     public function reviews()
     {
-        return $this->hasMany(Review::class, 'content_id')->orderBy('star','desc');
+        return $this->hasMany(Review::class, 'content_id')->orderBy('star', 'desc');
     }
     public function playlists()
     {

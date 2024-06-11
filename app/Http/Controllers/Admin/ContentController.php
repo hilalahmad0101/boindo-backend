@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\ContentCategory;
 use App\Models\SubCategory;
 use App\Models\Playlist;
 use Illuminate\Http\Request;
@@ -73,7 +74,7 @@ class ContentController extends Controller
 
         $content = Content::create([
             'category' => $request->category ?? '',
-            'sub_cat_id' => json_encode($request->subcategory) ?? '',
+            'sub_cat_id' => '0',
             'title' => $request->title ?? '',
             'isbn' => $request->isbn ?? '',
             'translator' => json_encode($request->translator)  ?? '',
@@ -93,6 +94,13 @@ class ContentController extends Controller
             'director' => json_encode($request->director) ?? '',
             'music_director' => json_encode($request->music_director) ?? '',
         ]);
+
+        foreach ($request->subcategory as $sub_category) {
+            ContentCategory::create([
+                'content_id' => $content->id,
+                'sub_category_id' => $sub_category
+            ]);
+        }
 
         foreach ($request->playlist_title as $key => $value) {
             $audio1 = "";
