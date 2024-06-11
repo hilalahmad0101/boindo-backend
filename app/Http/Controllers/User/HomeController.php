@@ -452,7 +452,7 @@ class HomeController extends Controller
             $ads = Jingle::findOrFail($id);
             $ads->views = $ads->views + 1;
             $ads->save();
-            return response()->json(['success' => true, 'ads' => $ads]);
+            return response()->json(['success' => true, 'message' => ['Views']]);
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage(), 'success' => false], 201);
         }

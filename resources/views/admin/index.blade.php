@@ -16,13 +16,13 @@
                     </p>
                     <div class="flex items-center mt-3 md:mt-0">
                         <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
-                            <img src="../images/search.png" alt="">
-                            <input type="text" placeholder="Search"
+                            <img src="{{ asset('images/search.png') }}" alt="">
+                            <input type="text" placeholder="Search" id="searchInput" 
                                 class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
                         </div>
                         <a href="{{ route('admin.admin.create') }}"
                             class=" hover:bg-white/95  ml-[29px] px-4 py-2 bg-white rounded-lg justify-start items-center gap-2 inline-flex text-black text-base font-bold   leading-normal">
-                            <img src="../images/plus.svg" alt="">
+                            <img src="{{ asset('images/plus.svg') }}" alt="">
                             <span>Add</span>
                         </a>
                     </div>
@@ -31,7 +31,7 @@
 
 
             <div class="mt-8  overflow-x-scroll xl:overflow-hidden ">
-                <table class="table-auto w-[1000px] xl:w-full rounded-md ">
+                <table class="table-auto w-[1000px] xl:w-full rounded-md " id="dataTable">
                     <thead class="bg-[#FFFFFF33] rounded-tl-lg rounded-tr-lg">
                         <tr class="rounded-md">
                             <th

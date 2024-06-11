@@ -19,7 +19,7 @@
 
 
             <div class="mt-8  overflow-x-scroll xl:overflow-hidden ">
-                <table class="table-auto w-[1000px] xl:w-full rounded-md ">
+                <table class="table-auto w-[1000px] xl:w-full rounded-md " id="dataTable">
                     <thead class="bg-[#FFFFFF33] rounded-tl-lg rounded-tr-lg">
                         <tr class="rounded-md">
                             <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">User Email</th>
