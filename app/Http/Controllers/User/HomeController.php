@@ -117,7 +117,7 @@ class HomeController extends Controller
                     $totalAvgReview = Review::where('content_id', $content->id)
                         ->avg('star');
                     $content->totalAvgReview = $totalAvgReview;
-                    $jingle = Jingle::inRandomOrder()->first();
+                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
                     $content->jingle = $jingle;
                 }
             }
@@ -170,7 +170,7 @@ class HomeController extends Controller
 
             // Append the calculated average to the content
             $content->totalAvgReview = $totalAvgReview;
-            $jingle = Jingle::inRandomOrder()->first();
+            $jingle = Jingle::inRandomOrder()->where('status',1)->first();
 
             $content->jingle = $jingle;
 
@@ -220,7 +220,7 @@ class HomeController extends Controller
             $totalAvgReview = Review::where('content_id', $content->id)
                 ->avg('star');
             $content->totalAvgReview = $totalAvgReview;
-            $jingle = Jingle::inRandomOrder()->first();
+            $jingle = Jingle::inRandomOrder()->where('status',1)->first();
             $content->jingle = $jingle;
 
             return response()->json(['content' => $content, 'success' => true], 201);
@@ -246,7 +246,7 @@ class HomeController extends Controller
                 $content->music_director = ActorProfile::find(json_decode($content->music_director, true));
                 $playlists = Playlist::where('content_id', $content->id)->get();
                 $content->playlists = $playlists;
-                $jingle = Jingle::inRandomOrder()->first();
+                $jingle = Jingle::inRandomOrder()->where('status',1)->first();
                 $content->jingle = $jingle;
                 foreach ($content->reviews as $review) {
                     $user = $review->user;
@@ -306,7 +306,7 @@ class HomeController extends Controller
 
                 if ((isset($producers) && in_array($id, $producers)) || (isset($director) && in_array($id, $director)) || (isset($music_director) && in_array($id, $music_director)) || (isset($cost2) && in_array($id, $cost2)) || (isset($cost) && in_array($id, $cost)) || (isset($translator) && in_array($id, $translator)) || (isset($adoption) && in_array($id, $adoption))) {
                     $content = Content::with('playlists', 'reviews')->findOrFail($content->id);
-                    $jingle = Jingle::inRandomOrder()->first();
+                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
                     $content->jingle = $jingle;
                     $content->authors = ActorProfile::find(json_decode($content->authors, true));
                     $content->producers = ActorProfile::find(json_decode($content->producers, true));
@@ -363,7 +363,7 @@ class HomeController extends Controller
                     $content->music_director = ActorProfile::find(json_decode($content->music_director, true));
                     $playlists = Playlist::where('content_id', $content->id)->get();
                     $content->playlists = $playlists;
-                    $jingle = Jingle::inRandomOrder()->first();
+                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
                     $content->jingle = $jingle;
                     foreach ($content->reviews as $review) {
                         $totalAvgReview = Review::where('content_id', $content->id)
@@ -400,7 +400,7 @@ class HomeController extends Controller
                     $content->director = ActorProfile::find(json_decode($content->director, true));
                     $content->music_director = ActorProfile::find(json_decode($content->music_director, true));
                     $content->in_search = 1;
-                    $jingle = Jingle::inRandomOrder()->first();
+                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
                     $content->jingle = $jingle;
                     foreach ($content->reviews as $review) {
                         // Calculate the average review
