@@ -122,6 +122,7 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::get('/jingle/edit/{id}', 'edit')->name('admin.jingle.edit');
             Route::post('/jingle/update/{id}', 'update')->name('admin.jingle.update');
             Route::get('/jingle/delete/{id}', 'delete')->name('admin.jingle.delete');
+            Route::get('/jingle/suspend/{id}', 'suspend')->name('admin.jingle.suspend');
         });
 
         Route::controller(LegalController::class)->group(function () {

@@ -139,6 +139,7 @@
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Viewed</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Sus</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
                         </tr>
                     </thead>
@@ -160,6 +161,27 @@
                                     <a href="{{ route('admin.jingle.edit', ['id' => $jingle->id]) }}">
                                         <img src="{{ asset('images/edit.svg') }}" alt="">
                                     </a>
+                                </td>
+                                <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                    @if ($jingle->status == 0)
+                                        <a href="{{ route('admin.jingle.suspend', ['id' => $jingle->id]) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="white" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811Z" />
+                                            </svg>
+
+                                        </a>
+                                    @else
+                                        <a href="{{ route('admin.jingle.suspend', ['id' => $jingle->id]) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="20"
+                                                viewBox="0 0 14 20" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M2 0H4C5.10457 0 6 0.89543 6 2V18C6 19.1046 5.10457 20 4 20H2C0.89543 20 0 19.1046 0 18V2C0 0.89543 0.89543 0 2 0ZM10 0H12C13.1046 0 14 0.89543 14 2V18C14 19.1046 13.1046 20 12 20H10C8.89543 20 8 19.1046 8 18V2C8 0.89543 8.89543 0 10 0ZM2 2V18H4V2H2ZM10 2V18H12V2H10Z"
+                                                    fill="white" />
+                                            </svg>
+                                        </a>
+                                    @endif
                                 </td>
                                 <td class="border-b border-[#FFFFFF33] px-6 py-4">
                                     <a href="{{ route('admin.jingle.delete', $jingle->id) }}">
