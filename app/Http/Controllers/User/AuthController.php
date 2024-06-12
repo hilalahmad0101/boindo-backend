@@ -133,7 +133,7 @@ class AuthController extends Controller
 
         $user = User::whereEmail($request->email)->first();
         if ($user->status == 0) {
-            return response()->json(['success' => false, 'message' => ['Your are suspend by admin']]);
+            return response()->json(['success' => false, 'message' => 'Your are suspend by admin']);
         }
         // $user1=User::whereEmailAndIsGoogle($request->email,1)->first();
         $user_ios = User::whereIosId($request->ios_id)->first();
