@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-end relative">
-                                    <input type="file" id="onboardingDemoFileInput" name="audio" accept="audio/*"
+                                    <input type="file" id="onboardingDemoFileInput" name="demo" accept="audio/*"
                                     class="absolute inset-0 opacity-0 z-50 w-full" />
                                     <img class="size-10 hidden" id="demo_edit"  src="{{ asset('images/edit.svg') }}" alt="">
                                 </div>
