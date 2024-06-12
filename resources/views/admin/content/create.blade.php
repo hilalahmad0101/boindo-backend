@@ -34,7 +34,7 @@
                     <div class="text-neutral-50 text-2xl font-black ">Media</div>
                     <div class="my-5">
 
-                        <div class="grid grid-cols-1 md:grid-cols-6 gap-5">
+                        <div class="grid grid-cols-1 md:grid-cols-6 gap-5" id="grid_system">
                             <div class="rounded-lg p-6 relative mt-[10px]">
                                 <label for=""
                                     class="text-neutral-50 text-sm font-black flex justify-center space-x-2 items-center">
@@ -44,9 +44,10 @@
                                 <input type="file" accept="images/*" id="onboardingImageInput" name="image"
                                     class="absolute inset-0 opacity-0 z-50" />
                                 <div class="mt-4" id="image">
-                                    <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
+                                    <img class="" id="" src="{{ asset('images/file-upload.svg') }}"
+                                        alt="">
                                 </div>
-                                <img src="" style="width: 100%" id="previewImage" alt="">
+                                <img src="" style="width: 100%" class="mt-4" id="previewImage" alt="">
                                 @error('image')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
@@ -59,11 +60,16 @@
                                 </label>
                                 <audio id="previewDemoAudio" controls style="display:none;" class="mt-5"></audio>
                                 <div class="relative">
-                                    <input type="file" id="onboardingDemoFileInput" name="demo"  accept="audio/*"
+                                    <input type="file" id="onboardingDemoFileInput" name="demo" accept="audio/*"
                                         class="absolute inset-0 opacity-0 z-50 w-full" />
                                     <div class="mt-4" id="demo_audio_image">
                                         <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
                                     </div>
+                                </div>
+                                <div class="flex items-center justify-end relative">
+                                    <input type="file" id="onboardingDemoFileInput" name="demo" accept="audio/*"
+                                    class="absolute inset-0 opacity-0 z-50 w-full" />
+                                    <img class="size-10 hidden" id="demo_edit"  src="{{ asset('images/edit.svg') }}" alt="">
                                 </div>
                                 @error('audio')
                                     <span style="color:red">{{ $message }}</span>
@@ -77,12 +83,19 @@
                                 </label>
                                 <audio id="previewContentAudio" controls style="display:none;" class="mt-5"></audio>
                                 <div class="relative">
-                                    <input type="file" id="onboardingContentFileInput" name="audio"  accept="audio/*"
+                                    <input type="file" id="onboardingContentFileInput" name="audio" accept="audio/*"
                                         class="absolute inset-0 opacity-0 z-50 w-full ml-10" />
                                     <div class="mt-4" id="content_audio_image">
                                         <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
                                     </div>
                                 </div>
+                                <div class="flex items-center justify-end  relative">
+                                    <input type="file" id="onboardingContentFileInput" name="audio" accept="audio/*"
+                                    class="absolute inset-0 opacity-0 z-50 w-full ml-10" />
+                                    <img class="size-10 hidden" id="content_edit"  src="{{ asset('images/edit.svg') }}"
+                                        alt="">
+                                </div>
+
                                 @error('audio')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
@@ -354,6 +367,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     imagePreview.src = e.target.result;
+                    document.getElementById('image').classList.add('hidden');
                 }
                 reader.readAsDataURL(file);
             }
@@ -367,6 +381,11 @@
                 reader.onload = function(e) {
                     audioPreview.src = e.target.result;
                     audioPreview.style.display = 'block';
+                    document.getElementById('grid_system').classList.add('md:grid-cols-3');
+                    document.getElementById('grid_system').classList.remove('md:grid-cols-6');
+                    document.getElementById('demo_audio_image').classList.add('hidden');
+                    document.getElementById('demo_edit').classList.add('block');
+                    document.getElementById('demo_edit').classList.remove('hidden');
                 }
                 reader.readAsDataURL(file);
             }
@@ -380,6 +399,9 @@
                 reader.onload = function(e) {
                     audioPreview.src = e.target.result;
                     audioPreview.style.display = 'block';
+                    document.getElementById('content_audio_image').classList.add('hidden');
+                    document.getElementById('content_edit').classList.add('block');
+                    document.getElementById('content_edit').classList.remove('hidden');
                 }
                 reader.readAsDataURL(file);
             }

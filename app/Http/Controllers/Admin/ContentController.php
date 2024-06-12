@@ -103,20 +103,20 @@ class ContentController extends Controller
         //     ]);
         // }
 
-        // foreach ($request->playlist_title as $key => $value) {
-        //     $audio1 = "";
-        //     if ($request->file('playlist_audio') && isset($request->file('playlist_audio')[$key])) {
-        //         // Use the correct key 'audio' for both checking and storing
-        //         $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
-        //     }
-        //     $playlist = new Playlist();
-        //     $playlist->title = $value;
-        //     $playlist->content_id = $content->id ?? '';
-        //     $playlist->audio = $audio1 ?? '';
-        //     $playlist->duration = $request->duration[$key] ?? '';
-        //     $playlist->authors = json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
-        //     $playlist->save();
-        // }
+        foreach ($request->playlist_title as $key => $value) {
+            $audio1 = "";
+            if ($request->file('playlist_audio') && isset($request->file('playlist_audio')[$key])) {
+                // Use the correct key 'audio' for both checking and storing
+                $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
+            }
+            $playlist = new Playlist();
+            $playlist->title = $value;
+            $playlist->content_id = $content->id ?? '';
+            $playlist->audio = $audio1 ?? '';
+            $playlist->duration = $request->duration[$key] ?? '';
+            $playlist->authors = json_encode(explode(',', $request->playlist_authors[$key])) ?? '';
+            $playlist->save();
+        }
         return to_route('admin.content.index')->with('success', 'Content add successfully');
     }
 
