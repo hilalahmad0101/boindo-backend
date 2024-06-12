@@ -340,7 +340,7 @@
 
     @if (session()->has('success'))
         <div class="fixed top-0 right-0 left-0" id="close_model">
-            <div class="flex items-center justify-center h-screen w-full bg-gray-900">
+            <div class="flex items-center justify-center h-screen w-full bg-gray-900/60">
                 <div class="bg-gray-800 text-center container mx-auto py-20 p-8  rounded-md max-w-2xl shadow-lg">
                     <div class="flex justify-center items-center mb-4">
                         <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
