@@ -117,7 +117,7 @@ class ContentController extends Controller
         //     // Use the correct key 'audio' for both checking and storing
         //     $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
         // }
-      
+
         // }
         return to_route('admin.content.index')->with('success', 'Content add successfully');
     }
