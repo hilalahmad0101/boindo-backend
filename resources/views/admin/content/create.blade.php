@@ -67,9 +67,9 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-end relative">
-                                    <input type="file" id="onboardingDemoFileInput" name="demo" accept="audio/*"
-                                    class="absolute inset-0 opacity-0 z-50 w-full" />
-                                    <img class="size-10 hidden" id="demo_edit"  src="{{ asset('images/edit.svg') }}" alt="">
+                                    {{-- <input type="file" id="onboardingDemoFileInput" name="demo" accept="audio/*"
+                                    class="absolute inset-0 opacity-0 z-50 w-full" /> --}}
+                                    {{-- <img class="size-10 hidden" id="demo_edit"  src="{{ asset('images/edit.svg') }}" alt=""> --}}
                                 </div>
                                 @error('audio')
                                     <span style="color:red">{{ $message }}</span>
@@ -85,15 +85,15 @@
                                 <div class="relative">
                                     <input type="file" id="onboardingContentFileInput" name="audio" accept="audio/*"
                                         class="absolute inset-0 opacity-0 z-50 w-full ml-10" />
-                                    <div class="mt-4" id="content_audio_image">
+                                    {{-- <div class="mt-4" id="content_audio_image">
                                         <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="flex items-center justify-end  relative">
-                                    <input type="file" id="onboardingContentFileInput" name="audio" accept="audio/*"
-                                    class="absolute inset-0 opacity-0 z-50 w-full ml-10" />
-                                    <img class="size-10 hidden" id="content_edit"  src="{{ asset('images/edit.svg') }}"
-                                        alt="">
+                                    {{-- <input type="file" id="onboardingContentFileInput" name="audio" accept="audio/*"
+                                    class="absolute inset-0 opacity-0 z-50 w-full ml-10" /> --}}
+                                    {{-- <img class="size-10 hidden" id="content_edit"  src="{{ asset('images/edit.svg') }}"
+                                        alt=""> --}}
                                 </div>
 
                                 @error('audio')
