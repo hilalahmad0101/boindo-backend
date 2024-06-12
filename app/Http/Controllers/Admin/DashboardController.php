@@ -163,7 +163,7 @@ class DashboardController extends Controller
         return view('admin.reviews', compact('reviews'));
     }
 
-    public function deleteReview($id)
+    public function deleteReviews($id)
     {
         Review::findOrFail($id)->delete();
         return to_route('admin.review.index')->with('success', 'Delete successfully');

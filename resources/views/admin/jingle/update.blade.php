@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="mt-[134px]">
-        <h1 class="text-neutral-50 text-4xl font-black ">ADVERTISING UPLOAD</h1>
+        <h1 class="text-neutral-50 text-4xl font-black ">ADVERTISING UPDATE</h1>
         <div>
             <div class="mt-12">
                 <form method="POST" enctype="multipart/form-data"
@@ -58,13 +58,13 @@
                         @enderror
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3"> 
                     <div></div>
                         <div class="flex items-center justify-end space-x-9 mt-[76px]">
                             <button onclick="window.location.href='{{ route('admin.onboarding.index') }}'" type="button"
                                 class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>
                             <button type="submit"
-                                class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Upload</button>
+                                class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Update</button>
                         </div>
                     </div>
                 </form>

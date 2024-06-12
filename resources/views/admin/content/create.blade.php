@@ -30,10 +30,9 @@
         <div>
             <div class="mt-12">
                 <div>
-                    @csrf 
-                    <h1 class="text-neutral-50 text-2xl font-black">Genral Information</h1>
+                    @csrf
+                    <div class="text-neutral-50 text-2xl font-black ">Media</div>
                     <div class="my-5">
-                        <div class="text-neutral-50 text-2xl font-black ">Media</div>
 
                         <div class="grid grid-cols-1 md:grid-cols-6 gap-5">
                             <div class="rounded-lg p-6 relative mt-[10px]">
@@ -44,25 +43,25 @@
                                 </label>
                                 <input type="file" accept="images/*" id="onboardingImageInput" name="image"
                                     class="absolute inset-0 opacity-0 z-50" />
-                                <div class=" mt-4" id="image">
+                                <div class="mt-4" id="image">
                                     <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
                                 </div>
-                                <img src="" style="width: 100%" id="preivew" alt="">
+                                <img src="" style="width: 100%" id="previewImage" alt="">
                                 @error('image')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="rounded-lg p-6  mt-[10px]">
+                            <div class="rounded-lg p-6 mt-[10px]">
                                 <label for=""
                                     class="text-neutral-50 text-sm font-black flex mb-3 justify-center space-x-2 items-center">
                                     <img src="{{ asset('images/jingle.png') }}" alt="">
                                     <span>Demo</span>
                                 </label>
-                                <audio id="previewAudio" controls style="display:none;" class="mt-5"></audio>
+                                <audio id="previewDemoAudio" controls style="display:none;" class="mt-5"></audio>
                                 <div class="relative">
-                                    <input type="file" id="onboardingFileInput" name="demo" accept="audio/*"
-                                        class="absolute inset-0 opacity-0 z-50" />
-                                    <div class=" mt-4" id="audio_image">
+                                    <input type="file" id="onboardingDemoFileInput" name="demo"  accept="audio/*"
+                                        class="absolute inset-0 opacity-0 z-50 w-full" />
+                                    <div class="mt-4" id="demo_audio_image">
                                         <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
                                     </div>
                                 </div>
@@ -70,17 +69,17 @@
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="rounded-lg p-6  mt-[10px]">
+                            <div class="rounded-lg p-6 mt-[10px]">
                                 <label for=""
                                     class="text-neutral-50 text-sm font-black flex mb-3 justify-center space-x-2 items-center">
                                     <img src="{{ asset('images/content-song.png') }}" alt="">
                                     <span>Content</span>
                                 </label>
-                                <audio id="previewAudio" controls style="display:none;" class="mt-5"></audio>
+                                <audio id="previewContentAudio" controls style="display:none;" class="mt-5"></audio>
                                 <div class="relative">
-                                    <input type="file" id="onboardingFileInput" name="audio" accept="audio/*"
-                                        class="absolute inset-0 opacity-0 z-50" />
-                                    <div class=" mt-4" id="audio_image">
+                                    <input type="file" id="onboardingContentFileInput" name="audio"  accept="audio/*"
+                                        class="absolute inset-0 opacity-0 z-50 w-full ml-10" />
+                                    <div class="mt-4" id="content_audio_image">
                                         <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
                                     </div>
                                 </div>
@@ -88,12 +87,15 @@
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
                             </div>
+
                         </div>
                     </div>
                     <div class="my-5">
+                        <h1 class="text-neutral-50 text-2xl font-black">Genral Information</h1>
+
                         <label class="">
                             <input type="text" name="title" value="{{ old('title') }}" placeholder="Title"
-                                class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl " />
+                                class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5  " />
                             @error('title')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
@@ -344,6 +346,45 @@
         });
     </script>
 
+    <script>
+        document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
+            const imagePreview = document.getElementById('previewImage');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('onboardingDemoFileInput').addEventListener('change', function(event) {
+            const audioPreview = document.getElementById('previewDemoAudio');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    audioPreview.src = e.target.result;
+                    audioPreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('onboardingContentFileInput').addEventListener('change', function(event) {
+            const audioPreview = document.getElementById('previewContentAudio');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    audioPreview.src = e.target.result;
+                    audioPreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
     <script>
         new TomSelect('#producers', {

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Content;
 use App\Models\SubCategory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SubCategoryController extends Controller
 {
@@ -49,7 +51,18 @@ class SubCategoryController extends Controller
     }
     function delete($id): RedirectResponse
     {
-        SubCategory::findOrFail($id)->delete();
+        DB::transaction(function () use ($id) {
+            // Retrieve the sub-category and its contents
+            $contents = Content::whereSubCatId($id)->get();
+
+            // Delete each content
+            foreach ($contents as $content) {
+                $content->delete();
+            }
+
+            // Finally, delete the sub-category
+            SubCategory::findOrFail($id)->delete();
+        });
         return redirect()->route('admin.sub-category.index')->with('success', 'Sub Category Delete successfully');
     }
 }
