@@ -95,6 +95,14 @@ class ContentController extends Controller
                 'director' => json_encode($request->director) ?? '',
                 'music_director' => json_encode($request->music_director) ?? '',
             ]);
+
+            $playlist = new Playlist();
+            $playlist->title = $request->title;
+            $playlist->content_id = $content->id ?? '';
+            $playlist->audio = $audio ?? '';
+            $playlist->duration = $request->duration ?? '';
+            $playlist->authors = json_encode(explode(',', $request->playlist_authors)) ?? '';
+            $playlist->save();
         }
 
         //     ContentCategory::create([
@@ -109,13 +117,7 @@ class ContentController extends Controller
         //     // Use the correct key 'audio' for both checking and storing
         //     $audio1 = $request->file('playlist_audio')[$key]->store('content/audio', 'public');
         // }
-        $playlist = new Playlist();
-        $playlist->title = $request->title;
-        $playlist->content_id = $content->id ?? '';
-        $playlist->audio = $audio ?? '';
-        $playlist->duration = $request->duration ?? '';
-        $playlist->authors = json_encode(explode(',', $request->playlist_authors)) ?? '';
-        $playlist->save();
+      
         // }
         return to_route('admin.content.index')->with('success', 'Content add successfully');
     }
