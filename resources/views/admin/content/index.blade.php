@@ -169,9 +169,9 @@
                             <div class="relative inline-block text-left ">
                                 <div class="">
                                     <button type="button"
-                                        class="inline-flex justify-between w-full  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                                        class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                                         id="content-category-button" aria-expanded="true" aria-haspopup="true">
-                                        Content Category
+                                        <span id="content-category-button-text">Content Category</span>
                                         <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd"
@@ -181,7 +181,7 @@
                                     </button>
                                 </div>
 
-                                <div class="origin-top-right hidden w-full absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                <div class="origin-top-right hidden  w-[200px]   absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="content_menu" aria-orientation="vertical" aria-labelledby="menu-button"
                                     tabindex="-1">
                                     <div class="py-1" role="none">
@@ -202,9 +202,9 @@
                             <div class="relative inline-block text-left ">
                                 <div class="">
                                     <button type="button"
-                                        class="inline-flex justify-between w-full  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                                        class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                                         id="content-sub-category-button" aria-expanded="true" aria-haspopup="true">
-                                        Content sub-category
+                                        <span id="content-sub-category-button-text">Content sub-category</span>
                                         <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd"
@@ -214,7 +214,7 @@
                                     </button>
                                 </div>
 
-                                <div class="origin-top-right hidden w-full absolute left-0 mt-2 overflow-y-scroll h-[40vh] rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                <div class="origin-top-right hidden  w-[200px]   absolute left-0 mt-2 overflow-y-scroll h-[40vh] rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="content_sub_menu" aria-orientation="vertical" aria-labelledby="menu-button"
                                     tabindex="-1">
                                     <div class="py-1" role="none">
@@ -222,7 +222,8 @@
                                             $categories = \App\Models\SubCategory::latest()->get();
                                         @endphp
                                         @foreach ($categories as $category)
-                                            <a href="#" data-id="{{ $category->id }}" id="searchSubCategory"
+                                            <a href="#" data-id="{{ $category->id }}"
+                                                data-category-name="{{ $category->name }}" id="searchSubCategory"
                                                 class="text-gray-200 block px-4 py-2 text-sm" role="menuitem"
                                                 tabindex="-1">{{ $category->name }}</a>
                                         @endforeach
@@ -236,9 +237,9 @@
                             <div class="relative inline-block text-left ">
                                 <div class="">
                                     <button type="button"
-                                        class="inline-flex justify-between w-full  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                                        class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                                         id="content-listened-button" aria-expanded="true" aria-haspopup="true">
-                                        Most listened
+                                        <span id="content-listened-button-text">Most listened</span>
                                         <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd"
@@ -248,9 +249,9 @@
                                     </button>
                                 </div>
 
-                                <div class="origin-top-right hidden w-full absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                    role="content_listened_menu" aria-orientation="vertical" aria-labelledby="menu-button"
-                                    tabindex="-1">
+                                <div class="origin-top-right hidden  w-[200px]  absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="content_listened_menu" aria-orientation="vertical"
+                                    aria-labelledby="menu-button" tabindex="-1">
                                     <div class="py-1" role="none">
                                         <a href="#" data-type="high" id="mosted_listened"
                                             class="text-gray-200 block px-4 py-2 text-sm" role="menuitem"
@@ -1274,6 +1275,7 @@
             let category = $(this).data('category');
 
             currentCategoryFilter = category;
+            $("#content-category-button-text").text(category)
             currentSubCategoryFilter = null; // Reset sub-category filter when category changes
             updateFilteredContents();
             renderTable(currentPage);
@@ -1285,8 +1287,10 @@
             const dropdown = document.querySelector('[role="content_sub_menu"]');
             dropdown.classList.toggle('hidden');
             let subCategoryId = $(this).data('id');
+            let category_name = $(this).data('category-name');
 
             currentSubCategoryFilter = subCategoryId;
+            $("#content-sub-category-button-text").text(category_name)
             updateFilteredContents();
             renderTable(currentPage);
             renderPagination(filteredContents.length);
@@ -1302,10 +1306,14 @@
                 filteredContents.sort((a, b) => a.plays - b.plays); // Sort ascending
                 this.sortOrder = 'asc';
                 $("#mosted_listened").text('High to Low');
+                $("#content-listened-button-text").text('High to Low')
+
             } else {
                 filteredContents.sort((a, b) => b.plays - a.plays); // Sort descending
                 this.sortOrder = 'desc';
                 $("#mosted_listened").text('Low to High');
+                $("#content-listened-button-text").text('Low to High')
+
             }
 
             currentPage = 1; // Reset to first page when sorting changes
