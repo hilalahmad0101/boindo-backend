@@ -254,7 +254,7 @@
                                     <div class="py-1" role="none">
                                         <a href="#" data-type="high" id="mosted_listened"
                                             class="text-gray-200 block px-4 py-2 text-sm" role="menuitem"
-                                            tabindex="-1">High To Low</a>
+                                            tabindex="-1">Low To High</a>
 
                                     </div>
                                 </div>
@@ -1301,11 +1301,11 @@
             if (typeof this.sortOrder === 'undefined' || this.sortOrder === 'desc') {
                 filteredContents.sort((a, b) => a.plays - b.plays); // Sort ascending
                 this.sortOrder = 'asc';
-                $("#mosted_listened").text('Low to High');
+                $("#mosted_listened").text('High to Low');
             } else {
                 filteredContents.sort((a, b) => b.plays - a.plays); // Sort descending
                 this.sortOrder = 'desc';
-                $("#mosted_listened").text('High to Low');
+                $("#mosted_listened").text('Low to High');
             }
 
             currentPage = 1; // Reset to first page when sorting changes
