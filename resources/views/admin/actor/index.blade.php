@@ -177,14 +177,14 @@
                 // Sort actors based on 'views' property (descending)
                 filteredActors.sort((a, b) => b.views - a.views);
                 this.sortOrder = 'asc';
-                $("#most_views").text('High to Low');
-                $("#content-listened-button-text").text('High to Low')
+                $("#most_views").text('Low to High');
+                $("#content-listened-button-text").text('Low to High')
             } else {
                 // Sort actors based on 'views' property (ascending)
                 filteredActors.sort((a, b) => a.views - b.views);
                 this.sortOrder = 'desc';
-                $("#most_views").text('Low to High');
-                $("#content-listened-button-text").text('Low to High')
+                $("#most_views").text('High to Low');
+                $("#content-listened-button-text").text('High to Low')
 
             }
 
