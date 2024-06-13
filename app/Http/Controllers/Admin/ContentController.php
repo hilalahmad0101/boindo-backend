@@ -33,7 +33,7 @@ class ContentController extends Controller
             'translator' => 'required',
             'cost' => 'required',
             'summary' => 'required',
-            'image' => 'required',
+            // 'image' => 'required',
             // 'audio' => 'required|mimes:audio/mpeg,mpga,mp3,wav',
             // 'demo' => 'required|mimes:audio/mpeg,mpga,mp3,wav',
             'authors' => 'required',
@@ -72,7 +72,7 @@ class ContentController extends Controller
         //     $demo = $request->file('demo')->store('content/demo', 'public');
         // }
 
-        foreach ($request->subcategory as $sub_category) {
+        foreach ($request->sub_cat_id as $sub_category) {
             $content = Content::findOrFail($request->id)->update([
                 'category' => $request->category ?? '',
                 'sub_cat_id' => $sub_category,
@@ -107,7 +107,7 @@ class ContentController extends Controller
         // }
 
         // }
-        response()->json();
+        return response()->json(['success'=>true,'message'=>'data add successfully']);
         // return to_route('admin.content.index')->with('success', 'Content add successfully');
     }
 
@@ -308,6 +308,6 @@ class ContentController extends Controller
         $playlist->duration = '0';
         $playlist->authors = '';
         $playlist->save();
-        return response()->json(['success'=>true,'message'=>'successfully']);
+        return response()->json(['success'=>true,'message'=>'successfully','id'=>$content->id]);
     }
 }

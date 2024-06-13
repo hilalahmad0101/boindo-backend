@@ -24,7 +24,8 @@
             <h1 class="text-neutral-50 text-4xl font-black ">CONTENT UPLOAD</h1>
             <p>
             <div><span class="text-white text-xl font-normal ">Content will be added to search engine category - </span><span
-                    class="text-amber-500 text-xl font-normal ">CONTENT</span> <input type='checkbox' name="search" /></div>
+                    class="text-amber-500 text-xl font-normal ">CONTENT</span> <input type='checkbox' name="search"
+                    id="is_search" /></div>
             </p>
         </div>
         <div>
@@ -141,7 +142,7 @@
                         <h1 class="text-neutral-50 text-2xl font-black ml-2">Genral Information</h1>
 
                         <label class="">
-                            <input type="text" name="title" value="{{ old('title') }}" placeholder="Title"
+                            <input type="text" id="title" value="{{ old('title') }}" placeholder="Title"
                                 class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5  " />
                             @error('title')
                                 <span style="color: red">{{ $message }}</span>
@@ -151,7 +152,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 ">
                         <div class="mt-5">
                             <label class="">
-                                <input type="text" value="{{ old('isbn') }}" name="isbn" placeholder="ISBN"
+                                <input type="text" value="{{ old('isbn') }}" id="isbn" placeholder="ISBN"
                                     class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl" />
                                 @error('isbn')
                                     <span style="color: red">{{ $message }}</span>
@@ -289,14 +290,14 @@
                             @enderror
                         </div>
                         <div class="mt-5">
-                            <input type="text" value="{{ old('summary') }}" name="summary" placeholder="Summary"
+                            <input type="text" value="{{ old('summary') }}" id="summary" placeholder="Summary"
                                 class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl" />
                             @error('summary')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mt-5">
-                            <input type="text" value="{{ old('total_duration') }}" name="total_duration"
+                            <input type="text" value="{{ old('total_duration') }}" id="total_duration"
                                 placeholder="Total Duration"
                                 class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl" />
                             @error('total_duration')
@@ -410,7 +411,7 @@
                         <div class="flex items-center justify-end space-x-9 mt-[76px] mb-10">
                             <button onclick="window.location.href='{{ route('admin.onboarding.index') }}'" type="button"
                                 class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>
-                            <button type="button" id="saveData" {{ route('admin.content.store') }}
+                            <button type="button" id="saveData" data-url="{{ route('admin.content.store') }}"
                                 class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Upload</button>
                         </div>
                     </div>
@@ -485,6 +486,7 @@
         let isDemoComplete = false;
         let isAudioComplete = false;
         let uploadInProgress = false;
+        let contentId = 0;
 
         let audio = "";
         let video = "";
@@ -569,7 +571,8 @@
                     success: function(data) {
                         if (data.success) {
                             assetsUpload = true;
-                            alert("Content uploaded successfully")
+                            contentId = data.id,
+                                alert("Content uploaded successfully")
                         }
                     },
                     error: function(data) {
@@ -714,24 +717,27 @@
                 type: 'POST',
                 url: url,
                 data: {
+                    "_token":"{{ csrf_token() }}",
+                    "id": contentId,
                     'category': $("#category").val(),
                     'sub_cat_id': multipiCategory,
                     'title': $("#title").val(),
                     'isbn': $("#isbn").val(),
-                    'translator': arrayTranslators,
+                    'translator': arrayTranslators.map(item=>item.value),
                     'total_duration': $("#total_duration").val(),
-                    'cost': arrayCast,
+                    'cost': arrayCast.map(item=>item.value),
                     'summary': $("#summary").val(),
                     'is_search': $("#is_search").val(),
-                    'author_id': arrayAuthers,
-                    'authors': arrayAuthers,
-                    'cost2': arrayCast2,
-                    'producers': arraysProducers,
-                    'director': arrayDirectors,
-                    'music_director': arrayMusicDirectors,
+                    'author_id': arrayAuthers.map(item=>item.value),
+                    'authors': arrayAuthers.map(item=>item.value),
+                    'cost2': arrayCast2.map(item=>item.value),
+                    'producers': arraysProducers.map(item=>item.value),
+                    'director': arrayDirectors.map(item=>item.value),
+                    'music_director': arrayMusicDirectors.map(item=>item.value),
                 },
-                success:(data)=>{
-                    console.log(data);
+                success: (data) => {
+                    toastr['success'](data.message)
+                    $("#saveData").text('Upload')
                 }
             })
 
