@@ -87,6 +87,7 @@ Route::middleware(['auth:admin'])->group(function () {
                 Route::get('list', 'index')->name('admin.content.index');
                 Route::post('get/sub/categories', 'getSubCategories')->name('admin.content.get.subcategories');
                 Route::post('get/sub/categories/update', 'getUpdateSubCategories')->name('admin.content.get.update.subcategories');
+                Route::post('content/store', 'contentAssets')->name('admin.content.assets.store');
                 Route::get('create', 'create')->name('admin.content.create');
                 Route::post('store', 'store')->name('admin.content.store');
                 Route::get('edit/{id}', 'edit')->name('admin.content.edit');

@@ -50,10 +50,10 @@ class ContentController extends Controller
         //         }
         //     } 
 
-        $image = "";
-        if ($request->file('image')) {
-            $image = $request->file('image')->store('content/image', 'public');
-        }
+        // $image = "";
+        // if ($request->file('image')) {
+        //     $image = $request->file('image')->store('content/image', 'public');
+        // }
 
         // $audio = [];
         // if ($request->file('audio')) {
@@ -63,46 +63,34 @@ class ContentController extends Controller
         // } 
 
 
-        $audio = "";
-        if ($request->file('audio')) {
-            $audio = $request->file('audio')->store('content/audio', 'public');
-        }
-        $demo = "";
-        if ($request->file('demo')) {
-            $demo = $request->file('demo')->store('content/demo', 'public');
-        }
+        // $audio = "";
+        // if ($request->file('audio')) {
+        //     $audio = $request->file('audio')->store('content/audio', 'public');
+        // }
+        // $demo = "";
+        // if ($request->file('demo')) {
+        //     $demo = $request->file('demo')->store('content/demo', 'public');
+        // }
 
         foreach ($request->subcategory as $sub_category) {
-            $content = Content::create([
+            $content = Content::findOrFail($request->id)->update([
                 'category' => $request->category ?? '',
                 'sub_cat_id' => $sub_category,
                 'title' => $request->title ?? '',
                 'isbn' => $request->isbn ?? '',
-                'translator' => json_encode($request->translator)  ?? '',
+                'translator' => json_encode($request->translator) ?? '',
                 'total_duration' => $request->total_duration ?? '',
                 'cost' => json_encode($request->cost) ?? '',
                 'summary' => $request->summary ?? '',
                 'is_search' => $request->search == "on" ? 1 : 0,
-                'image' => $image ?? '',
-                'audio' => $audio ?? '',
-                'demo' => $demo ?? '',
-                'author_id' => json_encode($request->authors) ?? '',
-                // 'authors' =>  json_encode(explode(',', $request->authors)) ?? '',
-                'authors' =>  json_encode($request->authors) ?? '',
-                'cost2' =>  json_encode($request->cost2) ?? '',
+                'author_id' => json_encode($request->authors) ?? '', 
+                'authors' => json_encode($request->authors) ?? '',
+                'cost2' => json_encode($request->cost2) ?? '',
                 'producers' => json_encode($request->producers) ?? '',
                 'adoption' => json_encode($request->adoption) ?? '',
                 'director' => json_encode($request->director) ?? '',
                 'music_director' => json_encode($request->music_director) ?? '',
-            ]);
-
-            $playlist = new Playlist();
-            $playlist->title = $request->title;
-            $playlist->content_id = $content->id ?? '';
-            $playlist->audio = $audio ?? '';
-            $playlist->duration = $request->duration ?? '';
-            $playlist->authors = json_encode(explode(',', $request->playlist_authors)) ?? '';
-            $playlist->save();
+            ]); 
         }
 
         //     ContentCategory::create([
@@ -119,7 +107,8 @@ class ContentController extends Controller
         // }
 
         // }
-        return to_route('admin.content.index')->with('success', 'Content add successfully');
+        response()->json();
+        // return to_route('admin.content.index')->with('success', 'Content add successfully');
     }
 
     public function edit($id)
@@ -173,7 +162,7 @@ class ContentController extends Controller
             'sub_cat_id' => $request->subcategory ?? '',
             'title' => $request->title ?? '',
             'isbn' => $request->isbn ?? '',
-            'translator' => json_encode($request->translator)  ?? '',
+            'translator' => json_encode($request->translator) ?? '',
             'total_duration' => $request->total_duration ?? '',
             'cost' => json_encode($request->cost) ?? '',
             'summary' => $request->summary ?? '',
@@ -183,8 +172,8 @@ class ContentController extends Controller
             'is_search' => $request->search == "on" ? 1 : 0,
             'author_id' => json_encode($request->authors) ?? '',
             // 'authors' =>  json_encode(explode(',', $request->authors)) ?? '',
-            'authors' =>  json_encode($request->authors) ?? '',
-            'cost2' =>  json_encode($request->cost2) ?? '',
+            'authors' => json_encode($request->authors) ?? '',
+            'cost2' => json_encode($request->cost2) ?? '',
             'producers' => json_encode($request->producers) ?? '',
             'adoption' => json_encode($request->adoption) ?? '',
             'director' => json_encode($request->director) ?? '',
@@ -248,6 +237,7 @@ class ContentController extends Controller
 
         $categories = SubCategory::where('category', $value)->get();
         if (count($categories) > 0) {
+            $output.="<option value=''>Select Sub Category</option>";
             foreach ($categories as $category) {
                 $output .= "<option value='{$category->id}'>{$category->name}</option>";
             }
@@ -287,5 +277,37 @@ class ContentController extends Controller
     {
         Playlist::findOrFail($id)->delete();
         return to_route('admin.content.edit', ['id' => $content_id])->with('success', 'Content Update successfully');
+    }
+
+    public function contentAssets(Request $request)
+    {
+        $image = "";
+        if ($request->file('image')) {
+            $image = $request->file('image')->store('content/image', 'public');
+        }
+
+        $audio = "";
+        if ($request->file('audio')) {
+            $audio = $request->file('audio')->store('content/audio', 'public');
+        }
+        $demo = "";
+        if ($request->file('demo')) {
+            $demo = $request->file('demo')->store('content/demo', 'public');
+        }
+        $content = Content::create([
+            'image' => $image ?? '',
+            'audio' => $audio ?? '',
+            'demo' => $demo ?? '',
+            'status' => 0
+        ]);
+
+        $playlist = new Playlist();
+        $playlist->title = 'NO TITLE';
+        $playlist->content_id = $content->id;
+        $playlist->audio = $audio ?? '';
+        $playlist->duration = '0';
+        $playlist->authors = '';
+        $playlist->save();
+        return response()->json(['success'=>true,'message'=>'successfully']);
     }
 }
