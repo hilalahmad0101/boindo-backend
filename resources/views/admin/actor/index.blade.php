@@ -13,35 +13,36 @@
                         <span
                             class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($actors) }}</span>
                     </p>
-                    <div class=" ">
-                        <div class="relative inline-block text-left ">
-                            <div class="">
-                                <button type="button"
-                                    class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
-                                    id="content-listened-button" aria-expanded="true" aria-haspopup="true">
-                                    <span id="content-listened-button-text">Most listened</span>
-                                    <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.707a1 1 0 011.414 0L10 11.293l3.293-3.586a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
 
-                            <div class="origin-top-right hidden  w-[200px]  absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                role="content_listened_menu" aria-orientation="vertical"
-                                aria-labelledby="menu-button" tabindex="-1">
-                                <div class="py-1" role="none">
-                                    <a href="#" data-type="high" id="most_views"
-                                        class="text-gray-200 block px-4 py-2 text-sm" role="menuitem"
-                                        tabindex="-1">Low To High</a>
+                    <div class="flex items-center mt-3 md:mt-0 space-x-6">
+                        <div class="">
+                            <div class="relative inline-block text-left ">
+                                <div class="">
+                                    <button type="button"
+                                        class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                                        id="content-listened-button" aria-expanded="true" aria-haspopup="true">
+                                        <span id="content-listened-button-text">Most viewed</span>
+                                        <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.707a1 1 0 011.414 0L10 11.293l3.293-3.586a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
 
+                                <div class="origin-top-right hidden  w-[200px]  absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="content_listened_menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                                    tabindex="-1">
+                                    <div class="py-1" role="none">
+                                        <a href="#" data-type="high" id="most_views"
+                                            class="text-gray-200 block px-4 py-2 text-sm" role="menuitem" tabindex="-1">Low
+                                            To High</a>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex items-center mt-3 md:mt-0">
                         <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
                             <img src="{{ asset('images/search.png') }}" alt="">
                             <input type="text" placeholder="Search" id="searchInput"
@@ -177,11 +178,14 @@
                 filteredActors.sort((a, b) => b.views - a.views);
                 this.sortOrder = 'asc';
                 $("#most_views").text('Low to High');
+                $("#content-listened-button-text").text('Low to High')
             } else {
                 // Sort actors based on 'views' property (ascending)
                 filteredActors.sort((a, b) => a.views - b.views);
                 this.sortOrder = 'desc';
                 $("#most_views").text('High to Low');
+                $("#content-listened-button-text").text('High to Low')
+
             }
 
             currentPage = 1; // Reset to first page when sorting changes
