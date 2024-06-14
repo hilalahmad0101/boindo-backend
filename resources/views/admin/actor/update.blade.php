@@ -62,7 +62,7 @@
         </form>
     </div> --}}
 
-    <form method="POST" enctype="multipart/form-data" class="mt-[134px]">
+    <form method="POST"  action="{{ route('admin.actor.update', ['id' => $actorProfile->id]) }}" enctype="multipart/form-data" class="mt-[134px]">
         <div class="flex md:flex-row flex-col md:space-y-0 space-x-5 items-center justify-between">
             <h1 class="text-neutral-50 text-4xl font-black ">CAST UPLOAD</h1>
             <p>
@@ -74,7 +74,7 @@
         <div>
             <div class="mt-12">
                 <div 
-                    action="{{ route('admin.actor.update', ['id' => $actorProfile->id]) }}">
+                   >
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
