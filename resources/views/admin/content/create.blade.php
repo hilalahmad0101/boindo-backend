@@ -689,22 +689,56 @@
 
 
 
+
+
+
+        let subCategoryCount = 1;
+        let deleteUrl = "{{ asset('images/trash.svg') }}";
+
+        function addSubCategoryField() {
+            const newField = `
+    <div class="flex items-center mb-4 sub-category-item space-x-5">
+        <select id="sub_category${subCategoryCount}" name="sub_category[]" class="w-full bg-[#383838] appearance-none py-4 px-4 text-white outline-none border-none rounded-2xl mt-2">
+        </select>
+        <img src="${deleteUrl}" class="size-6 delete-btn" />
+    </div>
+    `;
+            $('#sub-category-container').append(newField);
+        }
+
+        $('#sub-category-container').on('click', '.delete-btn', function() {
+            subCategoryCount--;
+            // Mark the item for deletion
+            $(this).closest('.sub-category-item').find('select').attr('name', 'deleted_sub_category[]');
+            $(this).closest('.sub-category-item').hide(); // Optionally hide it
+        });
+
+        $('#add-more-btn').click(function() {
+            subCategoryCount++;
+            const value = $("#category").val();
+            addSubCategoryField();
+
+            $.ajax({
+                url: "{{ route('admin.content.get.subcategories') }}",
+                type: 'POST',
+                data: {
+                    value,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: (data) => {
+                    $("#sub_category" + subCategoryCount).html(data);
+                }
+            });
+        });
+
+
         $('#saveData').on('click', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
             let url = $(this).data('url');
             let multipiCategory = [];
-            console.log(subCategoryCount);
             for (let i = 1; i <= subCategoryCount; i++) {
                 multipiCategory.push($("#sub_category" + i).val())
-            }
-            // console.log($("#sub_category"+subCategoryCount).val());
-            // console.log('authoers', arrayAuthers);
-            // console.log('producter', arraysProducers);
-            // console.log('producter', arrayTranslators);
-            // console.log('producter', arrayDirectors);
-            // console.log('producter', arrayMusicDirectors);
-            // console.log('producter', arrayCast);
-            // console.log('producter', arrayCast2);
+            } 
             $("#saveData").text('Uploading....')
             $.ajax({
                 type: 'POST',
@@ -737,51 +771,6 @@
             })
 
         })
-
-
-        let subCategoryCount = 1;
-        let deleteUrl = "{{ asset('images/trash.svg') }}"
-
-        // Function to add a new sub-category field
-        function addSubCategoryField() {
-            const newField = `
-       
-       <div class="flex items-center mb-4 sub-category-item space-x-5">
-            <select id="sub_category${subCategoryCount}" class="w-full bg-[#383838]  appearance-none py-4 px-4 text-white outline-none border-none rounded-2xl mt-2">
-            </select>
-        <img  src="${deleteUrl}" class="size-6 delete-btn" />
-            
-        </div>
-             
-    `;
-            $('#sub-category-container').append(newField);
-        }
-
-        // Add initial delete button functionality
-        $('#sub-category-container').on('click', '.delete-btn', function() {
-            $(this).closest('.sub-category-item').remove();
-        });
-
-        // Add more button click event
-        $('#add-more-btn').click(function() {
-            subCategoryCount++;
-            const value = $("#category").val();
-            $("#sub_category" + subCategoryCount).html('');
-
-            $.ajax({
-                url: "{{ route('admin.content.get.subcategories') }}",
-                type: 'POST',
-                data: {
-                    value,
-                    _token: "{{ csrf_token() }}",
-                },
-                success: (data) => {
-                    $("#sub_category" + subCategoryCount).html(data);
-
-                }
-            });
-            addSubCategoryField();
-        });
 
         $("#category").on('change', function() {
             const value = $(this).val();
