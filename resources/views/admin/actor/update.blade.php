@@ -62,7 +62,7 @@
         </form>
     </div> --}}
 
-    <div class="mt-[134px]">
+    <form method="POST" enctype="multipart/form-data" class="mt-[134px]">
         <div class="flex md:flex-row flex-col md:space-y-0 space-x-5 items-center justify-between">
             <h1 class="text-neutral-50 text-4xl font-black ">CAST UPLOAD</h1>
             <p>
@@ -73,7 +73,7 @@
         </div>
         <div>
             <div class="mt-12">
-                <form method="POST" enctype="multipart/form-data"
+                <div 
                     action="{{ route('admin.actor.update', ['id' => $actorProfile->id]) }}">
                     @csrf
 
@@ -146,10 +146,10 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <script>
         document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
