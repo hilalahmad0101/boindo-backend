@@ -99,10 +99,12 @@
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
                         </div>
-                        <label class=" mt-[20px]" id='version' style='display:none;'>
+                     
+                        <label class=" mt-[20px] relative" id='version' style='display:none;'>
                             <span class="text-neutral-50 text-2xl font-black">Select Version</span>
+                            <img src="{{ asset('icons/down.png') }}" class="size-6 absolute top-[4.2rem] right-[11px]" alt="">
                             <select name='version' id='version_data'
-                                class="block w-full mt-5 bg-[#383838] py-4 px-4 text-white outline-none border-none rounded-2xl">
+                                class="block w-full mt-5 appearance-none bg-[#383838] py-4 px-4 text-white outline-none border-none rounded-2xl">
                             </select>
                         </label>
 

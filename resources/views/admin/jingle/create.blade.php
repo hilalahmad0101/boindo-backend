@@ -54,6 +54,7 @@
         <h1 class="text-neutral-50 text-4xl font-black ">ADVERTISING UPLOAD</h1>
         <div>
             <div class="mt-12">
+                <div class="text-neutral-50 text-2xl font-black ">Media</div>
                 <form method="POST" enctype="multipart/form-data" action="{{ route('admin.jingle.store') }}">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
@@ -94,7 +95,7 @@
                             <label for=""
                                 class="text-neutral-50 text-sm font-black flex mb-3 justify-center space-x-2 items-center">
                                 <img src="{{ asset('images/jingle.png') }}" alt="">
-                                <span>Jingnle</span>
+                                <span>Jingle</span>
                             </label>
                             {{-- <audio id="previewDemoAudio" controls style="display:none;" class="mt-5"></audio> --}}
                             <div class="relative">
@@ -124,7 +125,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div>
+                    <div class="mt-[70px]">
                         <label for="" class="text-neutral-50 text-2xl font-black">Title</label>
                         <input type="text" placeholder="Title" name="title"
                             class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">

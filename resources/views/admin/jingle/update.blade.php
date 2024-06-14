@@ -7,6 +7,7 @@
         <h1 class="text-neutral-50 text-4xl font-black ">ADVERTISING UPDATE</h1>
         <div>
             <div class="mt-12">
+                <div class="text-neutral-50 text-2xl font-black ">Media</div>
                 <form method="POST" enctype="multipart/form-data"
                     action="{{ route('admin.jingle.update', ['id' => $jingle->id]) }}">
                     @csrf
@@ -83,7 +84,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="mt-[70px]">
                         <label for="" class="text-neutral-50 text-2xl font-black">Title</label>
                         <input type="text" placeholder="Title" name="title" value="{{ $jingle->title }}"
                             class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
