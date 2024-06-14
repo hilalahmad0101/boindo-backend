@@ -11,6 +11,10 @@ class Content extends Model
 
     protected $guarded = [];
 
+    protected $hidden = [
+        'status', 
+    ];
+
     public function sub_category()
     {
         return $this->belongsTo(SubCategory::class, 'sub_cat_id');

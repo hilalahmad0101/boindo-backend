@@ -17,6 +17,8 @@ class DashboardController extends Controller
         return view('admin.dashboard');
     }
 
+
+
     public function send_mail_view($id)
     {
         return view('admin.send-mail', compact('id'));

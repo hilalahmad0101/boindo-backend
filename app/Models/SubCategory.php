@@ -9,10 +9,11 @@ class SubCategory extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
-    public function contents(){
-        return $this->hasMany(Content::class,'sub_cat_id');
+    public function contents()
+    {
+        return $this->hasMany(Content::class, 'sub_cat_id')->where('status', 1);
     }
-    
+
 }

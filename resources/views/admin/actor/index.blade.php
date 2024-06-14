@@ -209,6 +209,8 @@
 
             paginatedItems.forEach(actor => {
                 let imageUrl = "{{ asset('storage/') }}/" + actor.image;
+                let editRoute="/admin/actor/edit/"+actor.id
+                let deleteRoute="/admin/actor/delete/"+actor.id
                 const row = `<tr>
             <td class="border border-[#FFFFFF33] text-white px-6 py-4">
                 <div class="flex items-center space-x-4">
@@ -223,12 +225,12 @@
                 ${actor.views}
             </td>
             <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                <a href="">
+                <a href="${editRoute}">
                     <img src="${editUrl}" alt="">
                 </a>
             </td>
             <td class="border-b border-[#FFFFFF33] px-6 py-4">
-                <a href="">
+                <a href="${deleteRoute}">
                     <img src="${deleteUrl}" alt="">
                 </a>
             </td>

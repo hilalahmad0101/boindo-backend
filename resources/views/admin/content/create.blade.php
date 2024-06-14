@@ -160,7 +160,7 @@
                             </label>
                         </div>
                         <div class="mt-5">
-                            <div class="w-full  mx-auto text-white">
+                            <div class="w-full mx-auto text-white">
                                 <div class="relative multi-select-container" data-type="producers">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
@@ -174,8 +174,11 @@
                                                 $authors = \App\Models\ActorProfile::orderBy('name', 'asc')->get();
                                             @endphp
                                             @foreach ($authors as $author)
-                                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-600"
-                                                    data-value="{{ $author->id }}">{{ $author->name }}</li>
+                                                <li class="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-600"
+                                                    data-value="{{ $author->id }}">
+                                                    <span>{{ $author->name }}</span>
+                                                    <input type="checkbox" class="ml-2">
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -186,11 +189,11 @@
                             @enderror
                         </div>
                         <div class="mt-5">
-                            <div class="w-full  mx-auto text-white">
+                            <div class="w-full mx-auto text-white">
                                 <div class="relative multi-select-container" data-type="authors">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Authors</span>
+                                        <span>Producers</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -200,23 +203,26 @@
                                                 $authors = \App\Models\ActorProfile::orderBy('name', 'asc')->get();
                                             @endphp
                                             @foreach ($authors as $author)
-                                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-600"
-                                                    data-value="{{ $author->id }}">{{ $author->name }}</li>
+                                                <li class="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-600"
+                                                    data-value="{{ $author->id }}">
+                                                    <span>{{ $author->name }}</span>
+                                                    <input type="checkbox" class="ml-2">
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            @error('autheors')
+                            @error('authors')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mt-5">
-                            <div class="w-full  mx-auto text-white">
+                            <div class="w-full mx-auto text-white">
                                 <div class="relative multi-select-container" data-type="translators">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Tranlator</span>
+                                        <span>Producers</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -226,8 +232,11 @@
                                                 $authors = \App\Models\ActorProfile::orderBy('name', 'asc')->get();
                                             @endphp
                                             @foreach ($authors as $author)
-                                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-600"
-                                                    data-value="{{ $author->id }}">{{ $author->name }}</li>
+                                                <li class="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-600"
+                                                    data-value="{{ $author->id }}">
+                                                    <span>{{ $author->name }}</span>
+                                                    <input type="checkbox" class="ml-2">
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -238,11 +247,11 @@
                             @enderror
                         </div>
                         <div class="mt-5">
-                            <div class="w-full  mx-auto text-white">
+                            <div class="w-full mx-auto text-white">
                                 <div class="relative multi-select-container" data-type="directors">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Director</span>
+                                        <span>Producers</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -252,8 +261,11 @@
                                                 $authors = \App\Models\ActorProfile::orderBy('name', 'asc')->get();
                                             @endphp
                                             @foreach ($authors as $author)
-                                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-600"
-                                                    data-value="{{ $author->id }}">{{ $author->name }}</li>
+                                                <li class="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-600"
+                                                    data-value="{{ $author->id }}">
+                                                    <span>{{ $author->name }}</span>
+                                                    <input type="checkbox" class="ml-2">
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -264,11 +276,11 @@
                             @enderror
                         </div>
                         <div class="mt-5">
-                            <div class="w-full  mx-auto text-white">
+                            <div class="w-full mx-auto text-white">
                                 <div class="relative multi-select-container" data-type="music_directors">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Music Director</span>
+                                        <span>Producers</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -278,8 +290,11 @@
                                                 $authors = \App\Models\ActorProfile::orderBy('name', 'asc')->get();
                                             @endphp
                                             @foreach ($authors as $author)
-                                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-600"
-                                                    data-value="{{ $author->id }}">{{ $author->name }}</li>
+                                                <li class="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-600"
+                                                    data-value="{{ $author->id }}">
+                                                    <span>{{ $author->name }}</span>
+                                                    <input type="checkbox" class="ml-2">
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -310,11 +325,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-6 ">
 
                         <div class="mt-5">
-                            <div class="w-full  mx-auto text-white">
+                            <div class="w-full mx-auto text-white">
                                 <div class="relative multi-select-container" data-type="cast">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Lead Cast</span>
+                                        <span>Producers</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -324,23 +339,26 @@
                                                 $authors = \App\Models\ActorProfile::orderBy('name', 'asc')->get();
                                             @endphp
                                             @foreach ($authors as $author)
-                                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-600"
-                                                    data-value="{{ $author->id }}">{{ $author->name }}</li>
+                                                <li class="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-600"
+                                                    data-value="{{ $author->id }}">
+                                                    <span>{{ $author->name }}</span>
+                                                    <input type="checkbox" class="ml-2">
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            @error('autheors')
+                            @error('cast')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="">
-                            <div class="w-full  mx-auto text-white">
+                            <div class="w-full mx-auto text-white">
                                 <div class="relative multi-select-container" data-type="cast2">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Secondary Cast</span>
+                                        <span>Producers</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -350,14 +368,17 @@
                                                 $authors = \App\Models\ActorProfile::orderBy('name', 'asc')->get();
                                             @endphp
                                             @foreach ($authors as $author)
-                                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-600"
-                                                    data-value="{{ $author->id }}">{{ $author->name }}</li>
+                                                <li class="flex items-center justify-between py-2 px-4 cursor-pointer hover:bg-gray-600"
+                                                    data-value="{{ $author->id }}">
+                                                    <span>{{ $author->name }}</span>
+                                                    <input type="checkbox" class="ml-2">
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            @error('autheors')
+                            @error('cast')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
                         </div>
@@ -572,7 +593,7 @@
                         if (data.success) {
                             assetsUpload = true;
                             contentId = data.id,
-                                alert("Content uploaded successfully")
+                            toastr['success'](data.message)
                         }
                     },
                     error: function(data) {
@@ -608,6 +629,8 @@
         let arrayMusicDirectors = [];
         let arrayCast = [];
         let arrayCast2 = [];
+        let openDropdown = null; // Track the currently open dropdown
+
         $('.multi-select-container').each(function() {
             const $container = $(this);
             const type = $container.data('type');
@@ -618,43 +641,45 @@
 
             // Toggle dropdown display
             $selectedItems.on('click', function() {
+                if (openDropdown && openDropdown !== $dropdown) {
+                    openDropdown.hide();
+                }
                 $dropdown.toggle();
+                openDropdown = $dropdown.is(':visible') ? $dropdown : null;
             });
 
-
             // Handle selection of dropdown items
-            $dropdownItems.on('click', function() {
+            $dropdownItems.on('click', function(event) {
+                const $checkbox = $(this).find('input[type="checkbox"]');
                 const value = $(this).data('value');
-                const text = $(this).text();
+                const text = $(this).find('span').text();
 
-                if (!selectedValues.some(item => item.value === value)) {
-                    selectedValues.push({
-                        value: value,
-                        text: text
-                    });
-                    $(this).remove(); // Remove selected item from the dropdown
+                // Toggle the checkbox state
+                $checkbox.prop('checked', !$checkbox.prop('checked'));
+
+                if ($checkbox.prop('checked')) {
+                    if (!selectedValues.some(item => item.value === value)) {
+                        selectedValues.push({
+                            value: value,
+                            text: text
+                        });
+                    }
+                } else {
+                    selectedValues = selectedValues.filter(item => item.value !== value);
                 }
 
                 updateSelectedItemsDisplay();
             });
 
-            // Hide dropdown when clicking outside
-            // $(document).on('click', function(event) {
-            //     if (!$(event.target).closest($container).length) {
-            //         $dropdown.hide();
-            //     }
-            // });
-
             function updateSelectedItemsDisplay() {
                 if (selectedValues.length > 2) {
                     const displayText = selectedValues.slice(0, 2).map(item => item.text).join(', ');
-                    $selectedItems.text(`${displayText} +${selectedValues.length - 2}`);
+                    $selectedItems.find('span').text(`${displayText} +${selectedValues.length - 2}`);
                 } else {
                     const displayText = selectedValues.map(item => item.text).join(', ');
-                    $selectedItems.text(displayText);
+                    $selectedItems.find('span').text(displayText);
                 }
             }
-
 
             // Store selected values in separate arrays based on type
             switch (type) {
@@ -666,7 +691,6 @@
                     // Logic for storing selected authors
                     arrayAuthers = selectedValues;
                     break;
-
                 case 'translators':
                     // Logic for storing selected authors
                     arrayTranslators = selectedValues;
@@ -687,14 +711,22 @@
                     // Logic for storing selected authors
                     arrayCast2 = selectedValues;
                     break;
-
                 default:
                     break;
             }
-
-
-
         });
+
+        // Hide dropdowns when clicking outside
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.multi-select-container').length) {
+                if (openDropdown) {
+                    openDropdown.hide();
+                    openDropdown = null;
+                }
+            }
+        });
+
+
 
         $('#saveData').on('click', function(e) {
             e.preventDefault();
@@ -717,27 +749,30 @@
                 type: 'POST',
                 url: url,
                 data: {
-                    "_token":"{{ csrf_token() }}",
+                    "_token": "{{ csrf_token() }}",
                     "id": contentId,
                     'category': $("#category").val(),
                     'sub_cat_id': multipiCategory,
                     'title': $("#title").val(),
                     'isbn': $("#isbn").val(),
-                    'translator': arrayTranslators.map(item=>item.value),
+                    'translator': arrayTranslators.map(item => item.value),
                     'total_duration': $("#total_duration").val(),
-                    'cost': arrayCast.map(item=>item.value),
+                    'cost': arrayCast.map(item => item.value),
                     'summary': $("#summary").val(),
                     'is_search': $("#is_search").val(),
-                    'author_id': arrayAuthers.map(item=>item.value),
-                    'authors': arrayAuthers.map(item=>item.value),
-                    'cost2': arrayCast2.map(item=>item.value),
-                    'producers': arraysProducers.map(item=>item.value),
-                    'director': arrayDirectors.map(item=>item.value),
-                    'music_director': arrayMusicDirectors.map(item=>item.value),
+                    'author_id': arrayAuthers.map(item => item.value),
+                    'authors': arrayAuthers.map(item => item.value),
+                    'cost2': arrayCast2.map(item => item.value),
+                    'producers': arraysProducers.map(item => item.value),
+                    'director': arrayDirectors.map(item => item.value),
+                    'music_director': arrayMusicDirectors.map(item => item.value),
                 },
                 success: (data) => {
-                    toastr['success'](data.message)
-                    $("#saveData").text('Upload')
+                    if (data.success) {
+                        toastr['success'](data.message)
+                        window.location.href = "/admin/content/list"
+                        $("#saveData").text('Upload')
+                    }
                 }
             })
 

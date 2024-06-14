@@ -1346,6 +1346,8 @@
 
             paginatedItems.forEach(content => {
                 let imageUrl = "{{ asset('storage/') }}/" + content.image;
+                let editButton="/admin/content/edit/"+content.id;
+                let deleteButton="/admin/content/delete/"+content.id;
                 const row = `<tr>
           <td class="border border-[#FFFFFF33] text-white px-6 py-4">
             <div class="flex items-center space-x-4">
@@ -1353,15 +1355,15 @@
               <span>${content.title}</span>
             </div>
           </td>
-          <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-          <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-          <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-          <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-          <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-            <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
+          <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
+          <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category ? content.sub_category.name : ''}</td>
+          <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
+          <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
+          <td class="border-b  border-[#FFFFFF33] text-white px-6 py-4">
+            <a href="${editButton}"><img src="${editUrl}" alt=""></a>
           </td>
-          <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-            <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
+          <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+            <a href="${deleteButton}"><img src="${deleteUrl}" alt=""></a>
           </td>
         </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', row);

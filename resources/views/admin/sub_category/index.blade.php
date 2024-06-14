@@ -168,7 +168,7 @@
                             <th
                                 class="px-6 py-3 text-left  text-white border-b border-r border-t rounded-tl-md border-[#FFFFFF33]">
                                 Title</th>
-                            <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Date</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-t border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
                         </tr>
@@ -285,16 +285,18 @@
             const paginatedItems = filteredCategories.slice(start, end);
 
             paginatedItems.forEach(category => {
+                let editButton="/admin/sub-category/edit/"+category.id;
+                let deleteButton="/admin/sub-category/delete/"+category.id;
                 const row = `<tr>
                 <td class="border border-[#FFFFFF33] text-white px-6 py-4">${category.name}</td>
                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${new Date(category.created_at).toLocaleDateString()}</td>
                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                    <a href="">
+                    <a href="${editButton}">
                         <img src="${editUrl}" alt="">
                     </a>
                 </td>
                 <td class="border-b border-[#FFFFFF33] px-6 py-4">
-                    <a href="">
+                    <a href="${deleteButton}">
                         <img src="${deleteUrl}" alt="">
                     </a>
                 </td>

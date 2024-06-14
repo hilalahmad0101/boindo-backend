@@ -12,6 +12,6 @@ class Recent extends Model
     protected $guarded=[];
 
     public function content(){
-        return $this->belongsTo(Content::class,'content_id');
+        return $this->belongsTo(Content::class,'content_id')->whereStatus(1);
     }
 }

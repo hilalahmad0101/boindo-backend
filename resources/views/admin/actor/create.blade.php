@@ -72,17 +72,32 @@
             <div class="mt-12">
                 <div>
                     @csrf
- 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div class="rounded-lg pb-6 relative mt-[10px]">
-                            <label for="" class="text-neutral-50 text-2xl font-black m">Media</label>
+
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                        <div class="rounded-lg p-6 relative mt-[10px]">
+                            <label for=""
+                                class="text-neutral-50 text-sm font-black flex justify-center space-x-2 items-center">
+                                <img src="{{ asset('images/img.png') }}" alt="">
+                                <span>Cover</span>
+                            </label>
                             <input type="file" accept="images/*" id="onboardingImageInput" name="image"
                                 class="absolute inset-0 opacity-0 z-50" />
-                            <div class=" mt-4" id="image">
-                                <img class="" src="{{ asset('images/file-upload.svg') }}" alt="">
+                            <div class="mt-4" id="image">
+                                <img class="" id="" src="{{ asset('images/file-upload.svg') }}"
+                                    alt="">
                             </div>
-                            <img src="" style="width: 100%" id="preivew"
-                                class="w-[100px] h-[100px] object-fill hidden" alt="">
+
+                            <div class="w-full max-w-md pt-4 flex items-center space-x-2">
+                                <div class="flex items-center space-x-2 w-full">
+                                    <div id="progressWrapper" class="relative w-full h-1 bg-gray-600 rounded-full">
+                                        <div id="progressBar" class="absolute h-1 bg-white rounded-full" style="width: 0%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-white text-sm" id="progressTextImage">0%</div>
+
+                            {{-- <img src="" style="width: 100%" class="mt-4" id="previewImage" alt=""> --}}
                             @error('image')
                                 <span style="color:red">{{ $message }}</span>
                             @enderror
@@ -132,36 +147,70 @@
     </form>
 
     <script>
-        // Function to handle the file input change event
-        function handleFileInputChange() {
-            var input = document.getElementById('onboardingImageInput');
-            var preview = document.getElementById('preivew');
-
-            var file = input.files[0];
-
-            // Check if a file is selected
+        document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
             if (file) {
-                // Create a FileReader
-                var reader = new FileReader();
+                simulateUpload(file, 'progressBar', 'progressTextImage');
+                image = file;
+                isImageComplete = true;
 
-                // Set up the FileReader to display the image preview once it's loaded
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block'; // Display the image preview
-                };
-
-                // Read the file as a data URL (base64 encoding)
-                reader.readAsDataURL(file);
-                document.getElementById('image').classList.add('hidden')
-            } else {
-                // If no file is selected, hide the image preview
-                // document.getElementById('image').classList.add('block')
-                // document.getElementById('image').classList.remove('hidden')
-                preview.style.display = 'none';
             }
-        }
+        });
 
-        // Attach the handleFileInputChange function to the change event of the file input
-        document.getElementById('onboardingImageInput').addEventListener('change', handleFileInputChange);
+        function simulateUpload(file, progressbar, progressText) {
+            const progressBar = document.getElementById(progressbar);
+            const totalSize = file.size;
+            let uploadedSize = 0;
+
+            const uploadInterval = setInterval(() => {
+                // Simulate a chunk of upload
+                const chunkSize = Math.random() * (totalSize / 10);
+                uploadedSize += chunkSize;
+
+                // Calculate the percentage completed
+                const percentComplete = Math.min((uploadedSize / totalSize) * 100, 100);
+                progressBar.style.backgroundColor = 'white';
+                progressBar.style.width = percentComplete + '%';
+                $("#" + progressText).text(Math.round(percentComplete) + '%');
+
+                // If upload is complete, stop the interval
+                if (uploadedSize >= totalSize) {
+                    clearInterval(uploadInterval);
+                    // alert("upload complete")
+                    upload();
+                }
+            }, 100); // Adjust the interval timing as needed
+        }
+        // Function to handle the file input change event
+        // function handleFileInputChange() {
+        //     var input = document.getElementById('onboardingImageInput');
+        //     var preview = document.getElementById('preivew');
+
+        //     var file = input.files[0];
+
+        //     // Check if a file is selected
+        //     if (file) {
+        //         // Create a FileReader
+        //         var reader = new FileReader();
+
+        //         // Set up the FileReader to display the image preview once it's loaded
+        //         reader.onload = function(e) {
+        //             preview.src = e.target.result;
+        //             preview.style.display = 'block'; // Display the image preview
+        //         };
+
+        //         // Read the file as a data URL (base64 encoding)
+        //         reader.readAsDataURL(file);
+        //         document.getElementById('image').classList.add('hidden')
+        //     } else {
+        //         // If no file is selected, hide the image preview
+        //         // document.getElementById('image').classList.add('block')
+        //         // document.getElementById('image').classList.remove('hidden')
+        //         preview.style.display = 'none';
+        //     }
+        // }
+
+        // // Attach the handleFileInputChange function to the change event of the file input
+        // document.getElementById('onboardingImageInput').addEventListener('change', handleFileInputChange);
     </script>
 @endsection

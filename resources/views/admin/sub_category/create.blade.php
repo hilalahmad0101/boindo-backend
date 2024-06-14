@@ -60,12 +60,13 @@
                         @enderror
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div class="mt-[60px]">
-                            <label for="" class="text-neutral-50 text-2xl font-black">Category</label>
-                            <select name="category" class="w-full bg-[#383838]  py-4 pl-4 pr-10 text-white outline-none border-none rounded-2xl mt-5"  id="">
+                        <div class="mt-[60px] relative">
+                            <label for="" class="text-neutral-50 text-2xl font-black ">Category</label>
+                            <img src="{{ asset('icons/down.png') }}" class="size-6 absolute top-[4.2rem] right-[11px]" alt="">
+                            <select name="category" class="w-full appearance-none bg-[#383838]  py-4 pl-4 pr-10 text-white outline-none border-none rounded-2xl mt-5"  id="">
                                 <option value="">Select Category</option>
                                 <option value="play">Play</option>
-                                <option value="short stories">Short Stories</option>
+                                <option   value="short stories">Short Stories</option>
                             </select>
                             @error('category')
                                 <span style="color: red">{{ $message }}</span>

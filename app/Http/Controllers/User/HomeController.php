@@ -118,7 +118,7 @@ class HomeController extends Controller
                     $totalAvgReview = Review::where('content_id', $content->id)
                         ->avg('star');
                     $content->totalAvgReview = $totalAvgReview;
-                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
+                    $jingle = Jingle::inRandomOrder()->where('status', 1)->first();
                     $content->jingle = $jingle;
                 }
             }
@@ -156,7 +156,7 @@ class HomeController extends Controller
     function next_previous_song($id)
     {
         try {
-            $content = Content::with('playlists', 'reviews')->findOrFail($id);
+            $content = Content::with('playlists', 'reviews')->whereStatus(1)->findOrFail($id);
 
             // Convert string representations of arrays to actual arrays
             $content->authors = json_decode($content->authors, true);
@@ -171,7 +171,7 @@ class HomeController extends Controller
 
             // Append the calculated average to the content
             $content->totalAvgReview = $totalAvgReview;
-            $jingle = Jingle::inRandomOrder()->where('status',1)->first();
+            $jingle = Jingle::inRandomOrder()->where('status', 1)->first();
 
             $content->jingle = $jingle;
 
@@ -184,7 +184,7 @@ class HomeController extends Controller
     function get_single_song($id)
     {
         try {
-            $content = Content::with('reviews', 'playlists')->findOrFail($id);
+            $content = Content::with('reviews', 'playlists')->whereStatus(1)->findOrFail($id);
 
             // Convert string representations of arrays to actual arrays
             $content->authors = ActorProfile::find(json_decode($content->authors, true));
@@ -221,7 +221,7 @@ class HomeController extends Controller
             $totalAvgReview = Review::where('content_id', $content->id)
                 ->avg('star');
             $content->totalAvgReview = $totalAvgReview;
-            $jingle = Jingle::inRandomOrder()->where('status',1)->first();
+            $jingle = Jingle::inRandomOrder()->where('status', 1)->first();
             $content->jingle = $jingle;
 
             return response()->json(['content' => $content, 'success' => true], 201);
@@ -247,7 +247,7 @@ class HomeController extends Controller
                 $content->music_director = ActorProfile::find(json_decode($content->music_director, true));
                 $playlists = Playlist::where('content_id', $content->id)->get();
                 $content->playlists = $playlists;
-                $jingle = Jingle::inRandomOrder()->where('status',1)->first();
+                $jingle = Jingle::inRandomOrder()->where('status', 1)->first();
                 $content->jingle = $jingle;
                 foreach ($content->reviews as $review) {
                     $user = $review->user;
@@ -291,7 +291,7 @@ class HomeController extends Controller
             $actor_profile = ActorProfile::findOrFail($id);
             $actor_profile->views = $actor_profile->views + 1;
             $actor_profile->save();
-            $contents = Content::with('playlists', 'reviews')->latest()->get();
+            $contents = Content::with('playlists', 'reviews')->whereStatus(1)->latest()->get();
 
             $matchingContents = [];
             foreach ($contents as $content) {
@@ -307,7 +307,7 @@ class HomeController extends Controller
 
                 if ((isset($producers) && in_array($id, $producers)) || (isset($director) && in_array($id, $director)) || (isset($music_director) && in_array($id, $music_director)) || (isset($cost2) && in_array($id, $cost2)) || (isset($cost) && in_array($id, $cost)) || (isset($translator) && in_array($id, $translator)) || (isset($adoption) && in_array($id, $adoption))) {
                     $content = Content::with('playlists', 'reviews')->findOrFail($content->id);
-                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
+                    $jingle = Jingle::inRandomOrder()->where('status', 1)->first();
                     $content->jingle = $jingle;
                     $content->authors = ActorProfile::find(json_decode($content->authors, true));
                     $content->producers = ActorProfile::find(json_decode($content->producers, true));
@@ -348,7 +348,7 @@ class HomeController extends Controller
             $searchTerm = $request->search;
 
             if ($searchTerm == '') {
-                $contents = Content::with('reviews')->whereIsSearch(1)->orderBy('title', 'asc')->get();
+                $contents = Content::with('reviews')->whereStatus(1)->whereIsSearch(1)->orderBy('title', 'asc')->get();
                 $actor_profiles = ActorProfile::where('in_search', 1)->get();
 
 
@@ -364,7 +364,7 @@ class HomeController extends Controller
                     $content->music_director = ActorProfile::find(json_decode($content->music_director, true));
                     $playlists = Playlist::where('content_id', $content->id)->get();
                     $content->playlists = $playlists;
-                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
+                    $jingle = Jingle::inRandomOrder()->where('status', 1)->first();
                     $content->jingle = $jingle;
                     foreach ($content->reviews as $review) {
                         $totalAvgReview = Review::where('content_id', $content->id)
@@ -385,6 +385,7 @@ class HomeController extends Controller
             } else {
                 $contents = Content::with('reviews', 'playlists')
                     ->whereIsSearch(1)
+                    ->whereStatus(1)
                     ->where('title', 'LIKE', "%{$searchTerm}%")
                     ->get();
 
@@ -401,7 +402,7 @@ class HomeController extends Controller
                     $content->director = ActorProfile::find(json_decode($content->director, true));
                     $content->music_director = ActorProfile::find(json_decode($content->music_director, true));
                     $content->in_search = 1;
-                    $jingle = Jingle::inRandomOrder()->where('status',1)->first();
+                    $jingle = Jingle::inRandomOrder()->where('status', 1)->first();
                     $content->jingle = $jingle;
                     foreach ($content->reviews as $review) {
                         // Calculate the average review

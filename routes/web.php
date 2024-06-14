@@ -41,10 +41,13 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::get('/logout', 'logout')->name('admin.logout');
     });
+   
 
     Route::prefix('admin')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index')->name('admin.dashboard');
+            Route::get('dashboard2', 'index1')->name('admin.dashboard2');
+            Route::get('dashboard3', 'login')->name('admin.dashboard3');
             Route::get('notification', 'notification')->name('admin.notification.index');
             Route::get('notification/create', 'notificationCreate')->name('admin.notification.create');
             Route::get('notification/delete/{id}', 'deleteNotification')->name('admin.notification.delete');
