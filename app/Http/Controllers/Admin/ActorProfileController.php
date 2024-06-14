@@ -39,7 +39,7 @@ class ActorProfileController extends Controller
             'profession' => $request->profession,
         ]);
 
-        return to_route('admin.actor.index')->with('success', 'Profile create successfully');
+        return to_route('admin.actor.create')->with('success', 'Profile create successfully');
     }
 
     public function edit($id)
