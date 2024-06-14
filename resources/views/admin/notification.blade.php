@@ -86,10 +86,11 @@
                             @enderror
                         </div>
 
-                        <div class="mt-[20px]">
-                            <label for="" class="text-neutral-50 text-2xl font-black">Option</label>
+                        <div class="mt-[60px] relative">
+                            <label for="" class="text-neutral-50 text-2xl font-black ">Option</label>
+                            <img src="{{ asset('icons/down.png') }}" class="size-6 absolute top-[4.2rem] right-[11px]" alt="">
                             <select name='type' id='type'
-                                class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
+                                class="w-full bg-[#383838]  appearance-none py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
                                 <option value='simple_notification'>Simple Notification</option>
                                 <option value='with_audio'>With Audio</option>
                                 <option value='new_version'>Install New Version</option>
