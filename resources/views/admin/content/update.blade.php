@@ -25,7 +25,7 @@
             <p>
             <div><span class="text-white text-xl font-normal ">Content will be added to search engine category - </span><span
                     class="text-amber-500 text-xl font-normal ">CONTENT</span> <input type='checkbox' name="search"
-                    id="is_search" /></div>
+                    id="is_search" @checked($content->is_search == 1) /></div>
             </p>
         </div>
         <div>
