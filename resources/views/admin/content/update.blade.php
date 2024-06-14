@@ -198,7 +198,7 @@
                                 <div class="relative multi-select-container" data-type="authors">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Producers</span>
+                                        <span>Authors</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -232,7 +232,7 @@
                                 <div class="relative multi-select-container" data-type="translators">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Producers</span>
+                                        <span>Translators</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -266,7 +266,7 @@
                                 <div class="relative multi-select-container" data-type="directors">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Producers</span>
+                                        <span>Directors</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -300,7 +300,7 @@
                                 <div class="relative multi-select-container" data-type="music_directors">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Producers</span>
+                                        <span>Music Director</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -354,7 +354,7 @@
                                 <div class="relative multi-select-container" data-type="cast">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Producers</span>
+                                        <span>Lead Cast</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"
@@ -388,7 +388,7 @@
                                 <div class="relative multi-select-container" data-type="cast2">
                                     <div id="selectedItems"
                                         class="w-full flex selected-items items-center justify-between bg-[#383838] py-4 px-4 rounded-2xl cursor-pointer">
-                                        <span>Producers</span>
+                                        <span>Secondary Cast</span>
                                         <img src="{{ asset('icons/down.png') }}" class="size-6" alt="">
                                     </div>
                                     <div id="dropdown"

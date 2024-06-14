@@ -72,26 +72,42 @@ class ContentController extends Controller
         //     $demo = $request->file('demo')->store('content/demo', 'public');
         // }
 
-        foreach ($request->sub_cat_id as $sub_category) {
-            $content = Content::findOrFail($request->id)->update([
-                'category' => $request->category ?? '',
-                'sub_cat_id' => $sub_category,
-                'title' => $request->title ?? '',
-                'isbn' => $request->isbn ?? '',
-                'translator' => json_encode($request->translator) ?? '',
-                'total_duration' => $request->total_duration ?? '',
-                'cost' => json_encode($request->cost) ?? '',
-                'summary' => $request->summary ?? '',
-                'is_search' => $request->search == "on" ? 1 : 0,
-                'author_id' => json_encode($request->authors) ?? '',
-                'authors' => json_encode($request->authors) ?? '',
-                'cost2' => json_encode($request->cost2) ?? '',
-                'producers' => json_encode($request->producers) ?? '',
-                'adoption' => json_encode($request->adoption) ?? '',
-                'director' => json_encode($request->director) ?? '',
-                'music_director' => json_encode($request->music_director) ?? '',
-                'status' => 1
-            ]);
+        $content = Content::findOrFail($request->id)->update([
+            'category' => $request->category ?? '',
+            'sub_cat_id' => $request->sub_cat_id[0],
+            'title' => $request->title ?? '',
+            'isbn' => $request->isbn ?? '',
+            'translator' => json_encode($request->translator) ?? '',
+            'total_duration' => $request->total_duration ?? '',
+            'cost' => json_encode($request->cost) ?? '',
+            'summary' => $request->summary ?? '',
+            'is_search' => $request->search == "on" ? 1 : 0,
+            'author_id' => json_encode($request->authors) ?? '',
+            'authors' => json_encode($request->authors) ?? '',
+            'cost2' => json_encode($request->cost2) ?? '',
+            'producers' => json_encode($request->producers) ?? '',
+            'adoption' => json_encode($request->adoption) ?? '',
+            'director' => json_encode($request->director) ?? '',
+            'music_director' => json_encode($request->music_director) ?? '',
+            'status' => 1
+        ]);
+
+        $sliced_ids = array_slice($request->sub_cat_id, 1);
+
+        // Iterate over the sliced array
+        foreach ($sliced_ids as $sub_category) {
+            $content1 = Content::findOrFail($request->id);
+            $new_content = $content1->replicate();
+            $new_content->sub_cat_id = $sub_category;
+            $new = $new_content->save();
+
+            $playlist = new Playlist();
+            $playlist->title = 'NO TITLE';
+            $playlist->content_id = $new_content->id;
+            $playlist->audio = $content1->audio ?? '';
+            $playlist->duration = '0';
+            $playlist->authors = '';
+            $playlist->save();
         }
 
         //     ContentCategory::create([
