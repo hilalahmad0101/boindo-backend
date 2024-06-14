@@ -293,7 +293,7 @@ class ContentController extends Controller
     public function delete_playlist($id, $content_id)
     {
         Playlist::findOrFail($id)->delete();
-        return to_route('admin.content.edit', ['id' => $content_id])->with('success', 'Content Delele successfully');
+        return to_route('admin.content.edit', ['id' => $content_id])->with('success', 'Content Delete successfully');
     }
 
     public function contentAssets(Request $request)

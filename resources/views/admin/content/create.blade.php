@@ -802,13 +802,13 @@
             }
 
             // Collecting arrays
-            const arrayTranslators = [];
-            const arrayCast = [];
-            const arrayAuthers = [];
-            const arrayCast2 = [];
-            const arraysProducers = [];
-            const arrayDirectors = [];
-            const arrayMusicDirectors = [];
+            // const arrayTranslators = [];
+            // const arrayCast = [];
+            // const arrayAuthers = [];
+            // const arrayCast2 = [];
+            // const arraysProducers = [];
+            // const arrayDirectors = [];
+            // const arrayMusicDirectors = [];
 
             let url = $(this).data('url');
             let multipiCategory = [];

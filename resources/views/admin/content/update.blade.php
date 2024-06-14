@@ -21,7 +21,7 @@
     </style>
     <form action="" method="POST" enctype="multipart/form-data" class="mt-[134px]">
         <div class="flex md:flex-row flex-col md:space-y-0 space-x-5 items-center justify-between">
-            <h1 class="text-neutral-50 text-4xl font-black ">CONTENT UPLOAD</h1>
+            <h1 class="text-neutral-50 text-4xl font-black ">CONTENT UPDATE</h1>
             <p>
             <div><span class="text-white text-xl font-normal ">Content will be added to search engine category - </span><span
                     class="text-amber-500 text-xl font-normal ">CONTENT</span> <input type='checkbox' name="search"
