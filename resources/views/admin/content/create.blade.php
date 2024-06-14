@@ -455,7 +455,7 @@
                     </div>
                 </div>
                 <h2 class="text-white text-2xl mb-4">Content upload successfully</h2>
-                <button onclick="history.back()"
+                <button onclick="window.location.reload()"
                     class="bg-white text-gray-800 px-4 py-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-600">
                     Close this popup
                 </button>
@@ -690,7 +690,7 @@
 
 
         $('#saveData').on('click', function(e) {
-            e.preventDefault();
+            e.preventDefault(); 
             let url = $(this).data('url');
             let multipiCategory = [];
             console.log(subCategoryCount);
@@ -720,7 +720,7 @@
                     'total_duration': $("#total_duration").val(),
                     'cost': arrayCast.map(item => item.value),
                     'summary': $("#summary").val(),
-                    'search': $("#is_search").val(),
+                    'search': $("#is_search").is(":checked") == true ? 1 : 0,
                     'author_id': arrayAuthers.map(item => item.value),
                     'authors': arrayAuthers.map(item => item.value),
                     'cost2': arrayCast2.map(item => item.value),

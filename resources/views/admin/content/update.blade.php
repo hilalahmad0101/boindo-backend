@@ -488,7 +488,7 @@
                     </div>
                 </div>
                 <h2 class="text-white text-2xl mb-4">Content Update successfully</h2>
-                <button onclick="history.back()"
+                <button onclick="window.location.href='/admin/content/list'"
                     class="bg-white text-gray-800 px-4 py-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-600">
                     Close this popup
                 </button>
@@ -586,33 +586,35 @@
 
 
         function upload() {
-            if (isImageComplete && isAudioComplete && isDemoComplete) {
-                let formData = new FormData();
-                formData.append('_token', "{{ csrf_token() }}");
+            let formData = new FormData();
+            formData.append('_token', "{{ csrf_token() }}");
+            if (isImageComplete) {
                 formData.append('image', image);
-                formData.append('audio', audio);
-                formData.append('demo', demo);
-                formData.append('id', "{{ $content->id }}");
-                $.ajax({
-                    url: "{{ route('admin.content.assets.store') }}",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(data) {
-                        if (data.success) {
-                            assetsUpload = true;
-                            contentId = data.id,
-                                toastr['success'](data.message)
-                        }
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                })
-            } else {
-                console.log("object");
             }
+            if (isAudioComplete) {
+                formData.append('audio', audio);
+            }
+            if (isDemoComplete) {
+                formData.append('demo', demo);
+            }
+            formData.append('id', "{{ $content->id }}");
+            $.ajax({
+                url: "{{ route('admin.content.assets.store') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.success) {
+                        assetsUpload = true;
+                        contentId = data.id,
+                            toastr['success'](data.message)
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            })
         }
 
 
@@ -773,7 +775,7 @@
                     'total_duration': $("#total_duration").val(),
                     'cost': arrayCast.map(item => item.value),
                     'summary': $("#summary").val(),
-                    'search': $("#is_search").val(),
+                    'search': $("#is_search").is(":checked") == true ? 1 : 0,
                     'author_id': arrayAuthers.map(item => item.value),
                     'authors': arrayAuthers.map(item => item.value),
                     'cost2': arrayCast2.map(item => item.value),

@@ -141,7 +141,7 @@
      </script> --}}
 
     <div class="mt-[134px]">
-        <div class="flex items-center justify-between">
+        <div class="flex md:flex-row flex-col my-4 items-center justify-between">
             <h1 class="text-neutral-50 text-4xl font-black ">CONTENT LIST</h1>
             <div class="flex items-center mt-3 md:mt-0">
                 <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
@@ -166,10 +166,10 @@
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-3  gap-x-4">
                         <div class=" ">
-                            <div class="relative inline-block text-left ">
-                                <div class="">
+                            <div class="relative md:inline-block flex text-left ">
+                                <div class="w-full md:my-0 my-5">
                                     <button type="button"
-                                        class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                                        class="flex justify-between md:w-[200px] w-full  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                                         id="content-category-button" aria-expanded="true" aria-haspopup="true">
                                         <span id="content-category-button-text">Content Category</span>
                                         <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +181,7 @@
                                     </button>
                                 </div>
 
-                                <div class="origin-top-right hidden  w-[200px]   absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                <div class="origin-top-right hidden  md:w-[200px] w-full z-50   absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="content_menu" aria-orientation="vertical" aria-labelledby="menu-button"
                                     tabindex="-1">
                                     <div class="py-1" role="none">
@@ -199,10 +199,10 @@
 
                         </div>
                         <div class=" ">
-                            <div class="relative inline-block text-left ">
-                                <div class="">
+                            <div class="relative md:inline-block flex text-left ">
+                                <div class="w-full md:my-0 my-5">
                                     <button type="button"
-                                        class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                                        class="inline-flex justify-between md:w-[200px] w-full  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                                         id="content-sub-category-button" aria-expanded="true" aria-haspopup="true">
                                         <span id="content-sub-category-button-text">Content sub-category</span>
                                         <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +214,7 @@
                                     </button>
                                 </div>
 
-                                <div class="origin-top-right hidden  w-[200px]   absolute left-0 mt-2 overflow-y-scroll h-[40vh] rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                <div class="origin-top-right hidden  md:w-[200px] w-full  z-50 absolute left-0 mt-2 overflow-y-scroll h-[40vh] rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="content_sub_menu" aria-orientation="vertical" aria-labelledby="menu-button"
                                     tabindex="-1">
                                     <div class="py-1" role="none">
@@ -234,10 +234,10 @@
 
                         </div>
                         <div class=" ">
-                            <div class="relative inline-block text-left ">
-                                <div class="">
+                            <div class="relative md:inline-block flex text-left ">
+                                <div class="w-full md:my-0 my-5">
                                     <button type="button"
-                                        class="inline-flex justify-between w-[200px]  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                                        class="inline-flex justify-between md:w-[200px] w-full  rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-[#383838] text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                                         id="content-listened-button" aria-expanded="true" aria-haspopup="true">
                                         <span id="content-listened-button-text">Most listened</span>
                                         <svg class="-mr-1 ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +249,7 @@
                                     </button>
                                 </div>
 
-                                <div class="origin-top-right hidden  w-[200px]  absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                <div class="origin-top-right hidden  md:w-[200px] w-full z-50  absolute left-0 mt-2  rounded-md shadow-lg bg-[#383838] ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="content_listened_menu" aria-orientation="vertical"
                                     aria-labelledby="menu-button" tabindex="-1">
                                     <div class="py-1" role="none">
@@ -318,7 +318,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-[45px] mb-[50px] flex items-center justify-between">
+            <div class="mt-[45px] mb-[50px] flex md:flex-row flex-col items-center justify-between">
                 <div class="mb-4 text-white" id="results-info">
                     <!-- Results info will be dynamically generated here -->
                 </div>

@@ -81,7 +81,7 @@ class ContentController extends Controller
             'total_duration' => $request->total_duration ?? '',
             'cost' => json_encode($request->cost) ?? '',
             'summary' => $request->summary ?? '',
-            'is_search' => $request->search == "on" ? 1 : 0,
+            'is_search' => $request->search,
             'author_id' => json_encode($request->authors) ?? '',
             'authors' => json_encode($request->authors) ?? '',
             'cost2' => json_encode($request->cost2) ?? '',
@@ -298,21 +298,29 @@ class ContentController extends Controller
 
     public function contentAssets(Request $request)
     {
-        $image = "";
-        if ($request->file('image')) {
-            $image = $request->file('image')->store('content/image', 'public');
-        }
 
-        $audio = "";
-        if ($request->file('audio')) {
-            $audio = $request->file('audio')->store('content/audio', 'public');
-        }
-        $demo = "";
-        if ($request->file('demo')) {
-            $demo = $request->file('demo')->store('content/demo', 'public');
-        }
         if ($request->id) {
-            $content = Content::findOrFail($request->id)->update([
+            $content = Content::findOrFail($request->id);
+            $image = "";
+            if ($request->file('image')) {
+                $image = $request->file('image')->store('content/image', 'public');
+            } else {
+                $image = $content->image;
+            }
+
+            $audio = "";
+            if ($request->file('audio')) {
+                $audio = $request->file('audio')->store('content/audio', 'public');
+            } else {
+                $audio = $content->audio;
+            }
+            $demo = "";
+            if ($request->file('demo')) {
+                $demo = $request->file('demo')->store('content/demo', 'public');
+            } else {
+                $demo = $content->demo;
+            }
+            $content->update([
                 'image' => $image ?? '',
                 'audio' => $audio ?? '',
                 'demo' => $demo ?? '',
@@ -321,6 +329,19 @@ class ContentController extends Controller
 
             return response()->json(['success' => true, 'message' => 'update successfully', 'id' => $request->id]);
         } else {
+            $image = "";
+            if ($request->file('image')) {
+                $image = $request->file('image')->store('content/image', 'public');
+            }
+
+            $audio = "";
+            if ($request->file('audio')) {
+                $audio = $request->file('audio')->store('content/audio', 'public');
+            }
+            $demo = "";
+            if ($request->file('demo')) {
+                $demo = $request->file('demo')->store('content/demo', 'public');
+            }
             $content = Content::create([
                 'image' => $image ?? '',
                 'audio' => $audio ?? '',
