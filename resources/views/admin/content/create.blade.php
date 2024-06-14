@@ -441,67 +441,28 @@
         </div>
     </form>
 
+
+    <div class="fixed top-0 right-0 left-0 hidden" id="on_success">
+        <div class="flex items-center justify-center h-screen w-full bg-gray-900/60">
+            <div class="bg-gray-800 text-center container mx-auto py-20 p-8  rounded-md max-w-2xl shadow-lg">
+                <div class="flex justify-center items-center mb-4">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="text-white text-2xl mb-4">Content upload successfully</h2>
+                <button onclick="history.back()"
+                    class="bg-white text-gray-800 px-4 py-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-600">
+                    Close this popup
+                </button>
+            </div>
+        </div>
+    </div>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
-
-    <script>
-        $(document).ready(function() {
-            $("#addMoreBtn").click(function() {
-                // Clone the existing input field and append it to the add_more div
-                var clonedInput = `<div class="input-set"> 
-                  <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Title</span>
-                    <input type="text" name="playlist_title[]"  
-                      class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl" />
-                    @error('title')
-                      <span style="color: red">{{ $message }}</span>
-                    @enderror
-                  </label> 
-                  <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Authors Comma separated ( , )</span>
-                    <input type="text" name="playlist_authors[]" value=""
-                      class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl" />
-                    @error('title')
-                      <span style="color: red">{{ $message }}</span>
-                    @enderror
-                  </label> 
-                  <label class="block text-sm my-2">
-                    <span class="text-gray-700 dark:text-gray-400">Audio</span>
-                    <input type="file" name="playlist_audio[]"
-                      class="w-full bg-[#383838]  py-4 px-4 text-white outline-none border-none rounded-2xl" />
-                    @error('audio')
-                      <span style="color: red">{{ $message }}</span>
-                    @enderror
-                  </label>
-                  <input type="hidden" name="duration[]" class="duration-input" readonly />
-                  <button type="button" class="closeBtn flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
-                    <span>Close</span>
-                  </button>
-                </div>`;
-                $("#add_more").append(clonedInput);
-            });
-
-            $(document).on('click', '.closeBtn', function() {
-                $(this).closest(".input-set").remove();
-            });
-
-            $(document).on('change', 'input[name="playlist_audio[]"]', function() {
-                var audioElement = new Audio();
-                var durationInput = $(this).closest(".input-set").find('.duration-input');
-
-                audioElement.src = URL.createObjectURL(this.files[0]);
-
-                audioElement.addEventListener('loadedmetadata', function() {
-                    var duration = audioElement.duration;
-                    var minutes = Math.floor(duration / 60);
-                    var seconds = Math.floor(duration % 60);
-                    var formattedDuration =
-                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    durationInput.val(formattedDuration);
-                });
-            });
-        });
-    </script>
-
     <script>
         let isImageComplete = false;
         let isDemoComplete = false;
@@ -593,7 +554,7 @@
                         if (data.success) {
                             assetsUpload = true;
                             contentId = data.id,
-                            toastr['success'](data.message)
+                                toastr['success'](data.message)
                         }
                     },
                     error: function(data) {
@@ -759,7 +720,7 @@
                     'total_duration': $("#total_duration").val(),
                     'cost': arrayCast.map(item => item.value),
                     'summary': $("#summary").val(),
-                    'is_search': $("#is_search").val(),
+                    'search': $("#is_search").val(),
                     'author_id': arrayAuthers.map(item => item.value),
                     'authors': arrayAuthers.map(item => item.value),
                     'cost2': arrayCast2.map(item => item.value),
@@ -768,10 +729,8 @@
                     'music_director': arrayMusicDirectors.map(item => item.value),
                 },
                 success: (data) => {
-                    console.log(data);
                     if (data.success) {
-                        toastr['success'](data.message)
-                        // window.location.href = "/admin/content/list"
+                        $("#on_success").addClass('block').removeClass('hidden');
                         $("#saveData").text('Upload')
                     }
                 }
