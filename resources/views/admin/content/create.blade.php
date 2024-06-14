@@ -430,10 +430,27 @@
                         <div></div>
                         <div></div>
                         <div class="flex items-center justify-end space-x-9 mt-[76px] mb-10">
-                            <button onclick="window.location.href='{{ route('admin.onboarding.index') }}'" type="button"
+                            <button onclick="window.location.href='{{ route('admin.content.index') }}'" type="button"
                                 class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>
                             <button type="button" id="saveData" data-url="{{ route('admin.content.store') }}"
-                                class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Upload</button>
+                                class="py-2 px-12 flex items-center justify-between space-x-4 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">
+                                <span>Upload</span>
+
+                                <div class="hidden" role="status" id="data-status">
+                                    <svg aria-hidden="true"
+                                        class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                                        viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                            fill="currentColor" />
+                                        <path
+                                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                            fill="currentFill" />
+                                    </svg>
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -475,6 +492,7 @@
         let image = "";
 
         let assetsUpload = false;
+        $("#saveData").attr('disabled', true);
 
 
         document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
@@ -483,7 +501,6 @@
                 simulateUpload(file, 'progressBar', 'progressTextImage');
                 image = file;
                 isImageComplete = true;
-
             }
         });
 
@@ -510,6 +527,7 @@
 
 
         function simulateUpload(file, progressbar, progressText) {
+            $("#data-status").addClass('block').removeClass('hidden');
             const progressBar = document.getElementById(progressbar);
             const totalSize = file.size;
             let uploadedSize = 0;
@@ -530,6 +548,8 @@
                     clearInterval(uploadInterval);
                     // alert("upload complete")
                     upload();
+                    $("#data-status").addClass('hidden').removeClass('block');
+
                 }
             }, 100); // Adjust the interval timing as needed
         }
@@ -539,6 +559,7 @@
 
         function upload() {
             if (isImageComplete && isAudioComplete && isDemoComplete) {
+                $("#saveData").attr('disabled', true);
                 let formData = new FormData();
                 formData.append('_token', "{{ csrf_token() }}");
                 formData.append('image', image);
@@ -553,8 +574,9 @@
                     success: function(data) {
                         if (data.success) {
                             assetsUpload = true;
-                            contentId = data.id,
-                                toastr['success'](data.message)
+                            contentId = data.id;
+                            toastr['success'](data.message)
+                            $("#saveData").attr('disabled', false);
                         }
                     },
                     error: function(data) {
@@ -734,11 +756,65 @@
 
         $('#saveData').on('click', function(e) {
             e.preventDefault();
+
+            // Function to check if a field is empty
+            function isEmpty(field) {
+                return !field || field.trim() === "";
+            }
+
+            // Collecting all required fields
+            const category = $("#category").val();
+            const title = $("#title").val();
+            const isbn = $("#isbn").val();
+            const totalDuration = $("#total_duration").val();
+            const summary = $("#summary").val();
+            const subCategories = [];
+            for (let i = 1; i <= subCategoryCount; i++) {
+                subCategories.push($("#sub_category" + i).val());
+            }
+
+            // Validation
+            if (isEmpty(category)) {
+                toastr['error']("Please fill the category field.");
+                return;
+            }
+            if (isEmpty(title)) {
+                toastr['error']("Please fill the title field.");
+                return;
+            }
+            if (isEmpty(isbn)) {
+                toastr['error']("Please fill the ISBN field.");
+                return;
+            }
+            if (isEmpty(totalDuration)) {
+                toastr['error']("Please fill the total duration field.");
+                return;
+            }
+            if (isEmpty(summary)) {
+                toastr['error']("Please fill the summary field.");
+                return;
+            }
+            for (let subCategory of subCategories) {
+                if (isEmpty(subCategory)) {
+                    toastr['error']("Please fill all sub-category fields.");
+                    return;
+                }
+            }
+
+            // Collecting arrays
+            const arrayTranslators = [];
+            const arrayCast = [];
+            const arrayAuthers = [];
+            const arrayCast2 = [];
+            const arraysProducers = [];
+            const arrayDirectors = [];
+            const arrayMusicDirectors = [];
+
             let url = $(this).data('url');
             let multipiCategory = [];
             for (let i = 1; i <= subCategoryCount; i++) {
                 multipiCategory.push($("#sub_category" + i).val())
-            } 
+            }
             $("#saveData").text('Uploading....')
             $.ajax({
                 type: 'POST',
@@ -746,14 +822,14 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "id": contentId,
-                    'category': $("#category").val(),
+                    'category': category,
                     'sub_cat_id': multipiCategory,
-                    'title': $("#title").val(),
-                    'isbn': $("#isbn").val(),
+                    'title': title,
+                    'isbn': isbn,
                     'translator': arrayTranslators.map(item => item.value),
-                    'total_duration': $("#total_duration").val(),
+                    'total_duration': totalDuration,
                     'cost': arrayCast.map(item => item.value),
-                    'summary': $("#summary").val(),
+                    'summary': summary,
                     'search': $("#is_search").is(":checked") == true ? 1 : 0,
                     'author_id': arrayAuthers.map(item => item.value),
                     'authors': arrayAuthers.map(item => item.value),
@@ -768,9 +844,9 @@
                         $("#saveData").text('Upload')
                     }
                 }
-            })
+            });
 
-        })
+        });
 
         $("#category").on('change', function() {
             const value = $(this).val();
