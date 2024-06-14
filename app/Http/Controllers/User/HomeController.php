@@ -376,10 +376,15 @@ class HomeController extends Controller
                 }
 
                 $contentsArray = $contents->toArray();
-                // $actorProfilesArray = $actor_profiles->toArray();
+                $actorProfilesArray = $actor_profiles->toArray();
 
                 // Merge the arrays
-                $resultArray = $contentsArray;
+                $resultArray = array_merge($contentsArray, $actorProfilesArray); 
+                // $contentsArray = $contents->toArray();
+                // // $actorProfilesArray = $actor_profiles->toArray();
+
+                // // Merge the arrays
+                // $resultArray = $contentsArray;
                 // $resultArray = array_merge($contentsArray, $actorProfilesArray); 
                 return response()->json(['contents' => $resultArray, 'success' => true], 200);
             } else {
