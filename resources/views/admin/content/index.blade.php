@@ -278,7 +278,7 @@
                                 Category</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">Sub
                                 Category</th>
-                            <th class="px-6 py-3 text-left  text-white border-b  border-t border-[#FFFFFF33]">Listened</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">Listened</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
@@ -1357,7 +1357,7 @@
           </td>
           <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
           <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category ? content.sub_category.name : ''}</td>
-          <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
+          <td class="border-b border-l border-r border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
           <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
           <td class="border-b  border-[#FFFFFF33] text-white px-6 py-4">
             <a href="${editButton}"><img src="${editUrl}" alt=""></a>

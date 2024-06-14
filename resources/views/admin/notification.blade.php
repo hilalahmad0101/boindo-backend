@@ -86,7 +86,7 @@
                             @enderror
                         </div>
 
-                        <div class="mt-[60px] relative">
+                        <div class="mt-[20px] relative">
                             <label for="" class="text-neutral-50 text-2xl font-black ">Option</label>
                             <img src="{{ asset('icons/down.png') }}" class="size-6 absolute top-[4.2rem] right-[11px]" alt="">
                             <select name='type' id='type'

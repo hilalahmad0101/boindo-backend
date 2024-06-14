@@ -40,9 +40,9 @@
                             <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Email</th>
                             <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Password</th>
                             <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Reset Password</th>
-                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
+                            <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
-                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
+                            <th class="px-6 py-3 text-left   text-white border-b border-[#FFFFFF33]">Delete</th>
                         </tr>
                     </thead>
                     <tbody class="bg-[#383838]">
@@ -60,7 +60,7 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                <td class="border border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($admin->created_at)) }}</td>
                                 <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
                                   <a href="{{ route('admin.admin.edit', ['id'=>$admin->id]) }}">

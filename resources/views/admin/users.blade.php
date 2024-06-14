@@ -27,9 +27,9 @@
                 <table class="table-auto w-[1000px] xl:w-full rounded-md " id="dataTable">
                     <thead class="bg-[#FFFFFF33] rounded-tl-lg rounded-tr-lg">
                         <tr class="rounded-md">
-                            <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Name</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Name</th>
                             <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Email</th>
-                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
+                            <th class="px-6 py-3 text-left  text-white border border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Del</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Sus</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Email</th>
@@ -40,7 +40,7 @@
                             <tr>
                                 <td class="border border-[#FFFFFF33] text-white  px-6 py-4">{{ $user->name }}</td>
                                 <td class="border border-[#FFFFFF33] text-white  px-6 py-4">{{ $user->email }}</td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                                <td class="border border-[#FFFFFF33] text-white px-6 py-4">
                                     {{ date('Y M d', strtotime($user->created_at)) }}</td>
                                 <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
                                     <a href="{{ route('admin.user.delete', ['id' => $user->id]) }}">
