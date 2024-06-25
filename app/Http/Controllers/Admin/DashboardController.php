@@ -178,7 +178,7 @@ class DashboardController extends Controller
                     ->orWhereHas('contents', function ($q) use ($searchTerm) {
                         $q->where('title', 'LIKE', "%{$searchTerm}%");
                     })
-                    ->orWhere('message', 'LIKE', "%{$searchTerm}%");
+                    ->orWhere('content', 'LIKE', "%{$searchTerm}%");
             });
         }
 
