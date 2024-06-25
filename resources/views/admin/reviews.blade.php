@@ -13,11 +13,11 @@
                         <span
                             class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($reviews) }}</span>
                     </p>
-                    <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
+                    <form method="GET" action="{{ route('admin.review.search') }}" class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
                         <img src="{{ asset('images/search.png') }}" alt="">
-                        <input type="text" placeholder="Search" id="searchInput" 
+                        <input type="text" placeholder="Search" name="search" 
                             class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -58,57 +58,10 @@
                 </table>
             </div>
             <div class="mt-[45px] mb-[50px]">
-                {{ $reviews->links() }}
-                {{-- <div class="flex md:flex-row flex-col items-center justify-between">
-                    <p class=" text-white text-base font-semibold  leading-tight">Showing 1 to 9 of 9 results</p>
-                    <div class="flex items-center space-x-3">
-                        <button
-                            class="px-4 py-2 rounded-lg border-2 border-white justify-start items-center gap-2 inline-flex">
-                            <img src="../images/back.svg" alt="">
-                            <p class=" text-white text-base font-bold leading-normal">Previous</p>
-                        </button>
-                        <button
-                            class="px-4 py-2 rounded-lg border-2 border-white justify-start items-center gap-2 inline-flex">
-                            <p class=" text-white text-base font-bold leading-normal">Next</p>
-                            <img src="../images/next.png" alt="">
-                        </button>
-                    </div>
-                </div> --}}
+                {{ $reviews->links() }} 
             </div>
         </div>
     </div>
 @endsection
 @section('script')
-    <script>
-         document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const table = document.getElementById('dataTable');
-            const tbody = table.getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
-
-            searchInput.addEventListener('keyup', function() {
-                const filter = searchInput.value.toLowerCase();
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    let rowContainsFilter = false;
-
-                    for (let j = 0; j < cells.length; j++) {
-                        if (cells[j]) {
-                            const cellText = cells[j].textContent || cells[j].innerText;
-                            if (cellText.toLowerCase().indexOf(filter) > -1) {
-                                rowContainsFilter = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (rowContainsFilter) {
-                        rows[i].style.display = '';
-                    } else {
-                        rows[i].style.display = 'none';
-                    }
-                }
-            });
-        });
-    </script>
 @endsection

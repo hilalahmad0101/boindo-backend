@@ -53,6 +53,7 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::get('notification/delete/{id}', 'deleteNotification')->name('admin.notification.delete');
             Route::post('send/notification', 'send_notification')->name('admin.notification.send');
             Route::get('review', 'getReviews')->name('admin.review.index');
+            Route::get('review/search', 'search')->name('admin.review.search');
             Route::get('review/delete/{id}', 'deleteReviews')->name('admin.review.delete');
             Route::post('get/version', 'getVersion')->name('admin.get.version');
             Route::get('/send/mail/{id}', 'send_mail_view')->name('admin.send.mail.view');
@@ -111,6 +112,7 @@ Route::middleware(['auth:admin'])->group(function () {
         });
         Route::controller(AdminController::class)->group(function () {
             Route::get('list', 'index')->name('admin.admin.index');
+            Route::get('search', 'search')->name('admin.admin.search');
             Route::get('create', 'create')->name('admin.admin.create');
             Route::post('store', 'store')->name('admin.admin.store');
             Route::get('edit/{id}', 'edit')->name('admin.admin.edit');
@@ -121,6 +123,7 @@ Route::middleware(['auth:admin'])->group(function () {
         });
         Route::controller(JingleController::class)->group(function () {
             Route::get('/jingle/list', 'index')->name('admin.jingle.index');
+            Route::get('/jingle/search', 'search')->name('admin.jingle.search');
             Route::get('/jingle/create', 'create')->name('admin.jingle.create');
             Route::post('/jingle/store', 'store')->name('admin.jingle.store');
             Route::get('/jingle/edit/{id}', 'edit')->name('admin.jingle.edit');

@@ -15,6 +15,15 @@ class AdminController extends Controller
         return view('admin.index', compact('admins'));
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $admins = Admin::latest()->where('name','LIKE',"%{$searchTerm}%")->orWhere('email','LIKE',"%{$searchTerm}%")->paginate(10);
+        $admins->appends(['search' => $searchTerm]);
+        return view('admin.index', compact('admins'));
+    }
+
+
     public function create()
     {
         return view('admin.create');

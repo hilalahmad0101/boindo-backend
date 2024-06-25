@@ -14,6 +14,14 @@ class JingleController extends Controller
         return view('admin.jingle.index', compact('jingles'));
     }
 
+    public function search(Request $request) {
+        $searchTerm = $request->input('search');
+        $jingles = Jingle::latest()->where('title', 'LIKE', "%{$searchTerm}%")->paginate(10);
+        // Append the search term to the pagination links
+        $jingles->appends(['search' => $searchTerm]);
+        return view('admin.jingle.index', compact('jingles'));
+    }
+
     public function create()
     {
         return view('admin.jingle.create');
