@@ -54,6 +54,7 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::post('send/notification', 'send_notification')->name('admin.notification.send');
             Route::get('review', 'getReviews')->name('admin.review.index');
             Route::get('review/search', 'search')->name('admin.review.search');
+            Route::get('notification/search', 'search_notification')->name('admin.notification.search');
             Route::get('review/delete/{id}', 'deleteReviews')->name('admin.review.delete');
             Route::post('get/version', 'getVersion')->name('admin.get.version');
             Route::get('/send/mail/{id}', 'send_mail_view')->name('admin.send.mail.view');

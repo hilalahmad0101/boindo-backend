@@ -14,11 +14,11 @@
                             class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($notifications) }}</span>
                     </p>
                     <div class="flex items-center mt-3 md:mt-0">
-                        <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
+                        <form action="{{ route('admin.notification.search') }}" method="GET" class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
                             <img src="{{ asset('images/search.png') }}" alt="">
-                            <input type="text" placeholder="Search" id="searchInput"
+                            <input type="text" placeholder="Search" name="search"
                                 class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
-                        </div>
+                        </form>
                         <a href="{{ route('admin.notification.create') }}"
                             class=" ml-[29px] px-4 py-2 bg-white rounded-lg justify-start items-center gap-2 inline-flex text-black text-base font-bold   leading-normal">
                             <img src="{{ asset('images/plus.svg') }}" alt="">
@@ -68,7 +68,7 @@
 
 
 @section('script')
-    <script>
+    {{-- <script>
          document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('searchInput');
             const table = document.getElementById('dataTable');
@@ -99,5 +99,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endsection

@@ -48,6 +48,13 @@ class DashboardController extends Controller
         return view('admin.notification.index', compact('notifications'));
     }
 
+    function search_notification(Request $request): View
+    {
+        $notifications = \DB::table('notifications')->where('title','LIKE','%{$request->search}%')->paginate(10);
+        $notifications->appends(['search' => $request->search]);
+        return view('admin.notification.index', compact('notifications'));
+    }
+
     public function notificationCreate()
     {
         return view('admin.notification');
@@ -173,7 +180,7 @@ class DashboardController extends Controller
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->whereHas('user', function ($q) use ($searchTerm) {
-                    $q->where('name', 'LIKE', "%{$searchTerm}%");
+                    $q->where('email', 'LIKE', "%{$searchTerm}%");
                 })
                 ->orWhereHas('contents', function ($q) use ($searchTerm) {
                     $q->where('title', 'LIKE', "%{$searchTerm}%");
