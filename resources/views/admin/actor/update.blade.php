@@ -73,8 +73,7 @@
         </div>
         <div>
             <div class="mt-12">
-                <div 
-                   >
+                <div>
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
@@ -87,19 +86,19 @@
                             <input type="file" accept="images/*" id="onboardingImageInput" name="image"
                                 class="absolute inset-0 opacity-0 z-50" />
                             <div class="mt-4" id="image">
-                                <img class="" id="" src="{{ asset('storage/'.$actorProfile->image) }}"
+                                <img class="" id="" src="{{ asset('images/file-upload.svg') }}"
                                     alt="">
                             </div>
 
                             <div class="w-full max-w-md pt-4 flex items-center space-x-2">
                                 <div class="flex items-center space-x-2 w-full">
                                     <div id="progressWrapper" class="relative w-full h-1 bg-gray-600 rounded-full">
-                                        <div id="progressBar" class="absolute h-1 bg-white rounded-full" style="width: 0%;">
+                                        <div id="progressBar" class="absolute h-1 bg-white rounded-full" style="width: {{ $actorProfile->image ?'100':'0' }}%;">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-white text-sm" id="progressTextImage">0%</div>
+                            <div class="text-white text-sm" id="progressTextImage">{{ $actorProfile->image ?'100':'0' }}%</div>
 
                             {{-- <img src="" style="width: 100%" class="mt-4" id="previewImage" alt=""> --}}
                             @error('image')

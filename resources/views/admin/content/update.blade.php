@@ -58,11 +58,11 @@
                                     <div class="flex items-center space-x-2 w-full">
                                         <div id="progressWrapper" class="relative w-full h-1 bg-gray-600 rounded-full">
                                             <div id="progressBar" class="absolute h-1 bg-white rounded-full"
-                                                style="width: 0%;"></div>
+                                                style="width: {{ $content->image ?'100':'0' }}%;"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-white text-sm" id="progressTextImage">0%</div>
+                                <div class="text-white text-sm" id="progressTextImage">{{ $content->image ?'100':'0' }}%</div>
 
                                 {{-- <img src="" style="width: 100%" class="mt-4" id="previewImage" alt=""> --}}
                                 @error('image')
@@ -93,11 +93,11 @@
                                     <div class="flex items-center space-x-2 w-full">
                                         <div id="progressWrapperDemo" class="relative w-full h-1 bg-gray-600 rounded-full">
                                             <div id="progressBar" class="absolute h-1 bg-white rounded-full"
-                                                style="width: 0%;"></div>
+                                                style="width: {{ $content->demo ? '100' : '0' }}%;"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-white text-sm" id="progressTextDemo">0%</div>
+                                <div class="text-white text-sm" id="progressTextDemo">{{ $content->demo ? '100' : '0' }}%</div>
                                 @error('audio')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
@@ -125,11 +125,11 @@
                                     <div class="flex items-center space-x-2 w-full">
                                         <div id="progressWrapperAudio" class="relative w-full h-1 bg-gray-600 rounded-full">
                                             <div id="progressBar" class="absolute h-1 bg-white rounded-full"
-                                                style="width: 0%;"></div>
+                                                style="width: {{ $content->audio ? '100' : '0' }}%;"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-white text-sm" id="progressTextAudio">0%</div>
+                                <div class="text-white text-sm" id="progressTextAudio">{{ $content->audio ? '100' : '0' }}%</div>
 
                                 @error('audio')
                                     <span style="color:red">{{ $message }}</span>

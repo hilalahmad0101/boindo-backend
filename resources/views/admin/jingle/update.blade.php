@@ -34,12 +34,12 @@
                             <div class="w-full max-w-md pt-4 flex items-center space-x-2">
                                 <div class="flex items-center space-x-2 w-full">
                                     <div id="progressWrapper" class="relative w-full h-1 bg-gray-600 rounded-full">
-                                        <div id="progressBar" class="absolute h-1 bg-white rounded-full" style="width: 0%;">
+                                        <div id="progressBar" class="absolute h-1 bg-white rounded-full" style="width: {{ $jingle->image ? '100':'0' }}%;">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-white text-sm" id="progressTextImage">0%</div>
+                            <div class="text-white text-sm" id="progressTextImage">{{ $jingle->image ? '100':'0' }}%</div>
 
                             {{-- <img src="" style="width: 100%" class="mt-4" id="previewImage" alt=""> --}}
                             @error('image')
@@ -69,12 +69,12 @@
                             <div class="w-full max-w-md pt-4 flex items-center space-x-2">
                                 <div class="flex items-center space-x-2 w-full">
                                     <div id="progressWrapperDemo" class="relative w-full h-1 bg-gray-600 rounded-full">
-                                        <div id="progressBar" class="absolute h-1 bg-white rounded-full" style="width: 0%;">
+                                        <div id="progressBar" class="absolute h-1 bg-white rounded-full" style="width: {{ $jingle->audio ? '100':'0' }}%;">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-white text-sm" id="progressTextDemo">0%</div>
+                            <div class="text-white text-sm" id="progressTextDemo">{{ $jingle->audio ? '100':'0' }}%</div>
                             @error('audio')
                                 <span style="color:red">{{ $message }}</span>
                             @enderror

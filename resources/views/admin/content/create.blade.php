@@ -800,15 +800,38 @@
                     return;
                 }
             }
+            if(arrayTranslators.length <=0){
+                toastr['error']("Please fill the translator field.");
+                return;
+            }
+            if(arrayCast.length <=0){
+                toastr['error']("Please fill the Lead Cast field.");
+                return;
+            }
+            if(arrayCast2.length <=0){
+                toastr['error']("Please fill the Secondary cast field.");
+                return;
+            }
+            if(arrayAuthers.length <=0){
+                toastr['error']("Please fill the Authors field.");
+                return;
+            }
 
-            // Collecting arrays
-            // const arrayTranslators = [];
-            // const arrayCast = [];
-            // const arrayAuthers = [];
-            // const arrayCast2 = [];
-            // const arraysProducers = [];
-            // const arrayDirectors = [];
-            // const arrayMusicDirectors = [];
+            if(arraysProducers.length <=0){
+                toastr['error']("Please fill the Producers field.");
+                return;
+            }
+
+            if(arrayDirectors.length <=0){
+                toastr['error']("Please fill the Directors field.");
+                return;
+            }
+
+            if(arrayMusicDirectors.length <=0){
+                toastr['error']("Please fill the Music Directors field.");
+                return;
+            }
+ 
 
             let url = $(this).data('url');
             let multipiCategory = [];
