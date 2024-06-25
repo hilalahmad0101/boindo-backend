@@ -168,24 +168,29 @@ class DashboardController extends Controller
     public function search(Request $request)
     {
         $query = Review::with('contents', 'user');
-
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
+        $searchTerm = $request->input('search', '');
+    
+        if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->whereHas('user', function ($q) use ($searchTerm) {
                     $q->where('name', 'LIKE', "%{$searchTerm}%");
                 })
-                    ->orWhereHas('contents', function ($q) use ($searchTerm) {
-                        $q->where('title', 'LIKE', "%{$searchTerm}%");
-                    })
-                    ->orWhere('content', 'LIKE', "%{$searchTerm}%");
+                ->orWhereHas('contents', function ($q) use ($searchTerm) {
+                    $q->where('title', 'LIKE', "%{$searchTerm}%");
+                })
+                ->orWhere('content', 'LIKE', "%{$searchTerm}%"); // Make sure 'content' is the correct column name
             });
         }
-
+    
         $reviews = $query->latest()->paginate(10);
         $reviews->appends(['search' => $searchTerm]);
+    
+        // Debugging: Check the query results
+        // dd($reviews);
+    
         return view('admin.reviews', compact('reviews'));
     }
+    
 
     public function deleteReviews($id)
     {
