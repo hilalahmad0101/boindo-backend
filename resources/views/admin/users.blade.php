@@ -13,11 +13,11 @@
                         <span
                             class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($users) }}</span>
                     </p>
-                    <div class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
+                    <form method="GET" class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
                         <img src="{{ asset('images/search.png') }}" alt="">
                         <input type="text" placeholder="Search" id="searchInput" 
                             class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
-                    </div>
+                    </form>
 
                 </div>
             </div>

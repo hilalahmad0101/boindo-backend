@@ -11,16 +11,26 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = Admin::latest()->paginate(10);
+        $admins = Admin::all();
         return view('admin.index', compact('admins'));
     }
 
     public function search(Request $request)
     {
         $searchTerm = $request->input('search');
-        $admins = Admin::latest()->where('name','LIKE',"%{$searchTerm}%")->orWhere('email','LIKE',"%{$searchTerm}%")->paginate(10);
+        $admins = Admin::latest()->where('name', 'LIKE', "%{$searchTerm}%")->orWhere('email', 'LIKE', "%{$searchTerm}%")->paginate(10);
         $admins->appends(['search' => $searchTerm]);
-        return view('admin.index', compact('admins'));
+        $output = view('components.get-admins', compact('admins'))->render();
+        return response()->json(['data' => $output]);
+    }
+
+
+    public function getAdmins(Request $request)
+    {
+        $admins = Admin::latest()->paginate(10);
+        // $admins->appends(['search' => $searchTerm]);
+        $output = view('components.get-admins', compact('admins'))->render();
+        return response()->json(['data' => $output]);
     }
 
 
@@ -80,7 +90,7 @@ class AdminController extends Controller
 
     public function resetPassword($id)
     {
-        return view('admin.reset-password',compact('id'));
+        return view('admin.reset-password', compact('id'));
     }
 
     public function updatePassword(Request $request, $id)
