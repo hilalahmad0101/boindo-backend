@@ -278,43 +278,15 @@
                                 Category</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">Sub
                                 Category</th>
-                            <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">Listened</th>
+                            <th class="px-6 py-3 text-left  text-white border-b border-r border-t border-[#FFFFFF33]">
+                                Listened</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Edit</th>
                             <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
                         </tr>
                     </thead>
                     <tbody class="bg-[#383838]" id="table-body">
-                        {{-- @foreach ($contents as $content)
-                            <tr>
-                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4 space-x-3">
-                                    <div class="flex items-center space-x-4">
-                                        <img src="{{ asset('storage/' . $content->image) }}"
-                                            class="w-[100px] h-[100px] object-fill" alt="">
-                                        <span> {{ $content->title }}</span>
-                                    </div>
-                                </td>
-                                <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ $content->category }}</td>
-                                <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ $content->sub_category->name }}</td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ $content->plays }}</td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ date('Y M d', strtotime($content->created_at)) }}</td>
-                                <td class=" border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    <a href="{{ route('admin.content.edit', ['id' => $content->id]) }}">
-                                        <img src="{{ asset('images/edit.svg') }}" alt="">
-                                    </a>
-                                </td>
-                                <td class="border-b border-[#FFFFFF33] px-6 py-4">
-                                    <a href="{{ route('admin.content.delete', $content->id) }}">
-                                        <img src="{{ asset('images/trash.svg') }}" alt="">
-                                    </a>
 
-                                </td>
-                            </tr>
-                        @endforeach --}}
                     </tbody>
                 </table>
             </div>
@@ -344,916 +316,127 @@
         });
     </script>
     <script>
+        let contents = @json($contents); // Make sure this variable gets populated correctly
+
         document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const table = document.getElementById('dataTable');
-            const tbody = table.getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
+    const searchInput = document.getElementById('searchInput');
+    const itemsPerPage = 10; // Number of items per page
+    let currentPage = 1;
+    // let contents = []; // This should be your entire dataset
+    let filteredContents = contents;
 
-            searchInput.addEventListener('keyup', function() {
-                const filter = searchInput.value.toLowerCase();
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    let rowContainsFilter = false;
+    // Function to render table rows based on current page and filtered contents
+    function renderTable(page) {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = '';
 
-                    for (let j = 0; j < cells.length; j++) {
-                        if (cells[j]) {
-                            const cellText = cells[j].textContent || cells[j].innerText;
-                            if (cellText.toLowerCase().indexOf(filter) > -1) {
-                                rowContainsFilter = true;
-                                break;
-                            }
-                        }
-                    }
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = filteredContents.slice(start, end);
 
-                    if (rowContainsFilter) {
-                        rows[i].style.display = '';
-                    } else {
-                        rows[i].style.display = 'none';
-                    }
-                }
-            });
+        paginatedItems.forEach(content => {
+            let imageUrl = "{{ asset('storage/') }}/" + content.image;
+            let editButton = "/admin/content/edit/" + content.id;
+            let deleteButton = "/admin/content/delete/" + content.id;
+            const row = `<tr>
+                <td class="border border-[#FFFFFF33] text-white px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
+                        <span>${content.title}</span>
+                    </div>
+                </td>
+                <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
+                <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category ? content.sub_category.name : ''}</td>
+                <td class="border-b border-l border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
+                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
+                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                    <a href="${editButton}"><img src="${editUrl}" alt=""></a>
+                </td>
+                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                    <a href="${deleteButton}"><img src="${deleteUrl}" alt=""></a>
+                </td>
+            </tr>`;
+            tableBody.insertAdjacentHTML('beforeend', row);
         });
+
+        renderResultsInfo(start + 1, Math.min(end, filteredContents.length), filteredContents.length);
+    }
+
+    // Function to handle page change
+    function changePage(page) {
+        if (page < 1 || page > Math.ceil(filteredContents.length / itemsPerPage)) return;
+        currentPage = page;
+        renderTable(page);
+        renderPagination(filteredContents.length);
+    }
+
+    // Function to render pagination controls
+    function renderPagination(totalItems) {
+        const paginationControls = document.getElementById('pagination-controls');
+        paginationControls.innerHTML = '';
+
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        if (currentPage > 1) {
+            const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
+              class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+              Previous
+            </a>`;
+            paginationControls.insertAdjacentHTML('beforeend', prevButton);
+        } else {
+            const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+              Previous
+            </span>`;
+            paginationControls.insertAdjacentHTML('beforeend', prevButton);
+        }
+
+        if (currentPage < totalPages) {
+            const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
+              class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+              Next
+            </a>`;
+            paginationControls.insertAdjacentHTML('beforeend', nextButton);
+        } else {
+            const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+              Next
+            </span>`;
+            paginationControls.insertAdjacentHTML('beforeend', nextButton);
+        }
+    }
+
+    // Function to render results info
+    function renderResultsInfo(start, end, total) {
+        const resultsInfo = document.getElementById('results-info');
+        resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
+    }
+
+    // Function to filter contents based on search input
+    function filterContents() {
+        const filter = searchInput.value.toLowerCase();
+        filteredContents = contents.filter(content => {
+            if(content.title){
+                return content.title.toLowerCase().includes(filter) ||
+                       content.category.toLowerCase().includes(filter) ||
+                       (content.sub_category && content.sub_category.name.toLowerCase().includes(filter)) ||
+                       content.plays.toString().includes(filter) ||
+                       new Date(content.created_at).toDateString().toLowerCase().includes(filter);
+            }
+        });
+        currentPage = 1; // Reset to the first page whenever a new search is done
+        renderTable(currentPage);
+        renderPagination(filteredContents.length);
+    }
+
+    searchInput.addEventListener('keyup', filterContents);
+
+    // Initial rendering
+    renderTable(currentPage);
+    renderPagination(filteredContents.length);
+});
+
     </script>
 
     <script>
-        // let contents = @json($contents);
-        // $(document).on('click', "#searchCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let category = $(this).data('category');
-        //     const tableBody = document.getElementById('table-body');
-        //     tableBody.innerHTML = '';
-        //     const itemsPerPage = 10;
-        //     let currentPage = 1;
-        //     const start = (currentPage - 1) * itemsPerPage;
-        //     const end = start + itemsPerPage; 
-        //     const paginatedItems = contents
-        //     let editUrl = "{{ asset('images/edit.svg') }}"
-        //     let deleteUrl = "{{ asset('images/trash.svg') }}"
-        //     paginatedItems.forEach(content => {
-        //         if (content.category == category) {
-        //             let imageUrl = "{{ asset('storage/') }}/" + content.image
-        //             const row = `<tr>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <div class="flex items-center space-x-4">
-    //                   <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
-    //                   <span>${content.title}</span>
-    //                 </div>
-    //               </td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
-    //               </td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
-    //               </td>
-    //             </tr>`;
-        //             tableBody.insertAdjacentHTML('beforeend', row);
-        //         }
-
-        //     });
-
-        //     renderResultsInfo(start + 1, Math.min(end, contents.length), contents.length);
-
-        //     function renderPagination() {
-        //         const paginationControls = document.getElementById('pagination-controls');
-        //         paginationControls.innerHTML = '';
-
-        //         const totalPages = Math.ceil(contents.length / itemsPerPage);
-
-        //         if (currentPage > 1) {
-        //             const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </a>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //         } else {
-        //             const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </span>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //         }
-
-        //         if (currentPage < totalPages) {
-        //             const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </a>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //         } else {
-        //             const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </span>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //         }
-        //     }
-
-        //     function renderResultsInfo(start, end, total) {
-        //         const resultsInfo = document.getElementById('results-info');
-        //         resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
-        //     }
-
-        //     function changePage(page) {
-        //         if (page < 1 || page > Math.ceil(contents.length / itemsPerPage)) return;
-        //         currentPage = page;
-        //         renderPagination();
-        //     }
-        // })
-        // $(document).on('click', "#searchSubCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_sub_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let id = $(this).data('id');
-        //     const tableBody = document.getElementById('table-body');
-        //     tableBody.innerHTML = '';
-        //     const itemsPerPage = 10;
-        //     let currentPage = 1;
-        //     const start = (currentPage - 1) * itemsPerPage;
-        //     const end = start + itemsPerPage; 
-        //     const paginatedItems = contents.slice(start, end);
-        //     let editUrl = "{{ asset('images/edit.svg') }}"
-        //     let deleteUrl = "{{ asset('images/trash.svg') }}"
-        //     paginatedItems.forEach(content => {
-        //         if (content.sub_cat_id == id) {
-        //             let imageUrl = "{{ asset('storage/') }}/" + content.image
-        //             const row = `<tr>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <div class="flex items-center space-x-4">
-    //                   <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
-    //                   <span>${content.title}</span>
-    //                 </div>
-    //               </td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
-    //               </td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
-    //               </td>
-    //             </tr>`;
-        //             tableBody.insertAdjacentHTML('beforeend', row);
-        //         }
-
-        //     });
-
-        //     renderResultsInfo(start + 1, Math.min(end, contents.length), contents.length);
-
-        //     function renderPagination() {
-        //         const paginationControls = document.getElementById('pagination-controls');
-        //         paginationControls.innerHTML = '';
-
-        //         const totalPages = Math.ceil(contents.length / itemsPerPage);
-
-        //         if (currentPage > 1) {
-        //             const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </a>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //         } else {
-        //             const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </span>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //         }
-
-        //         if (currentPage < totalPages) {
-        //             const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </a>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //         } else {
-        //             const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </span>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //         }
-        //     }
-
-        //     function renderResultsInfo(start, end, total) {
-        //         const resultsInfo = document.getElementById('results-info');
-        //         resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
-        //     }
-
-        //     function changePage(page) {
-        //         if (page < 1 || page > Math.ceil(contents.length / itemsPerPage)) return;
-        //         currentPage = page;
-        //         renderPagination();
-        //     }
-        // })
-
-        // let editUrl = "{{ asset('images/edit.svg') }}"
-        // let deleteUrl = "{{ asset('images/trash.svg') }}"
-        // // Extract the "plays" values into an array
-        // // let playsArray = contents.map(item => item.plays);
-
-        // // // Find the maximum and minimum values in the plays array
-        // // let maxPlays = Math.max(...playsArray);
-        // // let minPlays = Math.min(...playsArray);
-
-        // // console.log("Max Plays:", maxPlays);
-        // // console.log("Min Plays:", minPlays);
-
-        // $(document).on('click', "#mosted_listened", function() {
-        //     const dropdown = document.querySelector('[role="content_listened_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let type = $(this).data('type');
-        //     const tableBody = document.getElementById('table-body');
-        //     tableBody.innerHTML = '';
-        //     const itemsPerPage = 10;
-        //     let currentPage = 1;
-        //     const start = (currentPage - 1) * itemsPerPage;
-        //     const end = start + itemsPerPage;
-
-        //     // Toggle sorting direction
-        //     if (typeof this.sortOrder === 'undefined' || this.sortOrder === 'desc') {
-        //         // Sort contents based on 'plays' property (descending)
-        //         contents.sort((a, b) => b.plays - a.plays);
-        //         this.sortOrder = 'asc'; // Update sort order
-        //         $("#mosted_listened").text('Low to High')
-        //     } else {
-        //         // Sort contents based on 'plays' property (ascending)
-        //         contents.sort((a, b) => a.plays - b.plays);
-        //         this.sortOrder = 'desc'; // Update sort order
-        //         $("#mosted_listened").text('High to Low')
-
-        //     }
-
-        //     const paginatedItems = contents.slice(start, end);
-
-        //     // Render sorted items
-        //     paginatedItems.forEach(content => {
-        //         let imageUrl = "{{ asset('storage/') }}/" + content.image;
-        //         const row = `<tr>
-    //       <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //         <div class="flex items-center space-x-4">
-    //           <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
-    //           <span>${content.title}</span>
-    //         </div>
-    //       </td>
-    //       <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-    //       <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-    //       <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-    //       <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-    //       <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //         <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
-    //       </td>
-    //       <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //         <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
-    //       </td>
-    //     </tr>`;
-        //         tableBody.insertAdjacentHTML('beforeend', row);
-        //     });
-
-        //     renderResultsInfo(start + 1, Math.min(end, contents.length), contents.length);
-
-        //     function renderPagination() {
-        //         const paginationControls = document.getElementById('pagination-controls');
-        //         paginationControls.innerHTML = '';
-
-        //         const totalPages = Math.ceil(contents.length / itemsPerPage);
-
-        //         if (currentPage > 1) {
-        //             const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </a>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //         } else {
-        //             const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </span>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //         }
-
-        //         if (currentPage < totalPages) {
-        //             const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </a>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //         } else {
-        //             const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </span>`;
-        //             paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //         }
-        //     }
-
-        //     function renderResultsInfo(start, end, total) {
-        //         const resultsInfo = document.getElementById('results-info');
-        //         resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
-        //     }
-
-        //     function changePage(page) {
-        //         if (page < 1 || page > Math.ceil(contents.length / itemsPerPage)) return;
-        //         currentPage = page;
-        //         renderPagination();
-        //     }
-
-        // });
-
-
-
-
-
-        // const itemsPerPage = 10;
-        // let currentPage = 1;
-
-        // function renderTable(page) {
-        //     const tableBody = document.getElementById('table-body');
-        //     tableBody.innerHTML = '';
-
-        //     const start = (page - 1) * itemsPerPage;
-        //     const end = start + itemsPerPage;
-        //     const paginatedItems = contents.slice(start, end);
-
-
-        //     paginatedItems.forEach(content => {
-        //         let imageUrl = "{{ asset('storage/') }}/" + content.image
-        //         const row = `<tr>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <div class="flex items-center space-x-4">
-    //                   <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
-    //                   <span>${content.title}</span>
-    //                 </div>
-    //               </td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
-    //               </td>
-    //               <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //                 <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
-    //               </td>
-    //             </tr>`;
-        //         tableBody.insertAdjacentHTML('beforeend', row);
-        //     });
-
-        //     renderResultsInfo(start + 1, Math.min(end, contents.length), contents.length);
-        // }
-
-        // function renderPagination() {
-        //     const paginationControls = document.getElementById('pagination-controls');
-        //     paginationControls.innerHTML = '';
-
-        //     const totalPages = Math.ceil(contents.length / itemsPerPage);
-
-        //     if (currentPage > 1) {
-        //         const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     } else {
-        //         const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     }
-
-        //     if (currentPage < totalPages) {
-        //         const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     } else {
-        //         const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     }
-        // }
-
-        // function renderResultsInfo(start, end, total) {
-        //     const resultsInfo = document.getElementById('results-info');
-        //     resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
-        // }
-
-        // function changePage(page) {
-        //     if (page < 1 || page > Math.ceil(contents.length / itemsPerPage)) return;
-        //     currentPage = page;
-        //     renderTable(page);
-        //     renderPagination();
-        // }
-
-        // // Initial render
-        // renderTable(currentPage);
-        // renderPagination();
-
-        // let contents =
-        //     @json($contents); // Assuming contents is initialized correctly in your PHP/Blade template
-        // let editUrl = "{{ asset('images/edit.svg') }}"
-        // let deleteUrl = "{{ asset('images/trash.svg') }}"
-        // // $(document).ready(function() {
-        // const itemsPerPage = 10;
-        // let currentPage = 1;
-
-        // // Initial render
-        // renderTable(currentPage, contents);
-        // renderPagination(contents.length);
-
-
-
-        // // Click handler for searching by category
-        // $(document).on('click', "#searchCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let category = $(this).data('category');
-
-        //     const filteredContents = contents.filter(content => content.category == category);
-
-        //     // Reset to first page when filter changes
-        //     currentPage = 1;
-        //     renderTable(currentPage, filteredContents);
-        //     renderPagination(filteredContents.length);
-        // });
-
-        // // Click handler for searching by sub-category
-        // $(document).on('click', "#searchSubCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_sub_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let id = $(this).data('id');
-
-        //     const filteredContents = contents.filter(content => content.sub_cat_id == id);
-
-        //     // Reset to first page when filter changes
-        //     currentPage = 1;
-        //     renderTable(currentPage, filteredContents);
-        //     renderPagination(filteredContents.length);
-        // });
-
-
-        // // Click handler for sorting by plays (most listened)
-        // $(document).on('click', "#mosted_listened", function() {
-        //     const dropdown = document.querySelector('[role="content_listened_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let type = $(this).data('type');
-
-        //     // Toggle sorting direction
-        //     if (typeof this.sortOrder === 'undefined' || this.sortOrder === 'desc') {
-        //         // Sort contents based on 'plays' property (descending)
-        //         contents.sort((a, b) => b.plays - a.plays);
-        //         this.sortOrder = 'asc';
-        //         $("#mosted_listened").text('Low to High');
-        //     } else {
-        //         // Sort contents based on 'plays' property (ascending)
-        //         contents.sort((a, b) => a.plays - b.plays);
-        //         this.sortOrder = 'desc';
-        //         $("#mosted_listened").text('High to Low');
-        //     }
-
-        //     renderTable(currentPage, contents);
-        //     renderPagination(contents.length);
-        // });
-
-        // // Function to render table rows based on current page and filtered contents
-        // // Function to render table rows based on current page and filtered contents
-        // function renderTable(page, filteredContents) {
-        //     const tableBody = document.getElementById('table-body');
-        //     tableBody.innerHTML = '';
-
-        //     const start = (page - 1) * itemsPerPage;
-        //     const end = start + itemsPerPage;
-        //     const paginatedItems = filteredContents.slice(start, end);
-
-        //     paginatedItems.forEach(content => {
-        //         let imageUrl = "{{ asset('storage/') }}/" + content.image;
-        //         const row = `<tr>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <div class="flex items-center space-x-4">
-    //       <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
-    //       <span>${content.title}</span>
-    //     </div>
-    //   </td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
-    //   </td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
-    //   </td>
-    // </tr>`;
-        //         tableBody.insertAdjacentHTML('beforeend', row);
-        //     });
-
-        //     renderResultsInfo(start + 1, Math.min(end, filteredContents.length), filteredContents.length);
-        // }
-
-        // // Function to handle page change
-        // // Function to handle page change
-        // function changePage(page) {
-        //     const filteredContents = getFilteredContents(); // Implement this function to get filtered contents
-
-        //     if (page < 1 || page > Math.ceil(filteredContents.length / itemsPerPage)) return;
-        //     currentPage = page;
-        //     renderTable(page, filteredContents);
-        //     renderPagination(filteredContents.length);
-        // }
-
-        // // Function to render pagination controls
-        // function renderPagination(totalItems) {
-        //     const paginationControls = document.getElementById('pagination-controls');
-        //     paginationControls.innerHTML = '';
-
-        //     const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-        //     if (currentPage > 1) {
-        //         const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     } else {
-        //         const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Previous
-    //                     </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     }
-
-        //     if (currentPage < totalPages) {
-        //         const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
-    //                       class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     } else {
-        //         const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //                       Next
-    //                     </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     }
-        // }
-
-        // // Function to render results info
-        // function renderResultsInfo(start, end, total) {
-        //     const resultsInfo = document.getElementById('results-info');
-        //     resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
-        // }
-
-
-        // // });
-
-        // let contents =
-        //     @json($contents); // Assuming contents is initialized correctly in your PHP/Blade template
-        // let editUrl = "{{ asset('images/edit.svg') }}";
-        // let deleteUrl = "{{ asset('images/trash.svg') }}";
-        // const itemsPerPage = 10;
-        // let currentPage = 1;
-        // let filteredContents = []; // Variable to hold filtered contents
-
-        // // Initial render
-        // renderTable(currentPage);
-        // renderPagination(contents.length);
-
-        // // Click handler for searching by category
-        // $(document).on('click', "#searchCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let category = $(this).data('category');
-
-        //     updateFilteredContentsByCategory(category);
-
-        //     // Reset to first page when filter changes
-        //     currentPage = 1;
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-        // // Click handler for searching by sub-category
-        // $(document).on('click', "#searchSubCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_sub_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let subCategoryId = $(this).data('id');
-
-        //     updateFilteredContentsBySubCategory(subCategoryId);
-
-        //     // Reset to first page when filter changes
-        //     currentPage = 1;
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-        // // Click handler for sorting by plays (most listened)
-        // $(document).on('click', "#mosted_listened", function() {
-        //     const dropdown = document.querySelector('[role="content_listened_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let type = $(this).data('type');
-
-        //     // Toggle sorting direction
-        //     if (typeof this.sortOrder === 'undefined' || this.sortOrder === 'desc') {
-        //         // Sort contents based on 'plays' property (descending)
-        //         contents.sort((a, b) => b.plays - a.plays);
-        //         this.sortOrder = 'asc';
-        //         $("#mosted_listened").text('Low to High');
-        //     } else {
-        //         // Sort contents based on 'plays' property (ascending)
-        //         contents.sort((a, b) => a.plays - b.plays);
-        //         this.sortOrder = 'desc';
-        //         $("#mosted_listened").text('High to Low');
-        //     }
-
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-        // // Function to update filtered contents based on category filter
-        // function updateFilteredContentsByCategory(category) {
-        //     filteredContents = contents.filter(content => content.category == category);
-        // }
-
-        // // Function to update filtered contents based on sub-category filter
-        // function updateFilteredContentsBySubCategory(subCategoryId) {
-        //     filteredContents = contents.filter(content => content.sub_cat_id == subCategoryId);
-        // }
-
-        // // Function to render table rows based on current page and filtered contents
-        // function renderTable(page) {
-        //     const tableBody = document.getElementById('table-body');
-        //     tableBody.innerHTML = '';
-
-        //     const start = (page - 1) * itemsPerPage;
-        //     const end = start + itemsPerPage;
-        //     const paginatedItems = filteredContents.slice(start, end);
-
-        //     paginatedItems.forEach(content => {
-        //         let imageUrl = "{{ asset('storage/') }}/" + content.image;
-        //         const row = `<tr>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <div class="flex items-center space-x-4">
-    //       <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
-    //       <span>${content.title}</span>
-    //     </div>
-    //   </td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
-    //   </td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
-    //   </td>
-    // </tr>`;
-        //         tableBody.insertAdjacentHTML('beforeend', row);
-        //     });
-
-        //     renderResultsInfo(start + 1, Math.min(end, filteredContents.length), filteredContents.length);
-        // }
-
-        // // Function to handle page change
-        // function changePage(page) {
-        //     if (page < 1 || page > Math.ceil(filteredContents.length / itemsPerPage)) return;
-        //     currentPage = page;
-        //     renderTable(page);
-        //     renderPagination(filteredContents.length);
-        // }
-
-        // // Function to render pagination controls
-        // function renderPagination(totalItems) {
-        //     const paginationControls = document.getElementById('pagination-controls');
-        //     paginationControls.innerHTML = '';
-
-        //     const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-        //     if (currentPage > 1) {
-        //         const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
-    //           class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Previous
-    //         </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     } else {
-        //         const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Previous
-    //         </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     }
-
-        //     if (currentPage < totalPages) {
-        //         const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
-    //           class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Next
-    //         </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     } else {
-        //         const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Next
-    //         </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     }
-        // }
-
-        // // Function to render results info
-        // function renderResultsInfo(start, end, total) {
-        //     const resultsInfo = document.getElementById('results-info');
-        //     resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
-        // }
-
-        // Assuming contents is initialized correctly in your PHP/Blade template
-
-        // Click handler for sorting by plays (most listened)
-        // $(document).on('click', "#mosted_listened", function() {
-        //     const dropdown = document.querySelector('[role="content_listened_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let type = $(this).data('type');
-
-        //     // Toggle sorting direction
-        //     if (typeof this.sortOrder === 'undefined' || this.sortOrder === 'desc') {
-        //         // Sort contents based on 'plays' property (descending)
-        //         contents.sort((a, b) => b.plays - a.plays);
-        //         this.sortOrder = 'asc';
-        //         $("#mosted_listened").text('Low to High');
-        //     } else {
-        //         // Sort contents based on 'plays' property (ascending)
-        //         contents.sort((a, b) => a.plays - b.plays);
-        //         this.sortOrder = 'desc';
-        //         $("#mosted_listened").text('High to Low');
-        //     }
-
-        //     currentPage = 1; // Reset to first page when sorting changes
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-
-        // let contents = @json($contents); // Make sure this variable gets populated correctly
-
-        // let editUrl = "{{ asset('images/edit.svg') }}";
-        // let deleteUrl = "{{ asset('images/trash.svg') }}";
-        // const itemsPerPage = 10;
-        // let currentPage = 1;
-        // let filteredContents = []; // Variable to hold filtered contents
-
-        // $(document).ready(function() {
-        //     // Initial render on page load
-        //     updateFilteredContents();
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-        // // Click handler for searching by category
-        // $(document).on('click', "#searchCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let category = $(this).data('category');
-
-        //     updateFilteredContentsByCategory(category);
-        //     currentPage = 1; // Reset to first page when filter changes
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-        // // Click handler for searching by sub-category
-        // $(document).on('click', "#searchSubCategory", function() {
-        //     const dropdown = document.querySelector('[role="content_sub_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let subCategoryId = $(this).data('id');
-
-        //     updateFilteredContentsBySubCategory(subCategoryId);
-        //     currentPage = 1; // Reset to first page when filter changes
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-
-
-        // // Click handler for sorting by plays (most listened)
-        // $(document).on('click', "#mosted_listened", function() {
-        //     const dropdown = document.querySelector('[role="content_listened_menu"]');
-        //     dropdown.classList.toggle('hidden');
-        //     let type = $(this).data('type');
-
-        //     // Toggle sorting direction
-        //     if (typeof this.sortOrder === 'undefined' || this.sortOrder === 'desc') {
-        //         // Sort contents based on 'plays' property (descending)
-        //         filteredContents.sort((a, b) => b.plays - a.plays);
-        //         this.sortOrder = 'asc';
-        //         $("#mosted_listened").text('Low to High');
-        //     } else {
-        //         // Sort contents based on 'plays' property (ascending)
-        //         filteredContents.sort((a, b) => a.plays - b.plays);
-        //         this.sortOrder = 'desc';
-        //         $("#mosted_listened").text('High to Low');
-        //     }
-
-        //     currentPage = 1; // Reset to first page when sorting changes
-        //     renderTable(currentPage);
-        //     renderPagination(filteredContents.length);
-        // });
-
-        // // Function to update filtered contents based on all filters
-        // function updateFilteredContents() {
-        //     filteredContents = [...contents]; // Reset filteredContents to include all contents initially
-        // }
-
-        // // Function to update filtered contents based on category filter
-        // function updateFilteredContentsByCategory(category) {
-        //     filteredContents = contents.filter(content => content.category == category);
-        // }
-
-        // // Function to update filtered contents based on sub-category filter
-        // function updateFilteredContentsBySubCategory(subCategoryId) {
-        //     filteredContents = contents.filter(content => content.sub_cat_id == subCategoryId);
-        // }
-
-        // // Function to render table rows based on current page and filtered contents
-        // function renderTable(page) {
-        //     const tableBody = document.getElementById('table-body');
-        //     tableBody.innerHTML = '';
-
-        //     const start = (page - 1) * itemsPerPage;
-        //     const end = start + itemsPerPage;
-        //     const paginatedItems = filteredContents.slice(start, end);
-
-        //     paginatedItems.forEach(content => {
-        //         let imageUrl = "{{ asset('storage/') }}/" + content.image;
-        //         const row = `<tr>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <div class="flex items-center space-x-4">
-    //       <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
-    //       <span>${content.title}</span>
-    //     </div>
-    //   </td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.category}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.sub_category.name}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${content.plays}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">${new Date(content.created_at).toDateString()}</td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <a href="/edit/${content.id}"><img src="${editUrl}" alt=""></a>
-    //   </td>
-    //   <td class="border border-[#FFFFFF33] text-white px-6 py-4">
-    //     <a href="/delete/${content.id}"><img src="${deleteUrl}" alt=""></a>
-    //   </td>
-    // </tr>`;
-        //         tableBody.insertAdjacentHTML('beforeend', row);
-        //     });
-
-        //     renderResultsInfo(start + 1, Math.min(end, filteredContents.length), filteredContents.length);
-        // }
-
-        // // Function to handle page change
-        // function changePage(page) {
-        //     if (page < 1 || page > Math.ceil(filteredContents.length / itemsPerPage)) return;
-        //     currentPage = page;
-        //     renderTable(page);
-        //     renderPagination(filteredContents.length);
-        // }
-
-        // // Function to render pagination controls
-        // function renderPagination(totalItems) {
-        //     const paginationControls = document.getElementById('pagination-controls');
-        //     paginationControls.innerHTML = '';
-
-        //     const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-        //     if (currentPage > 1) {
-        //         const prevButton = `<a href="javascript:void(0);" onclick="changePage(currentPage - 1)"
-    //           class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Previous
-    //         </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     } else {
-        //         const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Previous
-    //         </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', prevButton);
-        //     }
-
-        //     if (currentPage < totalPages) {
-        //         const nextButton = `<a href="javascript:void(0);" onclick="changePage(currentPage + 1)"
-    //           class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Next
-    //         </a>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     } else {
-        //         const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
-    //           Next
-    //         </span>`;
-        //         paginationControls.insertAdjacentHTML('beforeend', nextButton);
-        //     }
-        // }
-
-        // // Function to render results info
-        // function renderResultsInfo(start, end, total) {
-        //     const resultsInfo = document.getElementById('results-info');
-        //     resultsInfo.textContent = `Showing ${start} to ${end} of ${total} results`;
-        // }
-
-        let contents = @json($contents); // Make sure this variable gets populated correctly
         let editUrl = "{{ asset('images/edit.svg') }}";
         let deleteUrl = "{{ asset('images/trash.svg') }}";
         const itemsPerPage = 10;
@@ -1346,8 +529,8 @@
 
             paginatedItems.forEach(content => {
                 let imageUrl = "{{ asset('storage/') }}/" + content.image;
-                let editButton="/admin/content/edit/"+content.id;
-                let deleteButton="/admin/content/delete/"+content.id;
+                let editButton = "/admin/content/edit/" + content.id;
+                let deleteButton = "/admin/content/delete/" + content.id;
                 const row = `<tr>
           <td class="border border-[#FFFFFF33] text-white px-6 py-4">
             <div class="flex items-center space-x-4">
