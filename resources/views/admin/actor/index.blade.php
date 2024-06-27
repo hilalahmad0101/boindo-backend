@@ -115,35 +115,123 @@
 
 @section('script')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+       document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('searchInput');
-            const table = document.getElementById('dataTable');
-            const tbody = table.getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
+            const tableBody = document.getElementById('table-body');
+            let actors = @json($actors); // Assuming $actors is passed from Blade template
+            let editUrl = "{{ asset('images/edit.svg') }}";
+            let deleteUrl = "{{ asset('images/trash.svg') }}";
+            const itemsPerPage = 10;
+            let currentPage = 1;
+            let filteredActors = []; // Variable to hold filtered actors
 
+            // Initial render on page load
+            updateFilteredActors();
+            renderTable(currentPage);
+            renderPagination(filteredActors.length);
+
+            // Search input event listener
             searchInput.addEventListener('keyup', function() {
-                const filter = searchInput.value.toLowerCase();
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    let rowContainsFilter = false;
-
-                    for (let j = 0; j < cells.length; j++) {
-                        if (cells[j]) {
-                            const cellText = cells[j].textContent || cells[j].innerText;
-                            if (cellText.toLowerCase().indexOf(filter) > -1) {
-                                rowContainsFilter = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (rowContainsFilter) {
-                        rows[i].style.display = '';
-                    } else {
-                        rows[i].style.display = 'none';
-                    }
-                }
+                const filter = searchInput.value.trim().toLowerCase();
+                filteredActors = actors.filter(actor =>
+                    actor.name.toLowerCase().includes(filter)
+                );
+                currentPage = 1; // Reset to first page when search changes
+                renderTable(currentPage);
+                renderPagination(filteredActors.length);
             });
+
+            // Function to update filtered actors based on all filters
+            function updateFilteredActors() {
+                filteredActors = [...actors]; // Reset filteredActors to include all actors initially
+            }
+
+            // Function to render table rows based on current page and filtered actors
+            function renderTable(page) {
+                const tableBody = document.getElementById('table-body');
+                tableBody.innerHTML = '';
+
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedItems = filteredActors.slice(start, end);
+
+                paginatedItems.forEach(actor => {
+                    let imageUrl = "{{ asset('storage/') }}/" + actor.image;
+                    let editRoute = "/admin/actor/edit/" + actor.id;
+                    let deleteRoute = "/admin/actor/delete/" + actor.id;
+                    const row = `<tr>
+                        <td class="border border-[#FFFFFF33] text-white px-6 py-4">
+                            <div class="flex items-center space-x-4">
+                                <img src="${imageUrl}" class="w-[100px] h-[100px] object-fill" alt="">
+                                <span>${actor.name}</span>
+                            </div>
+                        </td>
+                        <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${new Date(actor.created_at).toDateString()}</td>
+                        <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${actor.views}</td>
+                        <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                            <a href="${editRoute}">
+                                <img src="${editUrl}" alt="">
+                            </a>
+                        </td>
+                        <td class="border-b border-[#FFFFFF33] px-6 py-4">
+                            <a href="${deleteRoute}">
+                                <img src="${deleteUrl}" alt="">
+                            </a>
+                        </td>
+                    </tr>`;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+
+                renderResultsInfo(start + 1, Math.min(end, filteredActors.length), filteredActors.length);
+            }
+
+            // Function to handle page change
+            function changePage(page) {
+                if (page < 1 || page > Math.ceil(filteredActors.length / itemsPerPage)) return;
+                currentPage = page;
+                renderTable(page);
+                renderPagination(filteredActors.length);
+            }
+
+            // Function to render pagination controls
+            function renderPagination(totalItems) {
+                const paginationControls = document.getElementById('pagination-controls');
+                paginationControls.innerHTML = '';
+
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+                if (currentPage > 1) {
+                    const prevButton = `<a href="javascript:void(0);" onclick="changePage(${currentPage - 1})"
+                        class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                        Previous
+                    </a>`;
+                    paginationControls.insertAdjacentHTML('beforeend', prevButton);
+                } else {
+                    const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                        Previous
+                    </span>`;
+                    paginationControls.insertAdjacentHTML('beforeend', prevButton);
+                }
+
+                if (currentPage < totalPages) {
+                    const nextButton = `<a href="javascript:void(0);" onclick="changePage(${currentPage + 1})"
+                        class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                        Next
+                    </a>`;
+                    paginationControls.insertAdjacentHTML('beforeend', nextButton);
+                } else {
+                    const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                        Next
+                    </span>`;
+                    paginationControls.insertAdjacentHTML('beforeend', nextButton);
+                }
+            }
+
+            // Function to render results info
+            function renderResultsInfo(start, end, total) {
+                const resultsInfo = document.getElementById('results-info');
+                resultsInfo.textContent = `Showing ${start} to ${end} of ${total} actors`;
+            }
         });
         document.getElementById('content-listened-button').addEventListener('click', () => {
             const dropdown = document.querySelector('[role="content_listened_menu"]');

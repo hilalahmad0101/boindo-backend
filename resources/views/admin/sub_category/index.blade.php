@@ -208,43 +208,123 @@
 
 @section('script')
     <script>
+        let categories = @json($categories);
+
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('searchInput');
-            const table = document.getElementById('dataTable');
-            const tbody = table.getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
+            const tableBody = document.getElementById('table-body');
+            const paginationControls = document.getElementById('pagination-controls');
+            const resultsInfo = document.getElementById('results-info');
 
-            searchInput.addEventListener('keyup', function() {
-                const filter = searchInput.value.toLowerCase();
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    let rowContainsFilter = false;
+            let currentPage = 1;
+            const itemsPerPage = 10; // Number of items per page
+            let filteredCategories = []; // Initially set to all categories
 
-                    for (let j = 0; j < cells.length; j++) {
-                        if (cells[j]) {
-                            const cellText = cells[j].textContent || cells[j].innerText;
-                            if (cellText.toLowerCase().indexOf(filter) > -1) {
-                                rowContainsFilter = true;
-                                break;
-                            }
-                        }
-                    }
+            // Function to render table rows based on current page and filtered categories
+            function renderTable(page) {
+                tableBody.innerHTML = '';
 
-                    if (rowContainsFilter) {
-                        rows[i].style.display = '';
-                    } else {
-                        rows[i].style.display = 'none';
-                    }
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedItems = filteredCategories.slice(start, end);
+
+                paginatedItems.forEach(category => {
+                    let editButton = `/admin/sub-category/edit/${category.id}`;
+                    let deleteButton = `/admin/sub-category/delete/${category.id}`;
+                    const row = `<tr>
+                <td class="border border-[#FFFFFF33] text-white px-6 py-4">${category.name}</td>
+                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${new Date(category.created_at).toLocaleDateString()}</td>
+                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
+                    <a href="${editButton}">
+                        <img src="${editUrl}" alt="">
+                    </a>
+                </td>
+                <td class="border-b border-[#FFFFFF33] px-6 py-4">
+                    <a href="${deleteButton}">
+                        <img src="${deleteUrl}" alt="">
+                    </a>
+                </td>
+            </tr>`;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+
+                renderResultsInfo(start + 1, Math.min(end, filteredCategories.length), filteredCategories.length);
+            }
+
+            // Function to handle page change
+            function changePage(page) {
+                if (page < 1 || page > Math.ceil(filteredCategories.length / itemsPerPage)) return;
+                currentPage = page;
+                renderTable(page);
+                renderPagination(filteredCategories.length);
+            }
+
+            // Function to render pagination controls
+            function renderPagination(totalItems) {
+                paginationControls.innerHTML = '';
+
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+                if (currentPage > 1) {
+                    const prevButton = `<a href="javascript:void(0);" onclick="changePage(${currentPage - 1})"
+                class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                Previous
+            </a>`;
+                    paginationControls.insertAdjacentHTML('beforeend', prevButton);
+                } else {
+                    const prevButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                Previous
+            </span>`;
+                    paginationControls.insertAdjacentHTML('beforeend', prevButton);
                 }
+
+                if (currentPage < totalPages) {
+                    const nextButton = `<a href="javascript:void(0);" onclick="changePage(${currentPage + 1})"
+                class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                Next
+            </a>`;
+                    paginationControls.insertAdjacentHTML('beforeend', nextButton);
+                } else {
+                    const nextButton = `<span class="px-4 py-2 rounded-lg border-2 text-white border-white justify-start items-center gap-2 inline-flex">
+                Next
+            </span>`;
+                    paginationControls.insertAdjacentHTML('beforeend', nextButton);
+                }
+            }
+
+            // Function to render results info
+            function renderResultsInfo(start, end, total) {
+                resultsInfo.textContent = `Showing ${start} to ${end} of ${total} categories`;
+            }
+
+            // Simulated function to fetch and update categories
+            function fetchCategories() {
+                filteredCategories = categories.slice(); // Initialize filtered categories with all categories
+                renderTable(currentPage);
+                renderPagination(filteredCategories.length);
+            }
+
+            // Call fetchCategories to initialize
+            fetchCategories();
+
+            // Search input event listener
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.trim().toLowerCase();
+                filteredCategories = categories.filter(category =>
+                    category.name.toLowerCase().includes(filter)
+                );
+                currentPage = 1; // Reset to first page after search
+                renderTable(currentPage);
+                renderPagination(filteredCategories.length);
             });
         });
+
 
         document.getElementById('content-category-button').addEventListener('click', () => {
             const dropdown = document.querySelector('[role="content_category_menu"]');
             dropdown.classList.toggle('hidden');
         });
 
-        let categories = @json($categories);
         let editUrl = "{{ asset('images/edit.svg') }}";
         let deleteUrl = "{{ asset('images/trash.svg') }}";
         const itemsPerPage = 10;
@@ -267,13 +347,13 @@
             renderTable(currentPage);
             renderPagination(filteredCategories.length);
         });
- 
+
 
         // Function to update filtered categories based on category filter
         function updateFilteredContentsByCategory(category) {
             filteredCategories = categories.filter(cat => cat.category === category);
         }
- 
+
 
         // Function to render table rows based on current page and filtered categories
         function renderTable(page) {
@@ -285,8 +365,8 @@
             const paginatedItems = filteredCategories.slice(start, end);
 
             paginatedItems.forEach(category => {
-                let editButton="/admin/sub-category/edit/"+category.id;
-                let deleteButton="/admin/sub-category/delete/"+category.id;
+                let editButton = "/admin/sub-category/edit/" + category.id;
+                let deleteButton = "/admin/sub-category/delete/" + category.id;
                 const row = `<tr>
                 <td class="border border-[#FFFFFF33] text-white px-6 py-4">${category.name}</td>
                 <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">${new Date(category.created_at).toLocaleDateString()}</td>
