@@ -10,16 +10,28 @@ class JingleController extends Controller
 {
     public function index()
     {
-        $jingles = Jingle::latest()->paginate(10);
+        $jingles = Jingle::all();
         return view('admin.jingle.index', compact('jingles'));
+    }
+
+    public function getJingles()
+    {
+        $jingles = Jingle::latest()->paginate(10);
+        $output=view('components.get-jingles', compact('jingles'))->render();
+        return response()->json([
+            'success'=>true,
+            'data'=>$output,
+        ]);
     }
 
     public function search(Request $request) {
         $searchTerm = $request->input('search');
         $jingles = Jingle::latest()->where('title', 'LIKE', "%{$searchTerm}%")->paginate(10);
-        // Append the search term to the pagination links
-        $jingles->appends(['search' => $searchTerm]);
-        return view('admin.jingle.index', compact('jingles'));
+        $output=view('components.get-jingles', compact('jingles'))->render();
+        return response()->json([
+            'success'=>true,
+            'data'=>$output,
+        ]);
     }
 
     public function create()

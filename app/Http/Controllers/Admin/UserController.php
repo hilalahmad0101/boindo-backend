@@ -11,9 +11,28 @@ class UserController extends Controller
 {
     function index(): View
     {
-        $users = User::latest()->paginate(10);
+        $users = User::all();
         return view('admin.users', compact('users'));
     }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $users = User::latest()->where('name', 'LIKE', "%{$searchTerm}%")->orWhere('email', 'LIKE', "%{$searchTerm}%")->orWhere('email', 'LIKE', "%{$searchTerm}%")->paginate(10);
+        $users->appends(['search' => $searchTerm]);
+        $output = view('components.get-users', compact('users'))->render();
+        return response()->json(['data' => $output]);
+    }
+
+
+    public function getUsers(Request $request)
+    {
+        $users = User::latest()->paginate(10);
+        // $users->appends(['search' => $searchTerm]);
+        $output = view('components.get-users', compact('users'))->render();
+        return response()->json(['data' => $output]);
+    }
+
 
     function delete($id)
     {
@@ -24,15 +43,14 @@ class UserController extends Controller
     public function suspend($id)
     {
         $user = User::findOrFail($id);
-        if($user->status == 0){
+        if ($user->status == 0) {
             $user->status = 1;
             $user->save();
             return to_route('admin.user.index')->with('success', 'User Unsuspend successfully');
-        }else{
+        } else {
             $user->status = 0;
             $user->save();
             return to_route('admin.user.index')->with('success', 'User suspend successfully');
         }
-       
     }
 }

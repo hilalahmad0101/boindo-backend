@@ -14,11 +14,11 @@
                             class="px-3 py-1.5 bg-neutral-700 rounded-3xl justify-center items-center gap-2 inline-flex  text-white text-sm font-semibold leading-tight">{{ count($notifications) }}</span>
                     </p>
                     <div class="flex items-center mt-3 md:mt-0">
-                        <form action="{{ route('admin.notification.search') }}" method="GET" class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
+                        <div  class="flex items-center px-4 py-2 bg-[#383838] rounded-md">
                             <img src="{{ asset('images/search.png') }}" alt="">
-                            <input type="text" placeholder="Search" name="search"
+                            <input type="text" placeholder="Search" id="search"
                                 class="placeholder:text-white placeholder:font-bold text-white  ml-2 w-full bg-transparent outline-none border-none">
-                        </form>
+                        </div>
                         <a href="{{ route('admin.notification.create') }}"
                             class=" ml-[29px] px-4 py-2 bg-white rounded-lg justify-start items-center gap-2 inline-flex text-black text-base font-bold   leading-normal">
                             <img src="{{ asset('images/plus.svg') }}" alt="">
@@ -29,75 +29,47 @@
             </div>
 
 
-            <div class="mt-8  overflow-x-scroll xl:overflow-hidden ">
-                <table class="table-auto w-[1000px] xl:w-full rounded-md " id="dataTable">
-                    <thead class="bg-[#FFFFFF33] rounded-tl-lg rounded-tr-lg">
-                        <tr class="rounded-md">
-                            <th
-                                class="px-6 py-3 text-left  text-white border-b border-r border-t rounded-tl-md border-[#FFFFFF33]">
-                                Name</th>
-                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Date</th>
-                            <th class="px-6 py-3 text-left  text-white border-b border-[#FFFFFF33]">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-[#383838]">
-                        @foreach ($notifications as $notification)
-                            <tr>
-                                <td class="border border-[#FFFFFF33] text-white  px-6 py-4">
-                                    {{ $notification->title }}
-                                </td>
-                                <td class="border-b border-[#FFFFFF33] text-white px-6 py-4">
-                                    {{ date('Y M d', strtotime($notification->created_at)) }}</td>
-                                <td class="border-b border-[#FFFFFF33] px-6 py-4">
-                                    <a href="{{ route('admin.notification.delete', $notification->id) }}">
-                                        <img src="{{ asset('images/trash.svg') }}" alt="">
-                                    </a>
-
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="mt-[45px] mb-[50px]">
-                {{ $notifications->links() }}
-            </div> 
+            <div id="getNotifications"></div>
+            
         </div>
     </div>
 @endsection
 
 
 @section('script')
-    {{-- <script>
-         document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const table = document.getElementById('dataTable');
-            const tbody = table.getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
+<script>
+    $(document).ready(function() {
 
-            searchInput.addEventListener('keyup', function() {
-                const filter = searchInput.value.toLowerCase();
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName('td');
-                    let rowContainsFilter = false;
+        $(document).on('click', '#pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            fetch_data(page);
+        });
 
-                    for (let j = 0; j < cells.length; j++) {
-                        if (cells[j]) {
-                            const cellText = cells[j].textContent || cells[j].innerText;
-                            if (cellText.toLowerCase().indexOf(filter) > -1) {
-                                rowContainsFilter = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (rowContainsFilter) {
-                        rows[i].style.display = '';
-                    } else {
-                        rows[i].style.display = 'none';
-                    }
+        function fetch_data(page) {
+            $.ajax({
+                url: "/admin/notification/getNotifications?page=" + page,
+                type: 'GET',
+                success: function(data) {
+                    $('#getNotifications').html(data.data);
                 }
             });
-        });
-    </script> --}}
+        }
+
+        $(document).on('keyup', '#search', function() {
+            let page=1;
+            $.ajax({
+                url: "/admin/notification/search?page=" + page,
+                data:{
+                    "search":$(this).val(),
+                },
+                type: 'GET',
+                success: function(data) {
+                    $('#getNotifications').html(data.data);
+                }
+            });
+        })
+        fetch_data(1)
+    });
+</script>
 @endsection

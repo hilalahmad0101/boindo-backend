@@ -47,12 +47,25 @@ class DashboardController extends Controller
         $notifications = \DB::table('notifications')->paginate(10);
         return view('admin.notification.index', compact('notifications'));
     }
-
-    function search_notification(Request $request): View
+    function getNotifications()
     {
-        $notifications = \DB::table('notifications')->where('title','LIKE','%{$request->search}%')->paginate(10);
-        $notifications->appends(['search' => $request->search]);
-        return view('admin.notification.index', compact('notifications'));
+        $notifications = \DB::table('notifications')->paginate(10);
+        $output=view('components.get-notifications', compact('notifications'))->render();
+        return response()->json([
+            'success'=>true,
+            'data'=>$output, 
+        ]);
+    }
+
+    function search_notification(Request $request)
+    {
+        $notifications = \DB::table('notifications')->where('title', 'LIKE', '%{$request->search}%')->paginate(10);
+        // $notifications->appends(['search' => $request->search]);
+        $output=view('components.get-notifications', compact('notifications'))->render();
+        return response()->json([
+            'success'=>true,
+            'data'=>$output, 
+        ]);
     }
 
     public function notificationCreate()
@@ -166,38 +179,48 @@ class DashboardController extends Controller
         return to_route('admin.notification.index')->with('success', 'Notification send successfully');
     }
 
+    public function reviewGet()
+    {
+        $reviews = Review::all();
+        return view('admin.reviews', compact('reviews'));
+    }
     public function getReviews()
     {
         $reviews = Review::with('contents', 'user')->latest()->paginate(10);
-        return view('admin.reviews', compact('reviews'));
+        $output = view('components.get-reviews', compact('reviews'))->render();
+        return response()->json([
+            'success' => true,
+            'data' => $output
+        ]);
     }
 
     public function search(Request $request)
     {
         $query = Review::with('contents', 'user');
         $searchTerm = $request->input('search', '');
-    
+
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->whereHas('user', function ($q) use ($searchTerm) {
                     $q->where('email', 'LIKE', "%{$searchTerm}%");
                 })
-                ->orWhereHas('contents', function ($q) use ($searchTerm) {
-                    $q->where('title', 'LIKE', "%{$searchTerm}%");
-                })
-                ->orWhere('content', 'LIKE', "%{$searchTerm}%"); // Make sure 'content' is the correct column name
+                    ->orWhereHas('contents', function ($q) use ($searchTerm) {
+                        $q->where('title', 'LIKE', "%{$searchTerm}%");
+                    })
+                    ->orWhere('content', 'LIKE', "%{$searchTerm}%"); // Make sure 'content' is the correct column name
             });
         }
-    
+
         $reviews = $query->latest()->paginate(10);
         $reviews->appends(['search' => $searchTerm]);
-    
-        // Debugging: Check the query results
-        // dd($reviews);
-    
-        return view('admin.reviews', compact('reviews'));
+
+        $output = view('components.get-reviews', compact('reviews'))->render();
+        return response()->json([
+            'success' => true,
+            'data' => $output
+        ]);
     }
-    
+
 
     public function deleteReviews($id)
     {
