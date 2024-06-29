@@ -650,7 +650,6 @@
                 } else {
                     selectedValues = selectedValues.filter(item => item.value !== value);
                 }
-
                 updateSelectedItemsDisplay();
             });
 

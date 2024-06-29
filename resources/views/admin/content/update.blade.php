@@ -19,7 +19,7 @@
             color: white !important;
         }
     </style>
-    <form action="" method="POST" enctype="multipart/form-data" class="mt-[134px]">
+    <form method="POST" enctype="multipart/form-data" class="mt-[134px]">
         <div class="flex md:flex-row flex-col md:space-y-0 space-x-5 items-center justify-between">
             <h1 class="text-neutral-50 text-4xl font-black ">CONTENT UPDATE</h1>
             <p>
@@ -58,11 +58,12 @@
                                     <div class="flex items-center space-x-2 w-full">
                                         <div id="progressWrapper" class="relative w-full h-1 bg-gray-600 rounded-full">
                                             <div id="progressBar" class="absolute h-1 bg-white rounded-full"
-                                                style="width: {{ $content->image ?'100':'0' }}%;"></div>
+                                                style="width: {{ $content->image ? '100' : '0' }}%;"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-white text-sm" id="progressTextImage">{{ $content->image ?'100':'0' }}%</div>
+                                <div class="text-white text-sm" id="progressTextImage">{{ $content->image ? '100' : '0' }}%
+                                </div>
 
                                 {{-- <img src="" style="width: 100%" class="mt-4" id="previewImage" alt=""> --}}
                                 @error('image')
@@ -97,7 +98,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-white text-sm" id="progressTextDemo">{{ $content->demo ? '100' : '0' }}%</div>
+                                <div class="text-white text-sm" id="progressTextDemo">{{ $content->demo ? '100' : '0' }}%
+                                </div>
                                 @error('audio')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
@@ -129,7 +131,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-white text-sm" id="progressTextAudio">{{ $content->audio ? '100' : '0' }}%</div>
+                                <div class="text-white text-sm" id="progressTextAudio">{{ $content->audio ? '100' : '0' }}%
+                                </div>
 
                                 @error('audio')
                                     <span style="color:red">{{ $message }}</span>
@@ -654,16 +657,38 @@
             let selectedValues = [];
 
             // Initialize selected values
+            // $dropdownItems.each(function() {
+            //     const $checkbox = $(this).find('input[type="checkbox"]');
+            //     const value = $(this).data('value');
+            //     const text = $(this).find('span').text();
+
+            //     if ($checkbox.prop('checked')) {
+            //         selectedValues.push({
+            //             value: value,
+            //             text: text
+            //         });
+            //     }
+            // });
+
             $dropdownItems.each(function() {
                 const $checkbox = $(this).find('input[type="checkbox"]');
                 const value = $(this).data('value');
                 const text = $(this).find('span').text();
 
                 if ($checkbox.prop('checked')) {
-                    selectedValues.push({
-                        value: value,
-                        text: text
-                    });
+                    // Check if the value is already in the selectedValues array to avoid duplicates
+                    if (!selectedValues.some(item => item.value === value)) {
+                        selectedValues.push({
+                            value: value,
+                            text: text
+                        });
+                    }
+                } else {
+                    // Remove the item from selectedValues array if it's unchecked
+                    const index = selectedValues.findIndex(item => item.value === value);
+                    if (index !== -1) {
+                        selectedValues.splice(index, 1);
+                    }
                 }
             });
 
@@ -698,7 +723,27 @@
                 } else {
                     selectedValues = selectedValues.filter(item => item.value !== value);
                 }
+                $dropdownItems.each(function() {
+                    const $checkbox = $(this).find('input[type="checkbox"]');
+                    const value = $(this).data('value');
+                    const text = $(this).find('span').text();
 
+                    if ($checkbox.prop('checked')) {
+                        // Check if the value is already in the selectedValues array to avoid duplicates
+                        if (!selectedValues.some(item => item.value === value)) {
+                            selectedValues.push({
+                                value: value,
+                                text: text
+                            });
+                        }
+                    } else {
+                        // Remove the item from selectedValues array if it's unchecked
+                        const index = selectedValues.findIndex(item => item.value === value);
+                        if (index !== -1) {
+                            selectedValues.splice(index, 1);
+                        }
+                    }
+                });
                 updateSelectedItemsDisplay();
             });
 
@@ -752,7 +797,7 @@
 
 
 
-        
+
 
 
         let subCategoryCount = 1;
@@ -817,11 +862,12 @@
             e.preventDefault();
             let url = $(this).data('url');
             let multipiCategory = [];
-            console.log(subCategoryCount);
             for (let i = 1; i <= subCategoryCount; i++) {
                 multipiCategory.push($("#sub_category" + i).val())
             }
             $("#saveData").text('Updating....')
+
+
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -845,6 +891,7 @@
                     'music_director': arrayMusicDirectors.map(item => item.value),
                 },
                 success: (data) => {
+                    console.log(data);
                     if (data.success) {
                         $("#on_success").addClass('block').removeClass('hidden');
                         $("#saveData").text('Upload')

@@ -70,7 +70,7 @@ class ContentController extends Controller
         // $demo = "";
         // if ($request->file('demo')) {
         //     $demo = $request->file('demo')->store('content/demo', 'public');
-        // }
+        // } 
 
         $content = Content::findOrFail($request->id)->update([
             'category' => $request->category ?? '',
@@ -109,6 +109,8 @@ class ContentController extends Controller
             $playlist->authors = '';
             $playlist->save();
         }
+
+        return response()->json(['success' => true, 'message' => 'data add successfully']);
 
         //     ContentCategory::create([
         //         'content_id' => $content->id,
@@ -358,6 +360,5 @@ class ContentController extends Controller
             $playlist->save();
             return response()->json(['success' => true, 'message' => 'successfully', 'id' => $content->id]);
         }
-
     }
 }
