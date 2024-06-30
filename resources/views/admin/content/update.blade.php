@@ -648,116 +648,192 @@
 
 
 
-        $('.multi-select-container').each(function() {
-            const $container = $(this);
-            const type = $container.data('type');
-            const $selectedItems = $container.find('.selected-items');
-            const $dropdown = $container.find('.dropdown');
-            const $dropdownItems = $dropdown.find('li');
-            let selectedValues = [];
+        // $('.multi-select-container').each(function() {
+        //     const $container = $(this);
+        //     const type = $container.data('type');
+        //     const $selectedItems = $container.find('.selected-items');
+        //     const $dropdown = $container.find('.dropdown');
+        //     const $dropdownItems = $dropdown.find('li');
+        //     let selectedValues = [];
 
-            // Initialize selected values
-            // $dropdownItems.each(function() {
-            //     const $checkbox = $(this).find('input[type="checkbox"]');
-            //     const value = $(this).data('value');
-            //     const text = $(this).find('span').text();
+        //     // Initialize selected values
+        //     $dropdownItems.each(function() {
+        //         const $checkbox = $(this).find('input[type="checkbox"]');
+        //         const value = $(this).data('value');
+        //         const text = $(this).find('span').text();
 
-            //     if ($checkbox.prop('checked')) {
-            //         selectedValues.push({
-            //             value: value,
-            //             text: text
-            //         });
-            //     }
-            // });
+        //         if ($checkbox.prop('checked')) {
+        //             selectedValues.push({
+        //                 value: value,
+        //                 text: text
+        //             });
+        //         }
+        //     });
 
-            $dropdownItems.each(function() {
-                const $checkbox = $(this).find('input[type="checkbox"]');
-                const value = $(this).data('value');
-                const text = $(this).find('span').text();
+        //     // $dropdownItems.each(function() {
+        //     //     const $checkbox = $(this).find('input[type="checkbox"]');
+        //     //     const value = $(this).data('value');
+        //     //     const text = $(this).find('span').text();
 
-                if ($checkbox.prop('checked')) {
-                    // Check if the value is already in the selectedValues array to avoid duplicates
-                    if (!selectedValues.some(item => item.value === value)) {
-                        selectedValues.push({
-                            value: value,
-                            text: text
-                        });
-                    }
-                } else {
-                    // Remove the item from selectedValues array if it's unchecked
-                    const index = selectedValues.findIndex(item => item.value === value);
-                    if (index !== -1) {
-                        selectedValues.splice(index, 1);
-                    }
-                }
-            });
+        //     //     if ($checkbox.prop('checked')) {
+        //     //         // Check if the value is already in the selectedValues array to avoid duplicates
+        //     //         if (!selectedValues.some(item => item.value === value)) {
+        //     //             selectedValues.push({
+        //     //                 value: value,
+        //     //                 text: text
+        //     //             });
+        //     //         }
+        //     //     } else {
+        //     //         // Remove the item from selectedValues array if it's unchecked
+        //     //         const index = selectedValues.findIndex(item => item.value === value);
+        //     //         if (index !== -1) {
+        //     //             selectedValues.splice(index, 1);
+        //     //         }
+        //     //     }
+        //     // });
 
-            // Update the display with the default selected items
-            updateSelectedItemsDisplay();
+        //     // Update the display with the default selected items
+        //     updateSelectedItemsDisplay();
 
-            // Toggle dropdown display
-            $selectedItems.on('click', function() {
-                if (openDropdown && openDropdown !== $dropdown) {
-                    openDropdown.hide();
-                }
-                $dropdown.toggle();
-                openDropdown = $dropdown.is(':visible') ? $dropdown : null;
-            });
+        //     // Toggle dropdown display
+        //     $selectedItems.on('click', function() {
+        //         if (openDropdown && openDropdown !== $dropdown) {
+        //             openDropdown.hide();
+        //         }
+        //         $dropdown.toggle();
+        //         openDropdown = $dropdown.is(':visible') ? $dropdown : null;
+        //     });
 
-            // Handle selection of dropdown items
-            $dropdownItems.on('click', function(event) {
-                const $checkbox = $(this).find('input[type="checkbox"]');
-                const value = $(this).data('value');
-                const text = $(this).find('span').text();
+        //     // Handle selection of dropdown items
+        //     $dropdownItems.on('click', function(event) {
+        //         const $checkbox = $(this).find('input[type="checkbox"]');
+        //         const value = $(this).data('value');
+        //         const text = $(this).find('span').text();
 
-                // Toggle the checkbox state
-                $checkbox.prop('checked', !$checkbox.prop('checked'));
+        //         // Toggle the checkbox state
+        //         $checkbox.prop('checked', !$checkbox.prop('checked'));
 
-                if ($checkbox.prop('checked')) {
-                    if (!selectedValues.some(item => item.value === value)) {
-                        selectedValues.push({
-                            value: value,
-                            text: text
-                        });
-                    }
-                } else {
-                    selectedValues = selectedValues.filter(item => item.value !== value);
-                }
-                $dropdownItems.each(function() {
-                    const $checkbox = $(this).find('input[type="checkbox"]');
-                    const value = $(this).data('value');
-                    const text = $(this).find('span').text();
+        //         if ($checkbox.prop('checked')) {
+        //             if (!selectedValues.some(item => item.value === value)) {
+        //                 selectedValues.push({
+        //                     value: value,
+        //                     text: text
+        //                 });
+        //             }
+        //         } else {
+        //             selectedValues = selectedValues.filter(item => item.value !== value);
+        //         }
+        //         updateSelectedItemsDisplay();
+        //     });
 
-                    if ($checkbox.prop('checked')) {
-                        // Check if the value is already in the selectedValues array to avoid duplicates
-                        if (!selectedValues.some(item => item.value === value)) {
-                            selectedValues.push({
-                                value: value,
-                                text: text
-                            });
-                        }
-                    } else {
-                        // Remove the item from selectedValues array if it's unchecked
-                        const index = selectedValues.findIndex(item => item.value === value);
-                        if (index !== -1) {
-                            selectedValues.splice(index, 1);
-                        }
-                    }
+        //     function updateSelectedItemsDisplay() {
+        //         if (selectedValues.length > 2) {
+        //             const displayText = selectedValues.slice(0, 2).map(item => item.text).join(', ');
+        //             $selectedItems.find('span').text(`${displayText} +${selectedValues.length - 2}`);
+        //         } else {
+        //             const displayText = selectedValues.map(item => item.text).join(', ');
+        //             $selectedItems.find('span').text(displayText);
+        //         }
+        //     }
+
+        //     // Store selected values in separate arrays based on type
+        //     switch (type) {
+        //         case 'producers':
+        //             arraysProducers = selectedValues;
+        //             break;
+        //         case 'authors':
+        //             arrayAuthers = selectedValues;
+        //             break;
+        //         case 'translators':
+        //             arrayTranslators = selectedValues;
+        //             break;
+        //         case 'directors':
+        //             arrayDirectors = selectedValues;
+        //             break;
+        //         case 'music_directors':
+        //             arrayMusicDirectors = selectedValues;
+        //             break;
+        //         case 'cast':
+        //             arrayCast = selectedValues;
+        //             break;
+        //         case 'cast2':
+        //             arrayCast2 = selectedValues;
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // });
+
+        $(document).ready(function() {
+    $('.multi-select-container').each(function() {
+        const $container = $(this);
+        const type = $container.data('type');
+        const $selectedItems = $container.find('.selected-items');
+        const $dropdown = $container.find('.dropdown');
+        const $dropdownItems = $dropdown.find('li');
+        let selectedValues = [];
+
+        // Initialize selected values
+        $dropdownItems.each(function() {
+            const $checkbox = $(this).find('input[type="checkbox"]');
+            const value = $(this).data('value');
+            const text = $(this).find('span').text();
+
+            if ($checkbox.prop('checked')) {
+                selectedValues.push({
+                    value: value,
+                    text: text
                 });
-                updateSelectedItemsDisplay();
-            });
-
-            function updateSelectedItemsDisplay() {
-                if (selectedValues.length > 2) {
-                    const displayText = selectedValues.slice(0, 2).map(item => item.text).join(', ');
-                    $selectedItems.find('span').text(`${displayText} +${selectedValues.length - 2}`);
-                } else {
-                    const displayText = selectedValues.map(item => item.text).join(', ');
-                    $selectedItems.find('span').text(displayText);
-                }
             }
+        });
 
-            // Store selected values in separate arrays based on type
+        // Update the display with the default selected items
+        updateSelectedItemsDisplay();
+
+        // Toggle dropdown display
+        $selectedItems.on('click', function() {
+            if (openDropdown && openDropdown !== $dropdown) {
+                openDropdown.hide();
+            }
+            $dropdown.toggle();
+            openDropdown = $dropdown.is(':visible') ? $dropdown : null;
+        });
+
+        // Handle selection of dropdown items
+        $dropdownItems.on('click', function(event) {
+            event.stopPropagation(); // Prevent the dropdown from closing
+            const $checkbox = $(this).find('input[type="checkbox"]');
+            const value = $(this).data('value');
+            const text = $(this).find('span').text();
+
+            // Toggle the checkbox state
+            $checkbox.prop('checked', !$checkbox.prop('checked'));
+
+            if ($checkbox.prop('checked')) {
+                if (!selectedValues.some(item => item.value === value)) {
+                    selectedValues.push({
+                        value: value,
+                        text: text
+                    });
+                }
+            } else {
+                selectedValues = selectedValues.filter(item => item.value !== value);
+            }
+            updateSelectedItemsDisplay();
+        });
+
+        function updateSelectedItemsDisplay() {
+            if (selectedValues.length > 2) {
+                const displayText = selectedValues.slice(0, 2).map(item => item.text).join(', ');
+                $selectedItems.find('span').text(`${displayText} +${selectedValues.length - 2}`);
+            } else {
+                const displayText = selectedValues.map(item => item.text).join(', ');
+                $selectedItems.find('span').text(displayText);
+            }
+        }
+
+        // Store selected values in separate arrays based on type
+        function storeSelectedValues() {
             switch (type) {
                 case 'producers':
                     arraysProducers = selectedValues;
@@ -783,7 +859,18 @@
                 default:
                     break;
             }
+        }
+
+        // Initial store of selected values
+        storeSelectedValues();
+
+        // Update store on change
+        $dropdownItems.on('click', function() {
+            storeSelectedValues();
         });
+    });
+});
+
 
         // Hide dropdowns when clicking outside
         $(document).on('click', function(event) {
