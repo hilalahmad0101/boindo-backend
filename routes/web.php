@@ -97,6 +97,10 @@ Route::middleware(['auth:admin'])->group(function () {
                 Route::post('get/sub/categories', 'getSubCategories')->name('admin.content.get.subcategories');
                 Route::post('get/sub/categories/update', 'getUpdateSubCategories')->name('admin.content.get.update.subcategories');
                 Route::post('content/store', 'contentAssets')->name('admin.content.assets.store');
+                Route::post('content/store/image', 'contentAssetsImage')->name('admin.content.assets.store.image');
+                Route::post('content/store/demo', 'contentAssetsDemo')->name('admin.content.assets.store.demo');
+                Route::post('content/store/audio', 'contentAssetsAudio')->name('admin.content.assets.store.audio');
+
                 Route::get('create', 'create')->name('admin.content.create');
                 Route::post('store', 'store')->name('admin.content.store');
                 Route::get('edit/{id}', 'edit')->name('admin.content.edit');

@@ -495,41 +495,47 @@
         $("#saveData").attr('disabled', true);
 
 
-        document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                simulateUpload(file, 'progressBar', 'progressTextImage');
-                image = file;
-                isImageComplete = true;
-            }
-        });
+        // document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file) {
+        //         simulateUpload(file, 'progressBar', 'progressTextImage');
+        //         image = file;
+        //         isImageComplete = true;
+        //     }
+        // });
 
-        document.getElementById('onboardingDemoFileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                simulateUpload(file, 'progressWrapperDemo', 'progressTextDemo');
-                demo = file;
-                isDemoComplete = true;
+        // document.getElementById('onboardingDemoFileInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file) {
+        //         simulateUpload(file, 'progressWrapperDemo', 'progressTextDemo');
+        //         demo = file;
+        //         isDemoComplete = true;
 
-            }
-        });
+        //     }
+        // });
 
-        document.getElementById('onboardingAudioFileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                simulateUpload(file, 'progressWrapperAudio', 'progressTextAudio');
-                audio = file;
-                isAudioComplete = true;
+        // document.getElementById('onboardingAudioFileInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file) {
+        //         simulateUpload(file, 'progressWrapperAudio', 'progressTextAudio');
+        //         audio = file;
+        //         isAudioComplete = true;
 
 
-            }
-        });
+        //     }
+        // });
 
 
         function simulateUpload(file, progressbar, progressText) {
             $("#data-status").addClass('block').removeClass('hidden');
             const progressBar = document.getElementById(progressbar);
-            const totalSize = file.size;
+            let totalSize = file.size;
+
+            // // Adjust total size based on audio file if it's larger than 400MB
+            // if (audio && totalSize > 400 * 1024 * 1024) {
+            //     totalSize = 400 * 1024 * 1024; // Set to 400MB
+            // }
+
             let uploadedSize = 0;
 
             const uploadInterval = setInterval(() => {
@@ -546,10 +552,8 @@
                 // If upload is complete, stop the interval
                 if (uploadedSize >= totalSize) {
                     clearInterval(uploadInterval);
-                    // alert("upload complete")
                     upload();
                     $("#data-status").addClass('hidden').removeClass('block');
-
                 }
             }, 100); // Adjust the interval timing as needed
         }
@@ -557,38 +561,261 @@
 
 
 
-        function upload() {
-            if (isImageComplete && isAudioComplete && isDemoComplete) {
+
+        // function upload() {
+        //     if (isImageComplete && isAudioComplete && isDemoComplete) {
+        //         $("#saveData").attr('disabled', true);
+        //         let formData = new FormData();
+        //         formData.append('_token', "{{ csrf_token() }}");
+        //         formData.append('image', image);
+        //         formData.append('audio', audio);
+        //         formData.append('demo', demo);
+        //         $.ajax({
+        //             url: "{{ route('admin.content.assets.store') }}",
+        //             type: "POST",
+        //             data: formData,
+        //             processData: false,
+        //             contentType: false,
+        //             success: function(data) {
+        //                 if (data.success) {
+        //                     assetsUpload = true;
+        //                     contentId = data.id;
+        //                     toastr['success'](data.message)
+        //                     $("#saveData").attr('disabled', false);
+        //                 }
+        //             },
+        //             error: function(data) {
+        //                 console.log(data);
+        //             }
+        //         })
+        //     } else {
+        //         console.log("object");
+        //     }
+        // }
+
+
+
+        document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                $("#data-status").removeClass('hidden').addClass('block');
+                isImageComplete = true;
+                // simulateUpload(file, 'progressBar', 'progressTextImage');
+                image = file;
                 $("#saveData").attr('disabled', true);
                 let formData = new FormData();
                 formData.append('_token', "{{ csrf_token() }}");
                 formData.append('image', image);
-                formData.append('audio', audio);
-                formData.append('demo', demo);
+                // formData.append('audio', audio);
+                // formData.append('demo', demo);
+
                 $.ajax({
-                    url: "{{ route('admin.content.assets.store') }}",
+                    url: "{{ route('admin.content.assets.store.image') }}",
                     type: "POST",
                     data: formData,
                     processData: false,
                     contentType: false,
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        // Upload progress
+                        const progressBar = document.getElementById('progressWrapper');
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total * 100;
+                                progressBar.style.backgroundColor = 'white';
+                                progressBar.style.width = percentComplete + '%';
+                                $("#" + "progressTextImage").text(Math.round(percentComplete) +
+                                    '%');
+                            }
+                        }, false);
+
+                        return xhr;
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.success) {
+                            assetsUpload = true;
+                            contentId = data.id;
+                            toastr['success'](data.message);
+                            // $("#saveData").attr('disabled', false);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            }
+        });
+
+        document.getElementById('onboardingDemoFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                isDemoComplete = true;
+                // simulateUpload(file, 'progressWrapperDemo', 'progressTextDemo');
+                demo = file;
+                $("#data-status").removeClass('hidden').addClass('block');
+                $("#saveData").attr('disabled', true);
+                let formData = new FormData();
+                console.log(contentId);
+                formData.append('_token', "{{ csrf_token() }}");
+                // formData.append('image', image);
+                // formData.append('audio', audio);
+                formData.append('demo', demo);
+                formData.append('id', contentId);
+
+                $.ajax({
+                    url: "{{ route('admin.content.assets.store.demo') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        // Upload progress
+                        const progressBar = document.getElementById('progressWrapperDemo');
+
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total * 100;
+                                progressBar.style.backgroundColor = 'white';
+                                progressBar.style.width =
+                                    percentComplete + '%';
+                                $("#" + "progressTextDemo").text(Math.round(percentComplete) +
+                                    '%');
+                            }
+                        }, false);
+
+                        return xhr;
+                    },
                     success: function(data) {
                         if (data.success) {
                             assetsUpload = true;
                             contentId = data.id;
-                            toastr['success'](data.message)
+                            toastr['success'](data.message);
+                            // $("#saveData").attr('disabled', false);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            }
+        });
+
+        document.getElementById('onboardingAudioFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                isAudioComplete = true;
+                // simulateUpload(file, 'progressWrapperAudio', 'progressTextAudio');
+                audio = file;
+
+                $("#data-status").removeClass('hidden').addClass('block');
+                $("#saveData").attr('disabled', true);
+                let formData = new FormData();
+                console.log(contentId);
+                formData.append('_token', "{{ csrf_token() }}");
+                // formData.append('image', image);
+                formData.append('audio', audio);
+                // formData.append('demo', demo);
+                formData.append('id', contentId);
+
+                $.ajax({
+                    url: "{{ route('admin.content.assets.store.audio') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        // Upload progress
+                        const progressBar = document.getElementById('progressWrapperAudio');
+
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total * 100;
+                                progressBar.style.backgroundColor = 'white';
+                                progressBar.style.width =
+                                    percentComplete + '%';
+                                $("#" + "progressTextAudio").text(Math.round(percentComplete) +
+                                    '%');
+                            }
+                        }, false);
+
+                        return xhr;
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            assetsUpload = true;
+                            contentId = data.id;
+                            toastr['success'](data.message);
                             $("#saveData").attr('disabled', false);
                         }
                     },
                     error: function(data) {
                         console.log(data);
                     }
-                })
-            } else {
-                console.log("object");
+                });
             }
-        }
+        });
 
+        // function simulateUpload(file, progressbar, progressText) {
+        //     $("#data-status").addClass('block').removeClass('hidden');
+        //     const progressBar = document.getElementById(progressbar);
+        //     const totalSize = file.size;
 
+        //     let uploadedSize = 0;
+
+        //     const uploadInterval = setInterval(() => {
+        //         // Simulate a chunk of upload
+        //         const chunkSize = Math.random() * (totalSize / 10);
+        //         uploadedSize += chunkSize;
+
+        //         // Calculate the percentage completed
+        //         const percentComplete = Math.min((uploadedSize / totalSize) * 100, 100);
+        //         progressBar.style.backgroundColor = 'white';
+        //         progressBar.style.width = percentComplete + '%';
+        //         $("#" + progressText).text(Math.round(percentComplete) + '%');
+
+        //         // If upload is complete, stop the interval
+        //         if (uploadedSize >= totalSize) {
+        //             clearInterval(uploadInterval);
+        //             upload(); // Call upload function when upload is complete
+        //             $("#data-status").addClass('hidden').removeClass('block');
+        //         }
+        //     }, 100); // Adjust the interval timing as needed
+        // }
+
+        // function upload() {
+        //     if (isImageComplete && isAudioComplete && isDemoComplete) {
+        //         $("#saveData").attr('disabled', true);
+        //         let formData = new FormData();
+        //         formData.append('_token', "{{ csrf_token() }}");
+        //         formData.append('image', image);
+        //         formData.append('audio', audio);
+        //         formData.append('demo', demo);
+
+        //         $.ajax({
+        //             url: "{{ route('admin.content.assets.store') }}",
+        //             type: "POST",
+        //             data: formData,
+        //             processData: false,
+        //             contentType: false,
+        //             success: function(data) {
+        //                 if (data.success) {
+        //                     assetsUpload = true;
+        //                     contentId = data.id;
+        //                     toastr['success'](data.message);
+        //                     $("#saveData").attr('disabled', false);
+        //                 }
+        //             },
+        //             error: function(data) {
+        //                 console.log(data);
+        //             }
+        //         });
+        //     } else {
+        //         console.log("Incomplete files selected.");
+        //     }
+        // }
 
 
 
@@ -830,7 +1057,7 @@
             //     toastr['error']("Please fill the Music Directors field.");
             //     return;
             // }
- 
+
 
             let url = $(this).data('url');
             let multipiCategory = [];

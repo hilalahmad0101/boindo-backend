@@ -361,4 +361,203 @@ class ContentController extends Controller
             return response()->json(['success' => true, 'message' => 'successfully', 'id' => $content->id]);
         }
     }
+    public function contentAssetsImage(Request $request)
+    {
+
+        // if ($request->id) {
+        //     $content = Content::findOrFail($request->id);
+        //     $image = "";
+        //     if ($request->file('image')) {
+        //         $image = $request->file('image')->store('content/image', 'public');
+        //     } else {
+        //         $image = $content->image;
+        //     }
+
+        //     $audio = "";
+        //     if ($request->file('audio')) {
+        //         $audio = $request->file('audio')->store('content/audio', 'public');
+        //     } else {
+        //         $audio = $content->audio;
+        //     }
+        //     $demo = "";
+        //     if ($request->file('demo')) {
+        //         $demo = $request->file('demo')->store('content/demo', 'public');
+        //     } else {
+        //         $demo = $content->demo;
+        //     }
+        //     $content->update([
+        //         'image' => $image ?? '',
+        //         'audio' => $audio ?? '',
+        //         'demo' => $demo ?? '',
+        //         'status' => 1
+        //     ]);
+
+        //     return response()->json(['success' => true, 'message' => 'update successfully', 'id' => $request->id]);
+        // } else {
+
+
+        //     $audio = "";
+        //     if ($request->file('audio')) {
+        //         $audio = $request->file('audio')->store('content/audio', 'public');
+        //     }
+        //     $demo = "";
+        //     if ($request->file('demo')) {
+        //         $demo = $request->file('demo')->store('content/demo', 'public');
+        //     }
+        //     $image = "";
+
+        // }
+        if ($request->file('image')) {
+            $image = $request->file('image')->store('content/image', 'public');
+        }
+        $content = Content::create([
+            'image' => $image ?? '',
+            'audio' => '',
+            'demo' => '',
+            'status' => 0
+        ]);
+
+        $playlist = new Playlist();
+        $playlist->title = 'NO TITLE';
+        $playlist->content_id = $content->id;
+        $playlist->audio =  '';
+        $playlist->duration = '0';
+        $playlist->authors = '';
+        $playlist->save();
+        return response()->json(['success' => true, 'message' => 'Image upload successfully', 'id' => $content->id]);
+    }
+
+    public function contentAssetsDemo(Request $request)
+    {
+
+        // if ($request->id) {
+        //     $content = Content::findOrFail($request->id);
+        //     $image = "";
+        //     if ($request->file('image')) {
+        //         $image = $request->file('image')->store('content/image', 'public');
+        //     } else {
+        //         $image = $content->image;
+        //     }
+
+        //     $audio = "";
+        //     if ($request->file('audio')) {
+        //         $audio = $request->file('audio')->store('content/audio', 'public');
+        //     } else {
+        //         $audio = $content->audio;
+        //     }
+        //     $demo = "";
+        //     if ($request->file('demo')) {
+        //         $demo = $request->file('demo')->store('content/demo', 'public');
+        //     } else {
+        //         $demo = $content->demo;
+        //     }
+        //     $content->update([
+        //         'image' => $image ?? '',
+        //         'audio' => $audio ?? '',
+        //         'demo' => $demo ?? '',
+        //         'status' => 1
+        //     ]);
+
+        //     return response()->json(['success' => true, 'message' => 'update successfully', 'id' => $request->id]);
+        // } else {
+
+
+        //     $audio = "";
+        //     if ($request->file('audio')) {
+        //         $audio = $request->file('audio')->store('content/audio', 'public');
+        //     }
+        //     $demo = "";
+        //     if ($request->file('demo')) {
+        //         $demo = $request->file('demo')->store('content/demo', 'public');
+        //     }
+        //     $image = "";
+
+        // }
+        $demo = "";
+        if ($request->file('demo')) {
+            $demo = $request->file('demo')->store('content/demo', 'public');
+        }
+        $content = Content::findOrFail($request->id)->update([
+            'image' => '',
+            'audio' => '',
+            'demo' => $demo,
+            'status' => 0
+        ]);
+
+        $playlist = new Playlist();
+        $playlist->title = 'NO TITLE';
+        $playlist->content_id = $request->id;
+        $playlist->audio =  '';
+        $playlist->duration = '0';
+        $playlist->authors = '';
+        $playlist->save();
+        return response()->json(['success' => true, 'message' => 'Demo upload successfully', 'id' => $request->id]);
+    }
+
+    public function contentAssetsAudio(Request $request)
+    {
+
+        // if ($request->id) {
+        //     $content = Content::findOrFail($request->id);
+        //     $image = "";
+        //     if ($request->file('image')) {
+        //         $image = $request->file('image')->store('content/image', 'public');
+        //     } else {
+        //         $image = $content->image;
+        //     }
+
+        //     $audio = "";
+        //     if ($request->file('audio')) {
+        //         $audio = $request->file('audio')->store('content/audio', 'public');
+        //     } else {
+        //         $audio = $content->audio;
+        //     }
+        //     $demo = "";
+        //     if ($request->file('demo')) {
+        //         $demo = $request->file('demo')->store('content/demo', 'public');
+        //     } else {
+        //         $demo = $content->demo;
+        //     }
+        //     $content->update([
+        //         'image' => $image ?? '',
+        //         'audio' => $audio ?? '',
+        //         'demo' => $demo ?? '',
+        //         'status' => 1
+        //     ]);
+
+        //     return response()->json(['success' => true, 'message' => 'update successfully', 'id' => $request->id]);
+        // } else {
+
+
+        //     $audio = "";
+        //     if ($request->file('audio')) {
+        //         $audio = $request->file('audio')->store('content/audio', 'public');
+        //     }
+        //     $demo = "";
+        //     if ($request->file('demo')) {
+        //         $demo = $request->file('demo')->store('content/demo', 'public');
+        //     }
+        //     $image = "";
+
+        // }
+        $audio = "";
+        if ($request->file('audio')) {
+            $audio = $request->file('audio')->store('content/audio', 'public');
+        }
+        $content = Content::findOrFail($request->id)->update([
+            'image' => '',
+            'audio' => $audio,
+            'demo' => '',
+            'status' => 0
+        ]);
+
+        $playlist = new Playlist();
+        $playlist->title = 'NO TITLE';
+        $playlist->content_id = $request->id;
+        $playlist->audio =  '';
+        $playlist->duration = '0';
+        $playlist->authors = '';
+        $playlist->save();
+        return response()->json(['success' => true, 'message' => 'Audio upload successfully', 'id' => $request->id]);
+    }
 }
