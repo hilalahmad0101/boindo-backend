@@ -1,6 +1,6 @@
 @extends('layouts.new_app')
 @section('title')
-    Create Content
+    update Content
 @endsection
 @section('content')
     <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet" />

@@ -141,11 +141,13 @@ class ContentController extends Controller
     {
 
         $content = Content::findOrFail($request->id);
+        $content->sub_cat_id=$request->sub_cat_id[0];
+        $content->save();
         $contents = Content::whereTitle($content->title)->get();
         foreach ($contents as $content1) {
             $content1->update([
                 'category' => $request->category ?? '',
-                'sub_cat_id' => $request->sub_cat_id[0],
+                // 'sub_cat_id' => $request->sub_cat_id[0],
                 'title' => $request->title ?? '',
                 'isbn' => $request->isbn ?? '',
                 'translator' => json_encode($request->translator) ?? json_encode([]),
