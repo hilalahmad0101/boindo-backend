@@ -100,11 +100,14 @@ Route::middleware(['auth:admin'])->group(function () {
                 Route::post('content/store/image', 'contentAssetsImage')->name('admin.content.assets.store.image');
                 Route::post('content/store/demo', 'contentAssetsDemo')->name('admin.content.assets.store.demo');
                 Route::post('content/store/audio', 'contentAssetsAudio')->name('admin.content.assets.store.audio');
+                Route::post('update/image', 'updateAssetImage')->name('admin.content.assets.update.image');
+                Route::post('update/demo', 'updateAssetDemo')->name('admin.content.assets.update.demo');
+                Route::post('update/audio', 'updateAssetAudio')->name('admin.content.assets.update.audio');
 
                 Route::get('create', 'create')->name('admin.content.create');
                 Route::post('store', 'store')->name('admin.content.store');
                 Route::get('edit/{id}', 'edit')->name('admin.content.edit');
-                Route::post('update/{id}', 'update')->name('admin.content.update');
+                Route::post('update', 'update')->name('admin.content.update');
                 Route::get('delete/{id}', 'delete')->name('admin.content.delete');
                 Route::get('delete/playlist/{id}/content/{content_id}', 'delete_playlist');
             });

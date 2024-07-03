@@ -467,7 +467,7 @@
                         <div class="flex items-center justify-end space-x-9 mt-[76px] mb-10">
                             <button onclick="window.location.href='{{ route('admin.onboarding.index') }}'" type="button"
                                 class="py-2 px-12 rounded-xl border border-white text-center text-slate-50 text-base font-black leading-7 tracking-wide">Cancel</button>
-                            <button type="button" id="saveData" data-url="{{ route('admin.content.store') }}"
+                            <button type="button" id="saveData" data-url="{{ route('admin.content.update') }}"
                                 class="py-2 px-12 bg-[#FFA800] rounded-xl border border-[#FFA800] text-center text-[#5A5A5C] text-base font-black leading-7 tracking-wide">Update</button>
                         </div>
                     </div>
@@ -528,97 +528,257 @@
         let assetsUpload = false;
 
 
+        // document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file) {
+        //         simulateUpload(file, 'progressBar', 'progressTextImage');
+        //         image = file;
+        //         isImageComplete = true;
+
+        //     }
+        // });
+
+        // document.getElementById('onboardingDemoFileInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file) {
+        //         simulateUpload(file, 'progressWrapperDemo', 'progressTextDemo');
+        //         demo = file;
+        //         isDemoComplete = true;
+
+        //     }
+        // });
+
+        // document.getElementById('onboardingAudioFileInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file) {
+        //         simulateUpload(file, 'progressWrapperAudio', 'progressTextAudio');
+        //         audio = file;
+        //         isAudioComplete = true;
+
+
+        //     }
+        // });
+
+
+        // function simulateUpload(file, progressbar, progressText) {
+        //     const progressBar = document.getElementById(progressbar);
+        //     const totalSize = file.size;
+        //     let uploadedSize = 0;
+
+        //     const uploadInterval = setInterval(() => {
+        //         // Simulate a chunk of upload
+        //         const chunkSize = Math.random() * (totalSize / 10);
+        //         uploadedSize += chunkSize;
+
+        //         // Calculate the percentage completed
+        //         const percentComplete = Math.min((uploadedSize / totalSize) * 100, 100);
+        //         progressBar.style.backgroundColor = 'white';
+        //         progressBar.style.width = percentComplete + '%';
+        //         $("#" + progressText).text(Math.round(percentComplete) + '%');
+
+        //         // If upload is complete, stop the interval
+        //         if (uploadedSize >= totalSize) {
+        //             clearInterval(uploadInterval);
+        //             // alert("upload complete")
+        //             upload();
+        //         }
+        //     }, 100); // Adjust the interval timing as needed
+        // }
+
+
+
+
+        // function upload() {
+        //     let formData = new FormData();
+        //     formData.append('_token', "{{ csrf_token() }}");
+        //     if (isImageComplete) {
+        //         formData.append('image', image);
+        //     }
+        //     if (isAudioComplete) {
+        //         formData.append('audio', audio);
+        //     }
+        //     if (isDemoComplete) {
+        //         formData.append('demo', demo);
+        //     }
+        //     formData.append('id', "{{ $content->id }}");
+        //     $.ajax({
+        //         url: "{{ route('admin.content.assets.store') }}",
+        //         type: "POST",
+        //         data: formData,
+        //         processData: false,
+        //         contentType: false,
+        //         success: function(data) {
+        //             if (data.success) {
+        //                 assetsUpload = true;
+        //                 contentId = data.id,
+        //                     toastr['success'](data.message)
+        //             }
+        //         },
+        //         error: function(data) {
+        //             console.log(data);
+        //         }
+        //     })
+        // }
+
+
         document.getElementById('onboardingImageInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
+            console.log(file);
             if (file) {
-                simulateUpload(file, 'progressBar', 'progressTextImage');
-                image = file;
+                $("#data-status").removeClass('hidden').addClass('block');
                 isImageComplete = true;
+                // simulateUpload(file, 'progressBar', 'progressTextImage');
+                // image = file;
+                $("#saveData").attr('disabled', true);
+                let formData = new FormData();
+                formData.append('_token', "{{ csrf_token() }}");
+                formData.append('image', file);
+                formData.append('id', "{{ $content->id }}");
+                // formData.append('demo', demo);
 
+                $.ajax({
+                    url: "{{ route('admin.content.assets.update.image') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        // Upload progress
+                        const progressBar = document.getElementById('progressWrapper');
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total * 100;
+                                progressBar.style.backgroundColor = 'white';
+                                progressBar.style.width = percentComplete + '%';
+                                $("#" + "progressTextImage").text(Math.round(percentComplete) +
+                                    '%');
+                            }
+                        }, false);
+
+                        return xhr;
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.success) {
+                            assetsUpload = true;
+                            contentId = data.id;
+                            toastr['success'](data.message);
+                            // $("#saveData").attr('disabled', false);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
             }
         });
 
         document.getElementById('onboardingDemoFileInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
+            // console.log(file);
             if (file) {
-                simulateUpload(file, 'progressWrapperDemo', 'progressTextDemo');
-                demo = file;
-                isDemoComplete = true;
+                $("#data-status").removeClass('hidden').addClass('block');
+                isImageComplete = true;
+                // simulateUpload(file, 'progressBar', 'progressTextImage');
+                // image = file;
+                $("#saveData").attr('disabled', true);
+                let formData = new FormData();
+                formData.append('_token', "{{ csrf_token() }}");
+                formData.append('demo', file);
+                formData.append('id', "{{ $content->id }}");
+                // formData.append('demo', demo);
 
+                $.ajax({
+                    url: "{{ route('admin.content.assets.update.demo') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        // Upload progress
+                        const progressBar = document.getElementById('progressWrapperDemo');
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total * 100;
+                                progressBar.style.backgroundColor = 'white';
+                                progressBar.style.width = percentComplete + '%';
+                                $("#" + "progressTextDemo").text(Math.round(percentComplete) +
+                                    '%');
+                            }
+                        }, false);
+
+                        return xhr;
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.success) {
+                            assetsUpload = true;
+                            contentId = data.id;
+                            toastr['success'](data.message);
+                            // $("#saveData").attr('disabled', false);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
             }
         });
 
         document.getElementById('onboardingAudioFileInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
+            // console.log(file);
             if (file) {
-                simulateUpload(file, 'progressWrapperAudio', 'progressTextAudio');
-                audio = file;
-                isAudioComplete = true;
+                $("#data-status").removeClass('hidden').addClass('block');
+                isImageComplete = true;
+                // simulateUpload(file, 'progressBar', 'progressTextImage');
+                // image = file;
+                $("#saveData").attr('disabled', true);
+                let formData = new FormData();
+                formData.append('_token', "{{ csrf_token() }}");
+                formData.append('audio', file);
+                formData.append('id', "{{ $content->id }}");
+                // formData.append('audio', audio);
 
+                $.ajax({
+                    url: "{{ route('admin.content.assets.update.audio') }}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        // Upload progress
+                        const progressBar = document.getElementById('progressWrapperAudio');
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total * 100;
+                                progressBar.style.backgroundColor = 'white';
+                                progressBar.style.width = percentComplete + '%';
+                                $("#" + "progressTextAudio").text(Math.round(percentComplete) +
+                                    '%');
+                            }
+                        }, false);
 
+                        return xhr;
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.success) {
+                            assetsUpload = true;
+                            contentId = data.id;
+                            toastr['success'](data.message);
+                            // $("#saveData").attr('disabled', false);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
             }
         });
-
-
-        function simulateUpload(file, progressbar, progressText) {
-            const progressBar = document.getElementById(progressbar);
-            const totalSize = file.size;
-            let uploadedSize = 0;
-
-            const uploadInterval = setInterval(() => {
-                // Simulate a chunk of upload
-                const chunkSize = Math.random() * (totalSize / 10);
-                uploadedSize += chunkSize;
-
-                // Calculate the percentage completed
-                const percentComplete = Math.min((uploadedSize / totalSize) * 100, 100);
-                progressBar.style.backgroundColor = 'white';
-                progressBar.style.width = percentComplete + '%';
-                $("#" + progressText).text(Math.round(percentComplete) + '%');
-
-                // If upload is complete, stop the interval
-                if (uploadedSize >= totalSize) {
-                    clearInterval(uploadInterval);
-                    // alert("upload complete")
-                    upload();
-                }
-            }, 100); // Adjust the interval timing as needed
-        }
-
-
-
-
-        function upload() {
-            let formData = new FormData();
-            formData.append('_token', "{{ csrf_token() }}");
-            if (isImageComplete) {
-                formData.append('image', image);
-            }
-            if (isAudioComplete) {
-                formData.append('audio', audio);
-            }
-            if (isDemoComplete) {
-                formData.append('demo', demo);
-            }
-            formData.append('id', "{{ $content->id }}");
-            $.ajax({
-                url: "{{ route('admin.content.assets.store') }}",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    if (data.success) {
-                        assetsUpload = true;
-                        contentId = data.id,
-                            toastr['success'](data.message)
-                    }
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            })
-        }
 
 
 
