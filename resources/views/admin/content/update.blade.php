@@ -457,8 +457,8 @@
                                     <select id="sub_category1"
                                         class="w-full bg-[#383838]  appearance-none py-4 px-4 text-white outline-none border-none rounded-2xl mt-5">
                                     </select>
-                                    <img id="add-more-btn" src="{{ asset('icons/add-more.png') }}" class="size-6 "
-                                        alt="">
+                                    {{-- <img id="add-more-btn" src="{{ asset('icons/add-more.png') }}" class="size-6 "
+                                        alt=""> --}}
                                 </div>
                             </div>
                         </label>
