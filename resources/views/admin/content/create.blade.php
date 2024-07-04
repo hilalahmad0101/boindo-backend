@@ -749,6 +749,8 @@
                             contentId = data.id;
                             toastr['success'](data.message);
                             $("#saveData").attr('disabled', false);
+                            $("#data-status").removeClass('block').addClass('hidden');
+
                         }
                     },
                     error: function(data) {
