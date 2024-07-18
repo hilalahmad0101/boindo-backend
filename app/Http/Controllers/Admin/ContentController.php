@@ -141,7 +141,8 @@ class ContentController extends Controller
     {
 
         $content = Content::findOrFail($request->id);
-        $content->sub_cat_id=$request->sub_cat_id[0];
+        $content->sub_cat_id = $request->sub_cat_id[0];
+        $content->is_search = $request->search;
         $content->save();
         $contents = Content::whereTitle($content->title)->get();
         foreach ($contents as $content1) {
@@ -154,7 +155,6 @@ class ContentController extends Controller
                 'total_duration' => $request->total_duration ?? json_encode([]),
                 'cost' => json_encode($request->cost) ?? json_encode([]),
                 'summary' => $request->summary ?? '',
-                'is_search' => $request->search,
                 'author_id' => json_encode($request->authors) ?? json_encode([]),
                 'authors' => json_encode($request->authors) ?? json_encode([]),
                 'cost2' => json_encode($request->cost2) ?? json_encode([]),
@@ -496,7 +496,7 @@ class ContentController extends Controller
                 $image = $content1->image;
             }
             $content1->update([
-                'image' => $image ?? '', 
+                'image' => $image ?? '',
             ]);
         }
         return response()->json(['success' => true, 'message' => 'Image update successfully', 'id' => $content->id]);
