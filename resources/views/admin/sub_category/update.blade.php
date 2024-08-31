@@ -77,7 +77,7 @@
                             @enderror
 
                         </div>
-                        <div>
+                        <div style="display:flex;align-items:center">
                             <label for="checkbox" style="color: white;">Are you want it on top</label>
                             <input type="checkbox" name="is_checkbox" @checked($category->is_checkbox == 1)>
                         </div>
