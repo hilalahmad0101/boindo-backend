@@ -62,18 +62,24 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div class="mt-[60px] relative">
                             <label for="" class="text-neutral-50 text-2xl font-black ">Category</label>
-                            <img src="{{ asset('icons/down.png') }}" class="size-6 absolute top-[4.2rem] right-[11px]" alt="">
-                            <select name="category" class="w-full appearance-none bg-[#383838]  py-4 pl-4 pr-10 text-white outline-none border-none rounded-2xl mt-5"  id="">
+                            <img src="{{ asset('icons/down.png') }}" class="size-6 absolute top-[4.2rem] right-[11px]"
+                                alt="">
+                            <select name="category"
+                                class="w-full appearance-none bg-[#383838]  py-4 pl-4 pr-10 text-white outline-none border-none rounded-2xl mt-5"
+                                id="">
                                 <option value="">Select Category</option>
                                 <option value="play">Play</option>
-                                <option   value="short stories">Short Stories</option>
+                                <option value="short stories">Short Stories</option>
                             </select>
                             @error('category')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
 
                         </div>
-                        <div></div>
+                        <div style="display:flex;align-items:center">
+                            <label for="checkbox" style="color: white;">Are you want it on top</label>
+                            <input type="checkbox" name="is_checkbox">
+                        </div>
                         <div></div>
                         <div class="flex items-center justify-end space-x-9 mt-[76px]">
                             <button onclick="window.location.href='{{ route('admin.sub-category.index') }}'" type="button"

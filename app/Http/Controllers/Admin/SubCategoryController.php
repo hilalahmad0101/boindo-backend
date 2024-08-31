@@ -30,6 +30,7 @@ class SubCategoryController extends Controller
             'name' => 'required',
             'category' => 'required',
         ]);
+        $validate['is_checkbox'] = $request->is_checkbox == "on" ? 1 : 0;
         SubCategory::create($validate);
         return redirect()->route('admin.sub-category.index')->with('success', 'Sub Category add successfully');
     }
@@ -46,6 +47,7 @@ class SubCategoryController extends Controller
             'name' => 'required',
             'category' => 'required',
         ]);
+        $validate['is_checkbox'] = $request->is_checkbox == "on" ? 1 : 0;
         SubCategory::where('id', $id)->update($validate);
         return redirect()->route('admin.sub-category.index')->with('success', 'Sub Category Update successfully');
     }

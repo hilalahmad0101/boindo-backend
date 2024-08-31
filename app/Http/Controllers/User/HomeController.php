@@ -79,6 +79,7 @@ class HomeController extends Controller
         try {
             $sub_category_with_contents = SubCategory::with('contents.reviews.user', 'contents.playlists')
                 ->whereCategory($category)
+                ->orderBy('is_checkbox','desc')
                 ->get();
 
 
