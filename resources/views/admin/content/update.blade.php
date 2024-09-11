@@ -629,7 +629,7 @@
                 isImageComplete = true;
                 // simulateUpload(file, 'progressBar', 'progressTextImage');
                 // image = file;
-                $("#saveData").attr('disabled', true);
+                // $("#saveData").attr('disabled', true);
                 let formData = new FormData();
                 formData.append('_token', "{{ csrf_token() }}");
                 formData.append('image', file);
@@ -682,7 +682,7 @@
                 isImageComplete = true;
                 // simulateUpload(file, 'progressBar', 'progressTextImage');
                 // image = file;
-                $("#saveData").attr('disabled', true);
+                // $("#saveData").attr('disabled', true);
                 let formData = new FormData();
                 formData.append('_token', "{{ csrf_token() }}");
                 formData.append('demo', file);
@@ -735,7 +735,7 @@
                 isImageComplete = true;
                 // simulateUpload(file, 'progressBar', 'progressTextImage');
                 // image = file;
-                $("#saveData").attr('disabled', true);
+                // $("#saveData").attr('disabled', true);
                 let formData = new FormData();
                 formData.append('_token', "{{ csrf_token() }}");
                 formData.append('audio', file);
